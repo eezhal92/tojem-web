@@ -1,19 +1,21 @@
-if (!process.env.NODE_ENV) {
-  console.error('[App] NODE_ENV value must be set')
+const { resolve } = require('path');
+const dotEnv = require('dotenv');
 
-  return;
+dotEnv.config();
+
+try {
+  if (!process.env.NODE_ENV) {
+    throw new Error('[App] NODE_ENV value must be set');
+  }
+
+  if (resolve(process.env.NODE_PATH) !== resolve(__dirname)) {
+    throw new Error('[App] NODE_PATH value should be equal to root app path');
+  }
+} catch (err) {
+  console.error(err); // eslint-disable-line no-console
+  process.exit(1);
 }
 
-const { resolve } = require('path')
+require = require('@std/esm')(module); // eslint-disable-line no-global-assign, global-require
 
-if (resolve(process.env.NODE_PATH) !== resolve(__dirname)) {
-  console.error('[App] NODE_PATH value should be equal to root app path')
-
-  return;
-}
-
-require('dotenv').config()
-
-require = require('@std/esm')(module);
-
-module.exports = require('./main').default;
+module.exports = require('./main').default; // eslint-disable-line global-require
