@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Buat Postingan | Social Commerce</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Buat Postingan</h1>
+    <a class="btn" href="/">Kembali</a>
+    <hr>
+    <form action="/posts/create" method="post">
+      <div>
+        <label for="product">Produk</label>
+        <select name="product_id" id="product">
+          <% products.forEach(function (product) {%>
+          <option value="<%= product.id %>"><%= product.name %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div>
+        <label for="content">Konten</label>
+        <textarea name="content" id="content"></textarea>
+      </div>
+
+      <div>
+        <label for="price">Harga</label>
+        <input type="number" name="price" id="price">
+      </div>
+
+      <button type="submit">Kirim</button>
+    </form>
+  </div>
+</body>
+</html>
