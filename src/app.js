@@ -1,11 +1,12 @@
+import path from 'path';
 import express from 'express';
-import * as database from './database';
 import bodyParser from 'body-parser';
+import * as database from './database';
 
 const app = express();
 
 app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
+app.set('views', path.resolve(__dirname, 'views'));
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -16,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
   database.Product.findAll()
     .then((products) => {
-      res.render('product-list', { products: products });
+      res.render('product-list', { products });
     })
     .catch((error) => {
       res.send(error);
@@ -34,13 +35,11 @@ app.get('/products/create', (req, res) => {
  * Lihat halaman buat produk
  */
 app.post('/products/create', (req, res) => {
-  var name = req.body.name;
+  const { name } = req.body;
 
-  database.Product.create({
-    name: name,
-  })
+  database.Product.create({ name })
     .then((product) => {
-      res.redirect('/products/' + product.id);
+      res.redirect(`/products/${product.id}`);
     })
     .catch((error) => {
       res.send(error);
@@ -59,7 +58,7 @@ app.get('/products/:id', (req, res) => {
         return;
       }
 
-      res.render('product-detail', { product: product });
+      res.render('product-detail', { product });
     })
     .catch((error) => {
       res.send(error);
@@ -72,7 +71,7 @@ app.get('/products/:id', (req, res) => {
 app.get('/posts/create', (req, res) => {
   database.Product.findAll()
     .then((products) => {
-      res.render('post-create', { products: products });
+      res.render('post-create', { products });
     })
     .catch((error) => {
       res.send(error);
@@ -87,7 +86,7 @@ app.get('/posts/:id', (req, res) => {
     include: [{ model: database.Product }],
   })
     .then((post) => {
-      res.render('post-show', { post: post });
+      res.render('post-show', { post });
     })
     .catch((error) => {
       res.send(error);
@@ -102,7 +101,7 @@ app.get('/posts', (req, res) => {
     include: [{ model: database.Product }],
   })
     .then((posts) => {
-      res.render('post-list', { posts: posts });
+      res.render('post-list', { posts });
     })
     .catch((error) => {
       res.send(error);
@@ -113,17 +112,12 @@ app.get('/posts', (req, res) => {
  * Lihat form posting
  */
 app.post('/posts/create', (req, res) => {
-  const productId = req.body.product_id;
-  const content = req.body.content;
-  const price = parseInt(req.body.price);
+  const { product_id: productId, content } = req.body;
+  const price = parseInt(req.body.price, 10);
 
-  database.Post.create({
-    productId: productId,
-    content: content,
-    price: price,
-  })
+  database.Post.create({ productId, content, price })
     .then((product) => {
-      res.redirect('/posts/' + product.id);
+      res.redirect(`/posts/${product.id}`);
     })
     .catch((error) => {
       res.send(error);

@@ -4,7 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_PATH=. nodemon --exec \"node index.js\""
+    "test": "npm run lint && jest",
+    "dev": "cross-env NODE_PATH=. nodemon --exec 'node index.js'",
+    "lint": "eslint ."
+  },
+  "engines": {
+    "node": ">= 8",
+    "npm": ">= 5"
   },
   "author": "",
   "license": "ISC",
@@ -19,10 +25,34 @@
     "sequelize": "^4.19.0"
   },
   "devDependencies": {
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.12.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.3.2",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.5.1",
+    "jest": "^21.2.1",
     "nodemon": "^1.12.1"
   },
   "@std/esm": {
     "cjs": true,
     "esm": "js"
+  },
+  "eslintConfig": {
+    "extends": "airbnb",
+    "env": {
+      "node": true,
+      "browser": true,
+      "jest/globals": true
+    },
+    "plugins": [
+      "jest"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
   }
 }
