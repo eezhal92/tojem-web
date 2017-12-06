@@ -13,6 +13,4 @@
 - Jalankan aplikasi `yarn run dev`
 
 ## Todo
-- Buat migrations menggunakan sequelize
-- Buat tests
-- Setup eslint
+- Nothing
