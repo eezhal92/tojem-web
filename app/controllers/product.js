@@ -16,69 +16,69 @@ class Product {
   /**
    * Tampilkan semua daftar product.
    *
-   * @param {Express.Request} req
-   * @param {Express.Response} res
+   * @param {Express.Request} request
+   * @param {Express.Response} response
    */
-  showAll(req, res) {
+  showAll(request, response) {
     this.database.products.findAll()
       .then((products) => {
-        res.render('product-list', { products });
+        response.render('product-list', { products });
       })
       .catch((error) => {
-        res.send(error);
+        response.send(error);
       });
   }
 
   /**
    * Tampilkan product secara spesifik berdasarkan productId.
    *
-   * @param {Express.Request} req
-   * @param {Express.Response} res
+   * @param {Express.Request} request
+   * @param {Express.Response} response
    */
-  showById(req, res) {
-    this.database.products.findById(req.params.id)
+  showById(request, response) {
+    this.database.products.findById(request.params.id)
       .then((product) => {
         if (!product) {
-          res.render('not-found');
+          response.render('not-found');
 
           return;
         }
 
-        res.render('product-detail', { product });
+        response.render('product-detail', { product });
       })
       .catch((error) => {
-        res.send(error);
+        response.send(error);
       });
   }
 
   // eslint-disable-next-line
-  showForm (req, res) {
-    res.render('product-create');
+  showForm (request, response) {
+    response.render('product-create');
   }
 
   /**
    * Menyimpan record baru ke database.
    *
-   * @param {Express.Request} req
-   * @param {Express.Response} res
+   * @param {Express.Request} request
+   * @param {Express.Response} response
    */
-  store(req, res) {
-    const { name } = req.body;
+  store(request, response) {
+    const { name } = request.body;
 
     this.database.products.create({ name })
       .then((product) => {
-        res.redirect(`/products/${product.id}`);
+        response.redirect(`/products/${product.id}`);
       })
       .catch((error) => {
-        res.send(error);
+        response.send(error);
       });
   }
 
   // eslint-disable-next-line
-  destroy(req, res) {
+  destroy(request, response) {
     const error = new Error('Not implemented');
 
-    return res.send(error);
+    return response.send(error);
   }
 }
 

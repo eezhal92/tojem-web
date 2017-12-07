@@ -8,6 +8,7 @@
     "test": "npm run lint && jest",
     "db:migrate": "sequelize db:migrate --url $(./scripts/db-url)",
     "db:migrate:undo": "sequelize db:migrate:undo --url $(./scripts/db-url)",
+    "start": "NODE_PATH=. NODE_ENV=production node server.js",
     "dev": "cross-env NODE_PATH=. nodemon --exec 'node server.js'",
     "lint": "eslint ."
   },
@@ -18,11 +19,16 @@
   "dependencies": {
     "@std/esm": "^0.17.3",
     "body-parser": "^1.18.2",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.4.3",
     "cross-env": "^5.1.1",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "express-session": "^1.15.6",
     "mysql2": "^1.4.2",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
     "sequelize": "^4.19.0",
     "sequelize-cli": "^3.2.0"
   },
