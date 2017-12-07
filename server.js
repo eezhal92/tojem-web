@@ -16,5 +16,6 @@ try {
   process.exit(1);
 }
 
+// eslint-disable-next-line no-global-assign
 require = require('@std/esm')(module);
 module.exports = require('./bootstrap/app').default;

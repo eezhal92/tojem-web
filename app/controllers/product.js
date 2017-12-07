@@ -1,14 +1,26 @@
 import database from '../models';
 
+/**
+ * @class
+ */
 class Product {
+  constructor(db) {
+    this.database = db;
+
+    this.showAll = this.showAll.bind(this);
+    this.showById = this.showById.bind(this);
+    this.showForm = this.showForm.bind(this);
+    this.store = this.store.bind(this);
+    this.destroy = this.destroy.bind(this);
+  }
   /**
    * Tampilkan semua daftar product.
    *
-   * @param {http.IncomingMessage} req
-   * @param {http.ServerResponse}  res
+   * @param {Express.Request} req
+   * @param {Express.Response} res
    */
   showAll(req, res) {
-    database.products.findAll()
+    this.database.products.findAll()
       .then((products) => {
         res.render('product-list', { products });
       })
@@ -20,11 +32,11 @@ class Product {
   /**
    * Tampilkan product secara spesifik berdasarkan productId.
    *
-   * @param {http.IncomingMessage} req
-   * @param {http.ServerResponse}  res
+   * @param {Express.Request} req
+   * @param {Express.Response} res
    */
   showById(req, res) {
-    database.products.findById(req.params.id)
+    this.database.products.findById(req.params.id)
       .then((product) => {
         if (!product) {
           res.render('not-found');
@@ -39,26 +51,21 @@ class Product {
       });
   }
 
-  /**
-   * Tampilkan form menambahkan product.
-   *
-   * @param {http.IncomingMessage} req
-   * @param {http.ServerResponse}  res
-   */
-  showForm(req, res) {
+  // eslint-disable-next-line
+  showForm (req, res) {
     res.render('product-create');
   }
 
   /**
    * Menyimpan record baru ke database.
    *
-   * @param {http.IncomingMessage} req
-   * @param {http.ServerResponse}  res
+   * @param {Express.Request} req
+   * @param {Express.Response} res
    */
   store(req, res) {
     const { name } = req.body;
 
-    database.products.create({ name })
+    this.database.products.create({ name })
       .then((product) => {
         res.redirect(`/products/${product.id}`);
       })
@@ -67,18 +74,12 @@ class Product {
       });
   }
 
-  /**
-   * Hapus record dari database.
-   *
-   * @param {http.IncomingMessage} req
-   * @param {http.ServerResponse}  res
-   */
+  // eslint-disable-next-line
   destroy(req, res) {
-    const error = new Error;
-    error.message = 'Not implemented';
+    const error = new Error('Not implemented');
 
     return res.send(error);
   }
 }
 
-export default new Product;
+export default new Product(database);
