@@ -1,84 +1,85 @@
 import database from '../models';
 
+/**
+ * @class
+ */
 class Product {
+  constructor(db) {
+    this.database = db;
+
+    this.showAll = this.showAll.bind(this);
+    this.showById = this.showById.bind(this);
+    this.showForm = this.showForm.bind(this);
+    this.store = this.store.bind(this);
+    this.destroy = this.destroy.bind(this);
+  }
   /**
    * Tampilkan semua daftar product.
    *
-   * @param {http.IncomingMessage} req
-   * @param {http.ServerResponse}  res
+   * @param {Express.Request} request
+   * @param {Express.Response} response
    */
-  showAll(req, res) {
-    database.products.findAll()
+  showAll(request, response) {
+    this.database.products.findAll()
       .then((products) => {
-        res.render('product-list', { products });
+        response.render('product-list', { products });
       })
       .catch((error) => {
-        res.send(error);
+        response.send(error);
       });
   }
 
   /**
    * Tampilkan product secara spesifik berdasarkan productId.
    *
-   * @param {http.IncomingMessage} req
-   * @param {http.ServerResponse}  res
+   * @param {Express.Request} request
+   * @param {Express.Response} response
    */
-  showById(req, res) {
-    database.products.findById(req.params.id)
+  showById(request, response) {
+    this.database.products.findById(request.params.id)
       .then((product) => {
         if (!product) {
-          res.render('not-found');
+          response.render('not-found');
 
           return;
         }
 
-        res.render('product-detail', { product });
+        response.render('product-detail', { product });
       })
       .catch((error) => {
-        res.send(error);
+        response.send(error);
       });
   }
 
-  /**
-   * Tampilkan form menambahkan product.
-   *
-   * @param {http.IncomingMessage} req
-   * @param {http.ServerResponse}  res
-   */
-  showForm(req, res) {
-    res.render('product-create');
+  // eslint-disable-next-line
+  showForm (request, response) {
+    response.render('product-create');
   }
 
   /**
    * Menyimpan record baru ke database.
    *
-   * @param {http.IncomingMessage} req
-   * @param {http.ServerResponse}  res
+   * @param {Express.Request} request
+   * @param {Express.Response} response
    */
-  store(req, res) {
-    const { name } = req.body;
+  store(request, response) {
+    const { name } = request.body;
 
-    database.products.create({ name })
+    this.database.products.create({ name })
       .then((product) => {
-        res.redirect(`/products/${product.id}`);
+        response.redirect(`/products/${product.id}`);
       })
       .catch((error) => {
-        res.send(error);
+        response.send(error);
       });
   }
 
-  /**
-   * Hapus record dari database.
-   *
-   * @param {http.IncomingMessage} req
-   * @param {http.ServerResponse}  res
-   */
-  destroy(req, res) {
-    const error = new Error;
-    error.message = 'Not implemented';
+  // eslint-disable-next-line
+  destroy(request, response) {
+    const error = new Error('Not implemented');
 
-    return res.send(error);
+    return response.send(error);
   }
 }
 
-export default new Product;
+export default new Product(database);
