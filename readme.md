@@ -13,4 +13,4 @@
 - Jalankan aplikasi `yarn run dev`
 
 ## Todo
-- Nothing
+- Use service pattern, controller should only responsible for http layer only

@@ -44,7 +44,7 @@
     "extends": "airbnb",
     "env": {
       "node": true,
-      "browser": true,
+      "browser": false,
       "jest/globals": true
     },
     "plugins": [
