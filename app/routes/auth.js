@@ -11,9 +11,7 @@ import passport from '../lib/passport';
 const router = express.Router();
 
 router.get('/login', ces.ensureLoggedOut('/'), auth.getLoginForm);
-
 router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
-
 router.get(
   '/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
