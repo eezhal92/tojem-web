@@ -6,6 +6,12 @@ import database from '../models';
 class Product {
   constructor(db) {
     this.database = db;
+
+    this.showAll = this.showAll.bind(this);
+    this.showById = this.showById.bind(this);
+    this.showForm = this.showForm.bind(this);
+    this.store = this.store.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
   /**
    * Tampilkan semua daftar product.
