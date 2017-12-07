@@ -1,4 +1,5 @@
 import database from '../models';
+import { NotFoundError } from '../lib/errors';
 
 /**
  * @class
@@ -13,19 +14,21 @@ class Product {
     this.store = this.store.bind(this);
     this.destroy = this.destroy.bind(this);
   }
+
   /**
    * Tampilkan semua daftar product.
    *
    * @param {Express.Request} request
    * @param {Express.Response} response
+   * @param {Function} next
    */
-  showAll(request, response) {
+  showAll(request, response, next) {
     this.database.products.findAll()
       .then((products) => {
         response.render('product-list', { products });
       })
       .catch((error) => {
-        response.send(error);
+        next(error);
       });
   }
 
@@ -34,12 +37,13 @@ class Product {
    *
    * @param {Express.Request} request
    * @param {Express.Response} response
+   * @param {Function} next
    */
-  showById(request, response) {
+  showById(request, response, next) {
     this.database.products.findById(request.params.id)
       .then((product) => {
         if (!product) {
-          response.render('not-found');
+          next(new NotFoundError('Produk kagak ditemukan'));
 
           return;
         }
@@ -47,7 +51,7 @@ class Product {
         response.render('product-detail', { product });
       })
       .catch((error) => {
-        response.send(error);
+        next(error);
       });
   }
 
@@ -61,8 +65,9 @@ class Product {
    *
    * @param {Express.Request} request
    * @param {Express.Response} response
+   * @param {Function} next
    */
-  store(request, response) {
+  store(request, response, next) {
     const { name } = request.body;
 
     this.database.products.create({ name })
@@ -70,15 +75,15 @@ class Product {
         response.redirect(`/products/${product.id}`);
       })
       .catch((error) => {
-        response.send(error);
+        next(error);
       });
   }
 
   // eslint-disable-next-line
-  destroy(request, response) {
+  destroy(request, response, next) {
     const error = new Error('Not implemented');
 
-    return response.send(error);
+    next(error);
   }
 }
 

@@ -5,8 +5,6 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 
-import serverError from './server-error';
-
 /**
  * @type function[]
  */
@@ -17,7 +15,9 @@ const middlewares = [
   session({ secret: 'keyboard cat', resave: true, saveUninitialized: true }),
   passport.initialize(),
   passport.session(),
-  serverError,
 ];
 
 export default middlewares;
+
+export { default as serverError } from './server-error';
+export { default as notFound } from './not-found';

@@ -24,6 +24,7 @@
     "cross-env": "^5.1.1",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
+    "es6-error": "^4.0.2",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "mysql2": "^1.4.2",
