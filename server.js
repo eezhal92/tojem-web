@@ -16,6 +16,5 @@ try {
   process.exit(1);
 }
 
-require = require('@std/esm')(module); // eslint-disable-line no-global-assign, global-require
-
-module.exports = require('./main').default; // eslint-disable-line global-require
+require = require('@std/esm')(module);
+module.exports = require('./bootstrap/app').default;
