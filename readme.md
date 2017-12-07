@@ -8,9 +8,13 @@
 ## Cara Setup di Local
 - Buat database di MySQL
 - Buat file `.env`. Lihat contoh `.env.example`
-- Import file `tojem-web-dump.sql` ke database tersebut
-- Install dependencies `yarn install`
+- Jalankan script untuk migrasi databse `npm run db:migrate`
+- Install dependensi `yarn install`
 - Jalankan aplikasi `yarn run dev`
 
+## Cara Setup di Production
+- Install dependensi `production-only`, jalankan `yarn install --prod`
+- Jalankan aplikasi `yarn run start`
+
 ## Todo
-- Use service pattern, controller should only responsible for http layer only
+- Gunakan `Service` pattern, `controller` hanya bertanggung jawab sebatas request-response
