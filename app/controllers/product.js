@@ -23,9 +23,9 @@ class Product {
    * @param {Function} next
    */
   showAll(request, response, next) {
-    this.database.products.findAll()
+    this.database.Product.findAll()
       .then((products) => {
-        response.render('product-list', { products });
+        response.render('backstore/product/list', { products });
       })
       .catch((error) => {
         next(error);
@@ -40,7 +40,7 @@ class Product {
    * @param {Function} next
    */
   showById(request, response, next) {
-    this.database.products.findById(request.params.id)
+    this.database.Product.findById(request.params.id)
       .then((product) => {
         if (!product) {
           next(new NotFoundError('Produk kagak ditemukan'));
@@ -48,7 +48,7 @@ class Product {
           return;
         }
 
-        response.render('product-detail', { product });
+        response.render('backstore/product/detail', { product });
       })
       .catch((error) => {
         next(error);
@@ -57,7 +57,7 @@ class Product {
 
   // eslint-disable-next-line
   showForm (request, response) {
-    response.render('product-create');
+    response.render('backstore/product/create');
   }
 
   /**
@@ -70,7 +70,7 @@ class Product {
   store(request, response, next) {
     const { name } = request.body;
 
-    this.database.products.create({ name })
+    this.database.Product.create({ name })
       .then((product) => {
         response.redirect(`/products/${product.id}`);
       })

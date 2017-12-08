@@ -19,5 +19,6 @@ const middlewares = [
 
 export default middlewares;
 
-export { default as serverError } from './server-error';
 export { default as notFound } from './not-found';
+export { default as hasStore } from './store';
+export { default as serverError } from './server-error';

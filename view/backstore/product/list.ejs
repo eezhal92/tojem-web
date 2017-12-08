@@ -9,13 +9,12 @@
 <body>
   <div class="container">
     <h1>Daftar Produk</h1>
-    <a class="btn" href="/products/create">Tambah Produk</a>
-    <a class="btn" href="/posts/create">Buat Postingan</a>
+    <a class="btn" href="/back-store/products/create">Tambah Produk</a>
     <hr>
     <ul>
       <% products.forEach(function (product) { %>
         <li>
-          <a href="/products/<%= product.id %>"><%= product.name %></a>
+          <a href="/back-store/products/<%= product.id %>"><%= product.name %></a>
         </li>
       <% }) %>
     </ul>

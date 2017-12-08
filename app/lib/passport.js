@@ -13,7 +13,7 @@ const onAuthenticated = (accessToken, refreshToken, profile, cb) => {
   const where = { facebookId: profile.id };
   const defaults = { name: profile.displayName };
 
-  db.users.findOrCreate({ where, defaults })
+  db.User.findOrCreate({ where, defaults })
     .spread((user) => {
       cb(null, user);
     });
@@ -26,7 +26,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  db.users.findById(id)
+  db.User.findById(id)
     .then((user) => {
       done(null, user);
     })
