@@ -1,3 +1,6 @@
+/**
+ * Auth controller
+ */
 class Auth {
   constructor() {
     this.getLoginForm = this.getLoginForm.bind(this);
@@ -11,7 +14,7 @@ class Auth {
 
   // eslint-disable-next-line class-methods-use-this
   redirectOnAuthenticated(request, response) {
-    response.redirect('/back-store/products');
+    response.redirect('/backstore/products');
   }
 }
 

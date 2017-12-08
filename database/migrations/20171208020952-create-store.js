@@ -1,13 +1,13 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    const table = queryInterface.createTable('products', {
+    const table = queryInterface.createTable('stores', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      storeId: {
+      ownerId: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
@@ -15,8 +15,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      description: {
+      address: {
+        allowNull: false,
         type: Sequelize.TEXT,
+      },
+      location: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -30,5 +35,5 @@ module.exports = {
 
     return table;
   },
-  down: queryInterface => queryInterface.dropTable('products'),
+  down: queryInterface => queryInterface.dropTable('Stores'),
 };

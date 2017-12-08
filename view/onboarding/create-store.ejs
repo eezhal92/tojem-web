@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buat toko | tojem</title>
+</head>
+<body>
+  <h1>Selamat Datang, <%= user.name %>!</h1>
+  <h2>Silakan isi informasi toko Anda</h2>
+  <form class="onboarding-form" method="POST" action="/onboard/create-store">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <div>
+      <label for="name">Nama Toko</label>
+      <input id="name" type="text" name="name" placeholder="Toko Keren">
+    </div>
+    <div>
+      <label for="location">Lokasi</label>
+      <input id="location" type="text" name="location" placeholder="Palu, Sulteng">
+    </div>
+    <div>
+      <label for="address">Alamat</label>
+      <textarea id="address" name="address" cols="30" rows="3"></textarea>
+    </div>
+    <button id="submit" type="submit">Buat toko</button>
+  </form>
+</body>
+</html>
