@@ -6,6 +6,7 @@ import database from '../models';
 class Onboarding {
   constructor(db) {
     this.database = db;
+
     this.createStoreForm = this.createStoreForm.bind(this);
     this.createStore = this.createStore.bind(this);
   }

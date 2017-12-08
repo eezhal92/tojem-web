@@ -35,7 +35,7 @@ module.exports = {
   },
 
   /**
-   * Rollback migration.
+   * Rollback a migration.
    */
   'db:migrate:undo': () => {
     loadEnv();
@@ -43,5 +43,16 @@ module.exports = {
     process.stdout.write('Rollback database migration.\n');
 
     spawn(BIN_SEQUELIZE, ['db:migrate:undo', '--url', getMysqlUrl(process.env)], { stdio: 'inherit' });
+  },
+
+  /**
+   * Rollback all migration
+   */
+  'db:migrate:rollback': () => {
+    loadEnv();
+
+    process.stdout.write('Rollback database migration.\n');
+
+    spawn(BIN_SEQUELIZE, ['db:migrate:undo:all', '--url', getMysqlUrl(process.env)], { stdio: 'inherit' });
   },
 };
