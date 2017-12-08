@@ -2,7 +2,7 @@ import database from '../models';
 import { NotFoundError } from '../lib/errors';
 
 /**
- * @class
+ * Product controller
  */
 class Product {
   constructor(db) {
@@ -20,7 +20,7 @@ class Product {
    *
    * @param {Express.Request} request
    * @param {Express.Response} response
-   * @param {Function} next
+   * @param {function} next
    */
   showAll(request, response, next) {
     this.database.Product.findAll()
@@ -37,7 +37,7 @@ class Product {
    *
    * @param {Express.Request} request
    * @param {Express.Response} response
-   * @param {Function} next
+   * @param {function} next
    */
   showById(request, response, next) {
     this.database.Product.findById(request.params.id)
@@ -65,7 +65,7 @@ class Product {
    *
    * @param {Express.Request} request
    * @param {Express.Response} response
-   * @param {Function} next
+   * @param {function} next
    */
   store(request, response, next) {
     const { name } = request.body;

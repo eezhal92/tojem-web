@@ -1,3 +1,6 @@
+/**
+ * Auth controller
+ */
 class Auth {
   constructor() {
     this.getLoginForm = this.getLoginForm.bind(this);

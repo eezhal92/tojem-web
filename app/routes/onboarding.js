@@ -1,5 +1,5 @@
 /**
- * Store management routing
+ * Seller onboarding routing
  */
 
 import express from 'express';
