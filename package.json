@@ -6,10 +6,8 @@
   "scripts": {
     "prepush": "npm test",
     "test": "npm run lint && jest",
-    "db:migrate": "sequelize db:migrate --url $(./scripts/db-url)",
-    "db:migrate:undo": "sequelize db:migrate:undo --url $(./scripts/db-url)",
-    "start": "NODE_PATH=. NODE_ENV=production node server.js",
-    "dev": "cross-env NODE_PATH=. nodemon --exec 'node server.js'",
+    "start": "node tojem serve --prod",
+    "dev": "node tojem serve",
     "lint": "eslint ."
   },
   "engines": {
@@ -27,6 +25,7 @@
     "es6-error": "^4.0.2",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "meow": "^4.0.0",
     "mysql2": "^1.4.2",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
@@ -38,7 +37,7 @@
     "eslint": "^4.12.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jest": "^21.3.2",
+    "eslint-plugin-jest": "^21.4.2",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.5.1",
     "husky": "^0.14.3",
