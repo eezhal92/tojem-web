@@ -2,6 +2,7 @@
  * Seller onboarding routing
  */
 
+import csrf from 'csurf';
 import express from 'express';
 import ces from 'connect-ensure-login';
 
@@ -20,16 +21,18 @@ router.route('/onboard/create-store')
     ces.ensureLoggedIn('/login'),
     hasStore(db, {
       condition: true,
-      redirectPath: '/back-store/products',
+      redirectPath: '/backstore/products',
     }),
+    csrf({ cookie: true }),
     onboarding.createStoreForm,
   )
   .post(
     ces.ensureLoggedIn('/login'),
     hasStore(db, {
       condition: true,
-      redirectPath: '/back-store/products',
+      redirectPath: '/backstore/products',
     }),
+    csrf({ cookie: true }),
     onboarding.createStore,
   );
 

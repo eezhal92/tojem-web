@@ -12,7 +12,7 @@ class Onboarding {
 
   // eslint-disable-next-line
   createStoreForm(request, response) {
-    const data = { user: request.user };
+    const data = { user: request.user, csrfToken: request.csrfToken() };
 
     response.render('onboarding/create-store', data);
   }
@@ -39,7 +39,7 @@ class Onboarding {
       address,
     })
       .then(() => {
-        response.redirect('/back-store/products');
+        response.redirect('/backstore/products');
       })
       .catch((error) => {
         next(error);

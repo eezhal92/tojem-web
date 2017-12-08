@@ -57,7 +57,9 @@ class Product {
 
   // eslint-disable-next-line
   showForm (request, response) {
-    response.render('backstore/product/create');
+    const data = { csrfToken: request.csrfToken() };
+
+    response.render('backstore/product/create', data);
   }
 
   /**
@@ -67,12 +69,14 @@ class Product {
    * @param {Express.Response} response
    * @param {function} next
    */
-  store(request, response, next) {
-    const { name } = request.body;
+  async store(request, response, next) {
+    // @todo hard-code, change it later
+    const storeId = 1;
+    const { name, description = '' } = request.body;
 
-    this.database.Product.create({ name })
+    this.database.Product.create({ storeId, name, description })
       .then((product) => {
-        response.redirect(`/products/${product.id}`);
+        response.redirect(`/backstore/products/${product.id}`);
       })
       .catch((error) => {
         next(error);
