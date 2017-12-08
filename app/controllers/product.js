@@ -2,7 +2,7 @@ import database from '../models';
 import { NotFoundError } from '../lib/errors';
 
 /**
- * @class
+ * Product controller
  */
 class Product {
   constructor(db) {
@@ -20,12 +20,12 @@ class Product {
    *
    * @param {Express.Request} request
    * @param {Express.Response} response
-   * @param {Function} next
+   * @param {function} next
    */
   showAll(request, response, next) {
-    this.database.products.findAll()
+    this.database.Product.findAll()
       .then((products) => {
-        response.render('product-list', { products });
+        response.render('backstore/product/list', { products });
       })
       .catch((error) => {
         next(error);
@@ -37,10 +37,10 @@ class Product {
    *
    * @param {Express.Request} request
    * @param {Express.Response} response
-   * @param {Function} next
+   * @param {function} next
    */
   showById(request, response, next) {
-    this.database.products.findById(request.params.id)
+    this.database.Product.findById(request.params.id)
       .then((product) => {
         if (!product) {
           next(new NotFoundError('Produk kagak ditemukan'));
@@ -48,7 +48,7 @@ class Product {
           return;
         }
 
-        response.render('product-detail', { product });
+        response.render('backstore/product/detail', { product });
       })
       .catch((error) => {
         next(error);
@@ -57,7 +57,9 @@ class Product {
 
   // eslint-disable-next-line
   showForm (request, response) {
-    response.render('product-create');
+    const data = { csrfToken: request.csrfToken() };
+
+    response.render('backstore/product/create', data);
   }
 
   /**
@@ -65,14 +67,16 @@ class Product {
    *
    * @param {Express.Request} request
    * @param {Express.Response} response
-   * @param {Function} next
+   * @param {function} next
    */
-  store(request, response, next) {
-    const { name } = request.body;
+  async store(request, response, next) {
+    // @todo hard-code, change it later
+    const storeId = 1;
+    const { name, description = '' } = request.body;
 
-    this.database.products.create({ name })
+    this.database.Product.create({ storeId, name, description })
       .then((product) => {
-        response.redirect(`/products/${product.id}`);
+        response.redirect(`/backstore/products/${product.id}`);
       })
       .catch((error) => {
         next(error);

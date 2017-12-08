@@ -7,13 +7,16 @@ const fbStrategyOptions = {
   clientID: process.env.FACEBOOK_APP_ID,
   clientSecret: process.env.FACEBOOK_APP_SECRET,
   callbackURL: process.env.FACEBOOK_CALLBACK_URL,
+  profileFields: ['id', 'emails', 'name', 'displayName'],
 };
 
 const onAuthenticated = (accessToken, refreshToken, profile, cb) => {
   const where = { facebookId: profile.id };
-  const defaults = { name: profile.displayName };
+  const name = profile.displayName;
+  const email = profile.emails.length ? profile.emails[0].value : '';
+  const defaults = { name, email };
 
-  db.users.findOrCreate({ where, defaults })
+  db.User.findOrCreate({ where, defaults })
     .spread((user) => {
       cb(null, user);
     });
@@ -26,7 +29,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  db.users.findById(id)
+  db.User.findById(id)
     .then((user) => {
       done(null, user);
     })
