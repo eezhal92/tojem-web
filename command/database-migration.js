@@ -14,7 +14,11 @@ function loadEnv() {
   require('dotenv').config();
 }
 
-function getMysqlUrl({ DB_NAME, DB_USER, DB_PASSWORD, DB_HOST }) {
+function getMysqlUrl(env) {
+  const {
+    DB_NAME, DB_USER, DB_PASSWORD, DB_HOST,
+  } = env;
+
   return `mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`;
 }
 
