@@ -7,11 +7,14 @@ const fbStrategyOptions = {
   clientID: process.env.FACEBOOK_APP_ID,
   clientSecret: process.env.FACEBOOK_APP_SECRET,
   callbackURL: process.env.FACEBOOK_CALLBACK_URL,
+  profileFields: ['id', 'emails', 'name', 'displayName'],
 };
 
 const onAuthenticated = (accessToken, refreshToken, profile, cb) => {
   const where = { facebookId: profile.id };
-  const defaults = { name: profile.displayName };
+  const name = profile.displayName;
+  const email = profile.emails.length ? profile.emails[0].value : '';
+  const defaults = { name, email };
 
   db.User.findOrCreate({ where, defaults })
     .spread((user) => {
