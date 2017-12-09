@@ -11,7 +11,7 @@ export default function hasStore(db, { condition = false, redirectPath = '/' } =
    * @param {Express.Response} response
    * @param {function} next
    */
-  return (request, response, next) => {
+  return (request, response, next) =>
     db.Store.findAll({ where: { ownerId: request.user.id } })
       .then((stores) => {
         const doesHaveStore = !!stores.length;
@@ -26,5 +26,4 @@ export default function hasStore(db, { condition = false, redirectPath = '/' } =
       .catch((error) => {
         next(error);
       });
-  };
 }
