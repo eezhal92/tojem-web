@@ -1,5 +1,6 @@
+import { NotFoundError } from 'app/lib/errors';
+
 import serverError from '../server-error';
-import { NotFoundError } from '../../lib/errors';
 
 describe('middlewares/server-error', () => {
   const request = {};
