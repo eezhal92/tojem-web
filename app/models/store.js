@@ -7,9 +7,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        Store.belongsTo(models.users);
+        Store.belongsTo(models.User);
       },
     },
   });
+
   return Store;
 };
