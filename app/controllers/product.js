@@ -1,12 +1,12 @@
-import database from '../models';
+import { productService as ps } from '../services';
 import { NotFoundError } from '../lib/errors';
 
 /**
  * Product controller
  */
 class Product {
-  constructor(db) {
-    this.database = db;
+  constructor(productService) {
+    this.productService = productService;
 
     this.showAll = this.showAll.bind(this);
     this.showById = this.showById.bind(this);
@@ -23,7 +23,7 @@ class Product {
    * @param {function} next
    */
   showAll(request, response, next) {
-    this.database.Product.findAll()
+    this.productService.findAllByStore({ id: 1 })
       .then((products) => {
         response.render('backstore/product/list', { products });
       })
@@ -40,7 +40,7 @@ class Product {
    * @param {function} next
    */
   showById(request, response, next) {
-    this.database.Product.findById(request.params.id)
+    this.productService.findById(request.params.id)
       .then((product) => {
         if (!product) {
           next(new NotFoundError('Produk kagak ditemukan'));
@@ -69,12 +69,16 @@ class Product {
    * @param {Express.Response} response
    * @param {function} next
    */
-  async store(request, response, next) {
-    // @todo hard-code, change it later
-    const storeId = 1;
-    const { name, description = '' } = request.body;
+  store(request, response, next) {
+    const storeId = request.session.store.id;
+    const { name, price, description = '' } = request.body;
 
-    this.database.Product.create({ storeId, name, description })
+    this.productService.create({
+      storeId,
+      name,
+      price,
+      description,
+    })
       .then((product) => {
         response.redirect(`/backstore/products/${product.id}`);
       })
@@ -91,4 +95,4 @@ class Product {
   }
 }
 
-export default new Product(database);
+export default new Product(ps);

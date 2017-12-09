@@ -1,3 +1,21 @@
+export function storeSession(db) {
+  return (request, response, next) => {
+    db.Store.findAll({ where: { ownerId: request.user.id } })
+      .then((stores) => {
+        if (stores.length) {
+          const userStore = stores[0];
+
+          request.session.store = userStore.dataValues;
+        }
+
+        next();
+      })
+      .catch((error) => {
+        next(error);
+      });
+  };
+}
+
 /**
  * Fungsi factory untuk mengecek apakah seller telah membuat store
  * @param {models.db} db

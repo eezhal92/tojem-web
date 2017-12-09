@@ -15,6 +15,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      price: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       description: {
         type: Sequelize.TEXT,
       },

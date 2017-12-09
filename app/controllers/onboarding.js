@@ -39,7 +39,11 @@ class Onboarding {
       location,
       address,
     })
-      .then(() => {
+      .then((store) => {
+        // @todo maybe it should be extracted into a dedicated function. it's duplicated
+        // @see app/middlewares/store.js
+        request.session.store = store.dataValues;
+
         response.redirect('/backstore/products');
       })
       .catch((error) => {

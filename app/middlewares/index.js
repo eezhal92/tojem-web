@@ -12,6 +12,7 @@ const middlewares = [
   express.static(path.resolve(__dirname, '../..', 'public')),
   cookieParser(),
   bodyParser.urlencoded({ extended: true }),
+  // @todo change session driver to sequelize
   session({ secret: 'keyboard cat', resave: true, saveUninitialized: true }),
   passport.initialize(),
   passport.session(),
@@ -20,5 +21,5 @@ const middlewares = [
 export default middlewares;
 
 export { default as notFound } from './not-found';
-export { default as hasStore } from './store';
+export { default as hasStore, storeSession } from './store';
 export { default as serverError } from './server-error';
