@@ -1,4 +1,4 @@
-import database from '../app/models';
+import database from '../index';
 
 describe('database', () => {
   test('model name exists', () => {
