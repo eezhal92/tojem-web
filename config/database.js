@@ -7,9 +7,9 @@ module.exports = {
     dialect: 'mysql',
   },
   test: {
-    username: process.env.CI_DB_USER,
-    password: process.env.CI_DB_PASSWORD,
-    database: process.env.CI_DB_NAME,
+    username: process.env.TEST_DB_USER,
+    password: process.env.TEST_DB_PASSWORD,
+    database: process.env.TEST_DB_NAME,
     host: '127.0.0.1',
     dialect: 'mysql',
   },

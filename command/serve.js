@@ -5,6 +5,11 @@ const { spawn } = require('child_process');
 module.exports = {
   serve: (opts) => {
     process.env.NODE_ENV = opts.prod ? 'production' : 'development';
+
+    if (opts.test) {
+      process.env.NODE_ENV = 'test';
+    }
+
     process.env.PORT = opts.port || 5000; // TODO: Get port automations.
 
     const { NODE_PATH, NODE_ENV, PORT } = process.env;

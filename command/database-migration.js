@@ -15,9 +15,27 @@ function loadEnv() {
 }
 
 function getMysqlUrl(env) {
-  const {
-    DB_NAME, DB_USER, DB_PASSWORD, DB_HOST,
+  let {
+    DB_NAME,
+    DB_USER,
+    DB_PASSWORD,
+    DB_HOST,
   } = env;
+
+  const {
+    NODE_ENV,
+    TEST_DB_NAME,
+    TEST_DB_USER,
+    TEST_DB_PASSWORD,
+    TEST_DB_HOST,
+  } = env;
+
+  if (NODE_ENV === 'test') {
+    DB_NAME = TEST_DB_NAME;
+    DB_USER = TEST_DB_USER;
+    DB_PASSWORD = TEST_DB_PASSWORD;
+    DB_HOST = TEST_DB_HOST;
+  }
 
   return `mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`;
 }
