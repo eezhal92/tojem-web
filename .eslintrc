@@ -1,0 +1,23 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "node": true,
+    "browser": false,
+    "jest/globals": true
+  },
+  "plugins": [
+    "import",
+    "jest",
+    "mocha"
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": [
+          "node_modules",
+          "tojem-web"
+        ]
+      }
+    }
+  }
+}
