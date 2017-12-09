@@ -51,6 +51,7 @@ Untuk menjalankan unit dan integration test, gunakan `npm t`
 ### e2e test
 
 Untuk melakukan e2e test:
+
 - Jalankan aplikasi dalam environment `test`. Jalankan `node tojem server --test`.
 - Jalankan `npm run e2e`. Script ini akan melakukan rollback migration terhadap test database kemudian di-migrate kembali agar database dalam keadaan bersih sebelum melakukan otomasi browser test.
 

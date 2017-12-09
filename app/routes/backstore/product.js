@@ -1,7 +1,8 @@
 import csrf from 'csurf';
 import express from 'express';
 import ces from 'connect-ensure-login';
-import product from '../../controllers/product';
+
+import product from 'app/controllers/product';
 
 const csrfProtection = csrf({ cookie: true });
 
