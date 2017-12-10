@@ -3,6 +3,12 @@ module.exports = (sequelize, DataTypes) => {
     facebookId: DataTypes.STRING,
     name: DataTypes.STRING,
     email: DataTypes.STRING,
+  }, {
+    classMethods: {
+      associate: (models) => {
+        User.hasMany(models.Store, { foreignKey: 'ownerId' });
+      },
+    },
   });
 
   return User;
