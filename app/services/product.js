@@ -13,7 +13,7 @@ class ProductService {
    */
   async findAllByStore(store) {
     try {
-      return await this.database.Product.findAll({
+      return await this.database.product.findAll({
         where: { storeId: store.id },
       });
     } catch (error) {
@@ -37,7 +37,7 @@ class ProductService {
     price,
   } = {}) {
     try {
-      const product = await this.database.Product.create({
+      const product = await this.database.product.create({
         storeId,
         name,
         price,
@@ -58,7 +58,7 @@ class ProductService {
    */
   async findById(productId) {
     try {
-      return await this.database.Product.findById(productId);
+      return await this.database.product.findById(productId);
     } catch (error) {
       throw error;
     }

@@ -1,9 +1,9 @@
-import database from '../index';
+import db from '../index';
 
 describe('database', () => {
   test('model name exists', () => {
-    expect('User' in database).toBe(true);
-    expect('Product' in database).toBe(true);
-    expect('Store' in database).toBe(true);
+    expect('user' in db).toBe(true);
+    expect('product' in db).toBe(true);
+    expect('store' in db).toBe(true);
   });
 });

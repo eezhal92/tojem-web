@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  const User = sequelize.define('user', {
     facebookId: DataTypes.STRING,
     name: DataTypes.STRING,
     email: DataTypes.STRING,
   }, {
     classMethods: {
       associate: (models) => {
-        User.hasMany(models.Store, { foreignKey: 'ownerId' });
+        User.hasMany(models.store, { foreignKey: 'ownerId' });
       },
     },
   });

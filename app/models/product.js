@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Product = sequelize.define('Product', {
+  const Product = sequelize.define('product', {
     storeId: DataTypes.INTEGER,
     name: DataTypes.STRING,
     price: DataTypes.INTEGER,
@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        Product.belongsTo(models.Price);
+        Product.belongsTo(models.price);
       },
     },
   });

@@ -1,6 +1,6 @@
 export function storeSession(db) {
   return (request, response, next) => {
-    db.Store.findAll({ where: { ownerId: request.user.id } })
+    db.store.findAll({ where: { ownerId: request.user.id } })
       .then((stores) => {
         if (stores.length) {
           const userStore = stores[0];
@@ -30,7 +30,7 @@ export default function hasStore(db, { condition = false, redirectPath = '/' } =
    * @param {function} next
    */
   return (request, response, next) =>
-    db.Store.findAll({ where: { ownerId: request.user.id } })
+    db.store.findAll({ where: { ownerId: request.user.id } })
       .then((stores) => {
         const doesHaveStore = !!stores.length;
         if (doesHaveStore === condition) {

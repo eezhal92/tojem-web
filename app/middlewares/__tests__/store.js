@@ -7,7 +7,7 @@ describe('middlewares/store', () => {
   const response = { redirect: jest.fn() };
   const error = new Error('Operation is broken');
   const db = {
-    Store: {
+    store: {
       findAll: () => Promise.reject(error),
     },
   };
@@ -28,7 +28,7 @@ describe('middlewares/store', () => {
   });
 
   it('should call next when condition does not meet', async () => {
-    db.Store.findAll = () => Promise.resolve([]);
+    db.store.findAll = () => Promise.resolve([]);
 
     let middleware;
 
@@ -39,7 +39,7 @@ describe('middlewares/store', () => {
     expect(next).toHaveBeenCalledTimes(1);
     expect(response.redirect).not.toBeCalled();
 
-    db.Store.findAll = () => Promise.resolve([{ id: 1, name: 'Cool Store' }]);
+    db.store.findAll = () => Promise.resolve([{ id: 1, name: 'Cool Store' }]);
 
     middleware = store(db, { condition: false, redirectPath: '/' });
 
@@ -50,7 +50,7 @@ describe('middlewares/store', () => {
   });
 
   it('should call redirect when condition does meet', async () => {
-    db.Store.findAll = () => Promise.resolve([]);
+    db.store.findAll = () => Promise.resolve([]);
 
     let middleware;
 
@@ -62,7 +62,7 @@ describe('middlewares/store', () => {
     expect(response.redirect).toBeCalledWith('/');
     expect(response.redirect).toHaveBeenCalledTimes(1);
 
-    db.Store.findAll = () => Promise.resolve([{ id: 1, name: 'Cool Store' }]);
+    db.store.findAll = () => Promise.resolve([{ id: 1, name: 'Cool Store' }]);
 
     middleware = store(db, { condition: true, redirectPath: '/somewhere' });
 
