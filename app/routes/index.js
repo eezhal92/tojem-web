@@ -1,14 +1,13 @@
 import express from 'express';
 
 import auth from './auth';
+import tojem from './tojem';
 import backStore from './backstore';
 import onboarding from './onboarding';
 
 const router = express.Router();
 
-router.get('/', (request, response) => {
-  response.render('tojem/homepage');
-});
+router.use(tojem);
 router.use(auth);
 router.use(onboarding);
 router.use('/backstore', backStore);

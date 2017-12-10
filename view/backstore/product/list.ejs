@@ -4,20 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Daftar Produk | tojem</title>
-  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <div class="container">
     <h1>Daftar Produk</h1>
-    <a class="btn" href="/backstore/products/create">Tambah Produk</a>
+    <a class="btn btn-add-product" href="/backstore/products/create">Tambah Produk</a>
     <hr>
-    <ul>
-      <% products.forEach(function (product) { %>
-        <li>
-          <a href="/backstore/products/<%= product.id %>"><%= product.name %></a>
-        </li>
+    <div class="product-list">
+      <% products.forEach((product) => { %>
+        <div>
+          <div><%= product.name %></div>
+          <div>Rp. <%= product.price.toLocaleString() %></div>
+          <a href="/backstore/products/<%= product.id %>/edit">Ubah</a>
+          <a href="/backstore/products/<%= product.id %>">Lihat</a>
+        </div>
       <% }) %>
-    </ul>
+    </div>
   </div>
 </body>
 </html>
