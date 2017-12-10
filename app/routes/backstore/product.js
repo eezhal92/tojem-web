@@ -11,9 +11,11 @@ const router = express.Router();
 router.use(ces.ensureLoggedIn('/login'));
 
 router.get('/', product.showAll);
-router.get('/create', csrfProtection, product.showForm);
-router.get('/:id', product.showById);
+router.get('/create', csrfProtection, product.showCreateForm);
 router.post('/create', csrfProtection, product.store);
-router.delete('/create', product.destroy);
+router.get('/:id', product.showById);
+router.get('/:id/edit', csrfProtection, product.showEditForm);
+router.post('/:id', csrfProtection, product.update);
+router.delete('/:id', product.deactivate);
 
 export default router;

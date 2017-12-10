@@ -1,5 +1,5 @@
-import { productService as ps } from '../services';
 import { NotFoundError } from '../lib/errors';
+import { productService as ps } from '../services';
 
 /**
  * Product controller
@@ -10,9 +10,11 @@ class Product {
 
     this.showAll = this.showAll.bind(this);
     this.showById = this.showById.bind(this);
-    this.showForm = this.showForm.bind(this);
+    this.showCreateForm = this.showCreateForm.bind(this);
     this.store = this.store.bind(this);
-    this.destroy = this.destroy.bind(this);
+    this.showEditForm = this.showEditForm.bind(this);
+    this.update = this.update.bind(this);
+    this.deactivate = this.deactivate.bind(this);
   }
 
   /**
@@ -56,7 +58,7 @@ class Product {
   }
 
   // eslint-disable-next-line
-  showForm (request, response) {
+  showCreateForm (request, response) {
     const data = { csrfToken: request.csrfToken() };
 
     response.render('backstore/product/create', data);
@@ -87,8 +89,42 @@ class Product {
       });
   }
 
+  showEditForm(request, response, next) {
+    this.productService.findById(request.params.id)
+      .then((product) => {
+        const data = { product, csrfToken: request.csrfToken() };
+
+        response.render('backstore/product/edit', data);
+      })
+      .catch((error) => {
+        next(error);
+      });
+  }
+
+  async update(request, response, next) {
+    const productId = request.params.id;
+
+    try {
+      const product = await this.productService.findById(productId);
+      const { name, price, description } = request.body;
+
+      await product.update({ name, price, description });
+
+      response.redirect(`/backstore/products/${productId}`);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**
+   * Menyembunyikan produk dari listing.
+   *
+   * @param  {Express.Request}   request
+   * @param  {Express.Response}   response [description]
+   * @param  {function} next
+   */
   // eslint-disable-next-line
-  destroy(request, response, next) {
+  deactivate(request, response, next) {
     const error = new Error('Not implemented');
 
     next(error);
