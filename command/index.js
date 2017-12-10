@@ -32,8 +32,12 @@ module.exports = (() => {
           --port                 Set server port. Default[3000]
     db:migrate                   Fire database migration up.
     db:migrate:undo              Rollback database migration.
+    db:migrate:rollback          Rollback database migration.
+    db:migrate:refresh           Refresh database migration.
+    test:e2e                     Running browser test (e2e).
 
   Options
+    -t, --test                   Set the environment to test.
     -s, --silent                 Don't display log in stdout.
         --help                   Display this messages and exit.
 `, {
@@ -49,6 +53,10 @@ module.exports = (() => {
         },
         silent: {
           alias: 's',
+          default: false,
+        },
+        test: {
+          alias: 't',
           default: false,
         },
       },
