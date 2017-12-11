@@ -16,7 +16,7 @@ const onAuthenticated = (accessToken, refreshToken, profile, cb) => {
   const email = profile.emails.length ? profile.emails[0].value : '';
   const defaults = { name, email };
 
-  db.User.findOrCreate({ where, defaults })
+  db.user.findOrCreate({ where, defaults })
     .spread((user) => {
       cb(null, user);
     });
@@ -29,7 +29,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  db.User.findById(id)
+  db.user.findById(id)
     .then((user) => {
       done(null, user);
     })

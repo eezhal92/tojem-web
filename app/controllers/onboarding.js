@@ -33,7 +33,7 @@ class Onboarding {
       address,
     } = request.body;
 
-    this.database.Store.create({
+    this.database.store.create({
       ownerId,
       name,
       location,
