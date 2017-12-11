@@ -4,6 +4,6 @@ const command = require('./command');
 try {
   command.fire();
 } catch (err) {
-  process.stderr.write(err);
+  console.error(err); // eslint-disable-line no-console
   process.exit(1);
 }

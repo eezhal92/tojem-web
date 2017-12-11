@@ -44,27 +44,48 @@
 
 ## Testing
 
-### Unit dan integration test
+### Unit dan Integration Test
 
 Untuk menjalankan unit dan integration test, gunakan `npm t`
 
-### e2e test
+### Browser Test (e2e)
 
-Untuk melakukan e2e test:
+Untuk melakukan e2e test, eksekusi dengan perintah `npm run e2e`
+atau `./tojem test:e2e`. Penjelasan ada pada CLI [`Commands`](#commands).
 
-- Jalankan aplikasi dalam environment `test`. Jalankan `node tojem server --test`.
-- Jalankan `npm run e2e`. Script ini akan melakukan rollback migration terhadap test database kemudian di-migrate kembali agar database dalam keadaan bersih sebelum melakukan otomasi browser test.
+
 
 ## CLI
 
-Lebih lengkap tentang command.
-
 ```console
-$ node tojem --help
+$ ./tojem --help
 ```
+
+### Commands (perintah)
+
+- `init`. Membuat file `.env` jika belum tersedia.
+- `serve`. Mengaktifkan web server.
+- `db:migrate`. Melakukan migrasi (membuat tabel) dan strukturnya.
+- `db:migrate:undo`.  Menghapus satu tabel berdasarkan urutan migrasinya.
+- `db:migrate:rollback`.  Menghapus semua tabel.
+- `db:migrate:refresh`.  Melakukan proses `db:migrate:rollback` kemudian `db:migrate`.
+- `test:e2e`. Melakukan proses `db:migrate:refresh` kemudian otomasi browser test.
+
+### Flags (options)
+
+- `-t, --test`. Mengubah environment menjadi `'test'` mode.
+- `-s, --silent`. Mengalihkan output CLI ke `storage/log/<nama-file>.log`.
+- `--help`. Tampilkan bantuan.
+
+### Trick
+
+Lakukan perintah `./tojem db:migrate:refresh --test` untuk melakukan refresh `test` database.
+
+
+---
 
 
 ## Todo
 
-- Gunakan `Service` pattern, `controller` hanya bertanggung jawab sebatas request-response
-- Buat command untuk refresh migration, seperti `tojem db:migrate:refresh`
+- [ ] Gunakan `Service` pattern, `controller` hanya bertanggung jawab sebatas request-response
+- [x] Buat command untuk refresh migration, seperti `tojem db:migrate:refresh`

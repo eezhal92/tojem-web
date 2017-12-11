@@ -6,9 +6,8 @@
   "scripts": {
     "prepush": "npm test",
     "test": "npm run lint && jest",
-    "e2e": "NODE_ENV=test ./tojem db:migrate:rollback && NODE_ENV=test ./tojem db:migrate && nightwatch",
+    "e2e": "./tojem test:e2e",
     "start": "node tojem serve --prod",
-    "start:test": "node tojem serve --test",
     "dev": "node tojem serve",
     "lint": "eslint ."
   },
