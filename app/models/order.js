@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Order = sequelize.define('Order', {
+  const Order = sequelize.define('order', {
     name: DataTypes.STRING,
     address: DataTypes.TEXT,
     location: DataTypes.STRING,

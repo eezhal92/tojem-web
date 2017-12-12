@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    const table = queryInterface.createTable('Orders', {
+    const table = queryInterface.createTable('orders', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -17,9 +17,11 @@ module.exports = {
         type: Sequelize.STRING,
       },
       channel: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       type: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       createdAt: {

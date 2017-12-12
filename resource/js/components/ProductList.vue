@@ -10,24 +10,28 @@
 </template>
 
 <script>
+/* eslint-disable import/no-extraneous-dependencies */
+import axios from 'axios';
+
 import ProductItem from './ProductItem.vue';
 
 export default {
   data() {
     return {
-      products: [
-        {
-          id: 1,
-          name: 'Bakso Bakar',
-          price: 10000,
-        },
-        {
-          id: 2,
-          name: 'Nasi Goreng',
-          price: 9000,
-        },
-      ],
+      products: [],
     };
+  },
+  created() {
+    this.fetchProducts();
+  },
+  methods: {
+    fetchProducts() {
+      axios.get('/api/products')
+        .then(response => response.data)
+        .then((products) => {
+          this.products = products;
+        });
+    },
   },
   components: {
     'product-item': ProductItem,
