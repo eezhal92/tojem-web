@@ -1,8 +1,13 @@
 <template>
   <div class="hello w-full">
-    <div v-show="errorMessage" class="bg-red-lightest border-l-4 border-red text-red-dark p-4" role="alert">
+    <div v-if="errorMessage" id="error-message" class="bg-red-lightest border-l-4 border-red text-red-dark p-4" role="alert">
       <p class="font-bold">Gagal</p>
       <p>{{ errorMessage }}.</p>
+    </div>
+
+    <div v-if="success" id="success-message" class="bg-teal-lightest border-l-4 border-teal text-teal-dark p-4" role="alert">
+      <p class="font-bold">Berhasil</p>
+      <p>Transaksi berhasil.</p>
     </div>
 
     <div v-show="!items.length">
@@ -22,7 +27,7 @@
       <div>
         <strong>Cash
           <span class="float-right">
-            Rp.<input class="bg-grey-light" type="number" min="0" v-model="cash">
+            Rp.<input class="bg-grey-light" id="customer-cash" type="number" min="0" v-model="cash">
           </span>
         </strong>
       </div>
@@ -30,14 +35,14 @@
     </div>
 
     <div>
-      <strong>Kembali<span class="float-right">{{ changes | rupiah }}</span></strong>
+      <strong>Kembali<span class="float-right" id="customer-changes">{{ changes | rupiah }}</span></strong>
     </div>
 
     <div class="cart-action">
       <button @click="emptyCart" class="font-semibold rounded-full px-4 py-1 leading-normal bg-white border border-blue text-blue hover:bg-blue hover:text-white">
         Transaksi Baru
       </button>
-      <button @click="pay" class="font-semibold rounded-full px-4 py-1 leading-normal bg-blue border border-blue text-white hover:bg-blue hover:text-white">Bayar</button>
+      <button id="pay-button" v-if="!success" @click="pay" class="font-semibold rounded-full px-4 py-1 leading-normal bg-blue border border-blue text-white hover:bg-blue hover:text-white">Bayar</button>
     </div>
   </div>
 </template>
@@ -56,6 +61,7 @@ export default {
       cash: 0,
       changes: 0,
       errorMessage: '',
+      success: false,
     };
   },
   created() {
@@ -117,6 +123,7 @@ export default {
       })
         .then(response => response.data)
         .then(() => {
+          this.success = true;
           this.changes = changes;
         });
     },
@@ -125,6 +132,7 @@ export default {
       this.cash = 0;
       this.changes = 0;
       this.errorMessage = '';
+      this.success = false;
     },
   },
   computed: {

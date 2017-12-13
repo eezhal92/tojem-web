@@ -1,3 +1,5 @@
+import { ORDER_TYPE_ON_SITE, ORDER_CHANNEL_OFFLINE } from 'app/lib/order';
+
 import { OrderService } from '../order';
 
 describe('services/order', () => {
@@ -51,8 +53,8 @@ describe('services/order', () => {
 
   describe('createOnSiteOrder', () => {
     const resolvedOrder = {
-      type: 'on_site',
-      channel: 'offline',
+      type: ORDER_TYPE_ON_SITE,
+      channel: ORDER_CHANNEL_OFFLINE,
     };
 
     it('should create offline, on_site order', async () => {
@@ -79,7 +81,10 @@ describe('services/order', () => {
 
       await orderService.createOnSiteOrder(items);
 
-      expect(db.order.create).toBeCalledWith({ type: 'on_site', channel: 'offline' });
+      expect(db.order.create).toBeCalledWith({
+        type: ORDER_TYPE_ON_SITE,
+        channel: ORDER_CHANNEL_OFFLINE,
+      });
       expect(saveOrderItemsSpy).toBeCalledWith(resolvedOrder, items);
     });
   });
