@@ -1,6 +1,6 @@
 import database from '../models';
 
-class ProductService {
+export class ProductService {
   constructor(db) {
     this.database = db;
   }
@@ -11,14 +11,10 @@ class ProductService {
    * @param  {Tojem.Model.Store} store
    * @return {Tojem.Product[]}
    */
-  async findAllByStore(store) {
-    try {
-      return await this.database.product.findAll({
-        where: { storeId: store.id },
-      });
-    } catch (error) {
-      throw error;
-    }
+  findAllByStore(store) {
+    return this.database.product.findAll({
+      where: { storeId: store.id },
+    });
   }
 
   /**
@@ -30,24 +26,18 @@ class ProductService {
    * @param  {number} options.price
    * @return {Tojem.Model.Product}
    */
-  async create({
+  create({
     storeId,
     name,
     description,
     price,
   } = {}) {
-    try {
-      const product = await this.database.product.create({
-        storeId,
-        name,
-        price,
-        description,
-      });
-
-      return product;
-    } catch (error) {
-      throw error;
-    }
+    return this.database.product.create({
+      storeId,
+      name,
+      price,
+      description,
+    });
   }
 
   /**
@@ -56,12 +46,8 @@ class ProductService {
    * @param  {number} productId
    * @return {Tojem.Model.Product}
    */
-  async findById(productId) {
-    try {
-      return await this.database.product.findById(productId);
-    } catch (error) {
-      throw error;
-    }
+  findById(productId) {
+    return this.database.product.findById(productId);
   }
 }
 

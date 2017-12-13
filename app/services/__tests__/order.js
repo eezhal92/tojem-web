@@ -4,13 +4,13 @@ import { OrderService } from '../order';
 
 describe('services/order', () => {
   describe('saveOrderItems', () => {
-    it('should create order items', async () => {
-      const db = {
-        orderItem: {
-          create: jest.fn(item => Promise.resolve(item)),
-        },
-      };
+    const db = {
+      orderItem: {
+        create: jest.fn(item => Promise.resolve(item)),
+      },
+    };
 
+    it('should create order items', async () => {
       const orderService = new OrderService(db);
 
       const order = { id: 100, type: 'on_site', channel: 'offline' };
@@ -49,6 +49,30 @@ describe('services/order', () => {
         }],
       ]);
     });
+
+    it('should throw error when model fail to perform operation', async () => {
+      db.orderItem.create.mockImplementationOnce(() => Promise.reject(new Error('There is no order_items table')));
+
+      const orderService = new OrderService(db);
+
+      const order = { id: 100, type: 'on_site', channel: 'offline' };
+      const items = [
+        {
+          id: 1,
+          name: 'Fried Noodle',
+          price: 10,
+          qty: 2,
+        },
+        {
+          id: 2,
+          name: 'Fried Chicken',
+          price: 20,
+          qty: 1,
+        },
+      ];
+
+      await expect(orderService.saveOrderItems(order, items)).rejects.toThrow('There is no order_items table');
+    });
   });
 
   describe('createOnSiteOrder', () => {
@@ -57,16 +81,16 @@ describe('services/order', () => {
       channel: ORDER_CHANNEL_OFFLINE,
     };
 
-    it('should create offline, on_site order', async () => {
-      const db = {
-        order: {
-          create: jest.fn(() => Promise.resolve(resolvedOrder)),
-        },
-        orderItem: {
-          create: () => {},
-        },
-      };
+    const db = {
+      order: {
+        create: jest.fn(() => Promise.resolve(resolvedOrder)),
+      },
+      orderItem: {
+        create: () => {},
+      },
+    };
 
+    it('should create offline, on_site order', async () => {
       const orderService = new OrderService(db);
       const saveOrderItemsSpy = jest.spyOn(orderService, 'saveOrderItems');
 
@@ -86,6 +110,30 @@ describe('services/order', () => {
         channel: ORDER_CHANNEL_OFFLINE,
       });
       expect(saveOrderItemsSpy).toBeCalledWith(resolvedOrder, items);
+    });
+
+    it('should throw error when model fail to perform operation', async () => {
+      db.order.create.mockImplementationOnce(() => Promise.reject(new Error('Unexpected error')));
+
+      const orderService = new OrderService(db);
+      const saveOrderItemsSpy = jest.spyOn(orderService, 'saveOrderItems');
+
+      const items = [
+        {
+          id: 1,
+          name: 'Fried Noodle',
+          price: 10,
+          qty: 2,
+        },
+      ];
+
+      await expect(orderService.createOnSiteOrder(items)).rejects.toThrow('Unexpected error');
+
+      expect(db.order.create).toBeCalledWith({
+        type: ORDER_TYPE_ON_SITE,
+        channel: ORDER_CHANNEL_OFFLINE,
+      });
+      expect(saveOrderItemsSpy).not.toBeCalled();
     });
   });
 });
