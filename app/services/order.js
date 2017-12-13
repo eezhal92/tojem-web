@@ -1,7 +1,7 @@
 import database from '../models';
 import { ORDER_TYPE_ON_SITE, ORDER_CHANNEL_OFFLINE } from '../lib/order';
 
-class OrderService {
+export class OrderService {
   constructor(db) {
     this.database = db;
   }
