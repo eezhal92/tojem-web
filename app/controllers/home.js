@@ -1,3 +1,5 @@
 export default function home(request, response) {
-  response.render('tojem/homepage');
+  const data = { user: request.user };
+
+  response.render('tojem/homepage', data);
 }
