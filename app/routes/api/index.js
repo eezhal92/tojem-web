@@ -1,15 +1,15 @@
 /**
- * Store owner's routing
+ * Api routing
  */
 
 import express from 'express';
 
+import order from './order';
 import product from './product';
-import pos from './pos';
 
 const router = express.Router();
 
+router.use('/orders', order);
 router.use('/products', product);
-router.use('/pos', pos);
 
 export default router;

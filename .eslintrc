@@ -8,7 +8,8 @@
   "plugins": [
     "import",
     "jest",
-    "mocha"
+    "mocha",
+    "vue"
   ],
   "settings": {
     "import/resolver": {

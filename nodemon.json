@@ -6,6 +6,7 @@
     "public",
     "storage"
   ],
+  "watch": ["app"],
   "verbose": true,
   "ext": "js json ejs"
 }

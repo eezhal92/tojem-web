@@ -1,4 +1,4 @@
-import { NotFoundError } from '../lib/errors';
+import { NotFoundError, UnprocessableEntityError } from '../lib/errors';
 
 // eslint-disable-next-line no-unused-vars
 export default function serverError(error, request, response, next) {
@@ -10,6 +10,18 @@ export default function serverError(error, request, response, next) {
 
   if (error instanceof NotFoundError) {
     response.render('error/404', { message: error.message });
+
+    return;
+  }
+
+  if (error instanceof UnprocessableEntityError) {
+    if (request.xhr) {
+      response.status(error.code).json({
+        errors: error.constraintErrors,
+      });
+    } else {
+      response.redirect('back');
+    }
 
     return;
   }

@@ -9,6 +9,7 @@
     "e2e": "./tojem test:e2e",
     "start": "node tojem serve --prod",
     "dev": "node tojem serve",
+    "asset:dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "lint": "eslint ."
   },
   "engines": {
@@ -32,9 +33,11 @@
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "sequelize": "^4.19.0",
-    "sequelize-cli": "^3.2.0"
+    "sequelize-cli": "^3.2.0",
+    "validatorjs": "^3.13.6"
   },
   "devDependencies": {
+    "axios": "^0.17.1",
     "babel-preset-env": "^1.6.1",
     "chromedriver": "^2.33.2",
     "eslint": "^4.12.1",
@@ -45,11 +48,16 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-mocha": "^4.11.0",
     "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-vue": "^2.1.0",
     "husky": "^0.14.3",
-    "jest": "^21.2.1",
+    "jest": "21.3.0-beta.14",
+    "laravel-mix": "^1.7.2",
     "nightwatch": "^0.9.19",
     "nodemon": "^1.12.1",
-    "selenium-server": "^3.8.1"
+    "selenium-server": "^3.8.1",
+    "tailwindcss": "^0.3.0",
+    "vue": "^2.5.9",
+    "webpack": "^3.10.0"
   },
   "@std/esm": {
     "cjs": true,
