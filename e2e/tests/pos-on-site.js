@@ -1,26 +1,12 @@
 /* eslint-env node, mocha */
 require('dotenv').config();
 
-const path = require('path');
-const { spawn } = require('child_process');
-
-const BIN_SEQUELIZE = path.resolve(__dirname, '../../node_modules/.bin/sequelize');
-const mysqlUrl = 'mysql://root:password@localhost:/tojem-test';
-
-function seed() {
-  return new Promise((resolve) => {
-    spawn(BIN_SEQUELIZE, ['db:seed:all', '--url', mysqlUrl, '--seeders-path', 'database/seeders/e2e'])
-      .on('close', () => {
-        resolve();
-      });
-  });
-}
+const sequelize = require('@tojem/command/sequelize');
 
 describe('On-site Point of sales', () => {
   before((client, done) => {
-    seed().then(() => {
-      done();
-    });
+    sequelize.execSilent('db:seed:all', ['--seeders-path', 'database/seeders/e2e'], { test: true })
+      .then(() => done());
   });
 
   after((client, done) => {
