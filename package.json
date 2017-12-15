@@ -9,7 +9,7 @@
     "e2e": "./tojem test:e2e",
     "start": "node tojem serve --prod",
     "dev": "node tojem serve",
-    "asset:dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "asset:dev": "NODE_ENV=development webpack --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "lint": "eslint ."
   },
   "engines": {
