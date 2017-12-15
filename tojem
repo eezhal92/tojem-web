@@ -1,5 +1,19 @@
 #!/usr/bin/env node
-const command = require('./command');
+const command = require('@tojem/command');
+
+/**
+ *
+ * @todo We need to delete this file, it doesn't require anymore.
+ *
+ *  Since `@tojem/command` has been installed via package manager,
+ *  the `tojem` cli currently can be access from `node_module/.bin/tojem`
+ *  or just add the bin directory in your `PATH`.
+ *
+ *  export PATH="$PATH:./node_modules/.bin"
+ *
+ *  and then, just type `tojem --help`, instead of `./tojem --help`
+ *
+ */
 
 try {
   command.fire();

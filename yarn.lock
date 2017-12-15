@@ -6,6 +6,12 @@
   version "0.17.3"
   resolved "https://registry.yarnpkg.com/@std/esm/-/esm-0.17.3.tgz#c3cff9dcfa28966a567dbb27207317ea70ac6fb0"
 
+"@tojem/command@ssh://git@bitbucket.org:cc-id/tojem-command.git":
+  version "0.0.1"
+  resolved "ssh://git@bitbucket.org:cc-id/tojem-command.git#76b0c7782e174aa19d4100482ea5f760ff5bd07c"
+  dependencies:
+    meow "^4.0.0"
+
 "@types/geojson@^1.0.0":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-1.0.6.tgz#3e02972728c69248c2af08d60a48cbb8680fffdf"

@@ -51,14 +51,14 @@ Untuk menjalankan unit dan integration test, gunakan `npm t`
 ### Browser Test (e2e)
 
 Untuk melakukan e2e test, eksekusi dengan perintah `npm run e2e`
-atau `./tojem test:e2e`. Penjelasan ada pada CLI [`Commands`](#commands).
+atau `tojem test:e2e`. Penjelasan ada pada CLI [`Commands`](#commands).
 
 
 
 ## CLI
 
 ```console
-$ ./tojem --help
+$ tojem --help
 ```
 
 ### Commands (perintah)
@@ -69,7 +69,7 @@ $ ./tojem --help
 - `db:migrate:undo`.  Menghapus satu tabel berdasarkan urutan migrasinya.
 - `db:migrate:rollback`.  Menghapus semua tabel.
 - `db:migrate:refresh`.  Melakukan proses `db:migrate:rollback` kemudian `db:migrate`.
-- `test:e2e`. Melakukan proses `db:migrate:refresh` kemudian otomasi browser test.
+- `test:e2e`. Melakukan proses otomasi browser test. Server berjalan pada background process dan berakhir setelah test selesai.
 
 ### Flags (options)
 
@@ -79,7 +79,7 @@ $ ./tojem --help
 
 ### Trick
 
-Lakukan perintah `./tojem db:migrate:refresh --test` untuk melakukan refresh `test` database.
+Lakukan perintah `tojem db:migrate:refresh --test` untuk melakukan refresh `test` database.
 
 
 ---
@@ -89,3 +89,6 @@ Lakukan perintah `./tojem db:migrate:refresh --test` untuk melakukan refresh `te
 
 - [ ] Gunakan `Service` pattern, `controller` hanya bertanggung jawab sebatas request-response
 - [x] Buat command untuk refresh migration, seperti `tojem db:migrate:refresh`
+- [ ] Hapus bin file `./tojem`, karena bisa di akses `./node_modules/.bin/tojem`
+- [ ] Implementasi [Connect Session Store](https://github.com/mweibel/connect-session-sequelize)
+- [ ] ...

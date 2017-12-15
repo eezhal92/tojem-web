@@ -8,7 +8,8 @@ module.exports = {
 
   selenium: {
     start_process: true,
-    server_path: './node_modules/selenium-server/lib/runner/selenium-server-standalone-3.8.1.jar',
+    // eslint-disable-next-line global-require,import/no-extraneous-dependencies
+    server_path: require('selenium-server').path,
     log_path: '',
     port: 4444,
     cli_args: {
