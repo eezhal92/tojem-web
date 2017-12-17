@@ -1,21 +1,42 @@
-/**
- * Auth controller
- */
-class Auth {
+/* eslint class-methods-use-this: [2, { exceptMethods: [
+  getLoginForm, redirectOnAuthenticated
+]}] */
+
+import autoBind from 'auto-bind';
+
+export class AuthController {
+  /**
+   * Create a new AuthController instance.
+   *
+   * @return {any}
+   */
   constructor() {
-    this.getLoginForm = this.getLoginForm.bind(this);
-    this.redirectOnAuthenticated = this.redirectOnAuthenticated.bind(this);
+    autoBind(this);
   }
 
-  // eslint-disable-next-line class-methods-use-this
+  /**
+   * Show login form.
+   *
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @param  {function}         next
+   * @return {Express.Response}
+   */
   getLoginForm(request, response) {
     response.render('auth/login');
   }
 
-  // eslint-disable-next-line class-methods-use-this
+  /**
+   * Redirect if user authenticated.
+   *
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @param  {function}         next
+   * @return {Express.Response}
+   */
   redirectOnAuthenticated(request, response) {
     response.redirect('/backstore/products');
   }
 }
 
-export default new Auth();
+export default new AuthController();

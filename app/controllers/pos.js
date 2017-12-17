@@ -1,17 +1,40 @@
-class PointOfSales {
+/* eslint class-methods-use-this: [2, { exceptMethods: [
+  showTransactionForm, processTransaction
+]}] */
+
+import autoBind from 'auto-bind';
+
+export class PointOfSales {
+  /**
+   * Create a new PointOfSales instance.
+   *
+   * @return {void}
+   */
   constructor() {
-    this.showTransactionForm = this.showTransactionForm.bind(this);
-    this.processTransaction = this.processTransaction.bind(this);
+    autoBind(this);
   }
 
-  // eslint-disable-next-line
-  showTransactionForm(request, response, next) {
+  /**
+   * Show transaction form.
+   *
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @return {Express.Response}
+   */
+  showTransactionForm(request, response) {
     response.render('backstore/pos/create');
   }
 
-  // eslint-disable-next-line
+  /**
+   * Process transaction.
+   *
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @param  {function}         next
+   * @return {Express.Response}
+   */
   processTransaction(request, response, next) {
-
+    // ...
   }
 }
 

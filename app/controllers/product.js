@@ -1,28 +1,31 @@
+/* eslint class-methods-use-this: [2, { exceptMethods: [
+  showCreateForm, deactivate
+]}] */
+
+import autoBind from 'auto-bind';
 import { NotFoundError } from '../lib/errors';
 import { productService as ps } from '../services';
 
-/**
- * Product controller
- */
-class Product {
+export class ProductController {
+  /**
+   * Create a new ProductController instance.
+   *
+   * @param  {Tojem.Service.ProductService} productService
+   * @return {any}
+   */
   constructor(productService) {
     this.productService = productService;
 
-    this.showAll = this.showAll.bind(this);
-    this.showById = this.showById.bind(this);
-    this.showCreateForm = this.showCreateForm.bind(this);
-    this.store = this.store.bind(this);
-    this.showEditForm = this.showEditForm.bind(this);
-    this.update = this.update.bind(this);
-    this.deactivate = this.deactivate.bind(this);
+    autoBind(this);
   }
 
   /**
    * Tampilkan semua daftar product.
    *
-   * @param {Express.Request} request
-   * @param {Express.Response} response
-   * @param {function} next
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @param  {function}         next
+   * @return {Express.Response}
    */
   showAll(request, response, next) {
     this.productService.findAllByStore({ id: 1 })
@@ -37,9 +40,10 @@ class Product {
   /**
    * Tampilkan product secara spesifik berdasarkan productId.
    *
-   * @param {Express.Request} request
-   * @param {Express.Response} response
-   * @param {function} next
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @param  {function}         next
+   * @return {Express.Response}
    */
   showById(request, response, next) {
     this.productService.findById(request.params.id)
@@ -57,30 +61,35 @@ class Product {
       });
   }
 
-  // eslint-disable-next-line
-  showCreateForm (request, response) {
+  /**
+   * Show view form for create a new product.
+   *
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @return {Express.Response}
+   */
+  showCreateForm(request, response) {
     const data = { csrfToken: request.csrfToken() };
 
     response.render('backstore/product/create', data);
   }
 
   /**
-   * Menyimpan record baru ke database.
+   * Persistence product into database.
    *
-   * @param {Express.Request} request
-   * @param {Express.Response} response
-   * @param {function} next
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @param  {function}         next
+   * @return {Express.Response}
    */
   store(request, response, next) {
     const storeId = request.session.store.id;
     const { name, price, description = '' } = request.body;
+    const data = {
+      storeId, name, price, description,
+    };
 
-    this.productService.create({
-      storeId,
-      name,
-      price,
-      description,
-    })
+    this.productService.create(data)
       .then((product) => {
         response.redirect(`/backstore/products/${product.id}`);
       })
@@ -89,6 +98,14 @@ class Product {
       });
   }
 
+  /**
+   * Show view form edit to change product associated by id.
+   *
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @param  {function}         next
+   * @return {Express.Response}
+   */
   showEditForm(request, response, next) {
     this.productService.findById(request.params.id)
       .then((product) => {
@@ -101,6 +118,14 @@ class Product {
       });
   }
 
+  /**
+   * Update and persistence the product associated by id.
+   *
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @param  {function}         next
+   * @return {Express.Response}
+   */
   async update(request, response, next) {
     const productId = request.params.id;
 
@@ -119,16 +144,14 @@ class Product {
   /**
    * Menyembunyikan produk dari listing.
    *
-   * @param  {Express.Request}   request
-   * @param  {Express.Response}   response [description]
-   * @param  {function} next
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @param  {function}         next
+   * @return {Express.Response}
    */
-  // eslint-disable-next-line
   deactivate(request, response, next) {
-    const error = new Error('Not implemented');
-
-    next(error);
+    // ...
   }
 }
 
-export default new Product(ps);
+export default new ProductController(ps);
