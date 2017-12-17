@@ -8,6 +8,6 @@ import home from 'app/controllers/home';
 
 const router = express.Router();
 
-router.get('/', home);
+router.get('/', home.showHomePage);
 
 export default router;
