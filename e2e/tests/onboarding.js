@@ -16,9 +16,96 @@ describe('Seller-user onboarding', () => {
       .waitForElementVisible('body', 1000)
       .click('@fbLoginLink')
       .waitForElementVisible('body', 1000)
-      .fbLogin()
+      .fbLogin();
+  });
+
+  it('#1 - fail by giving empty field', (client) => {
+    const createStore = client.page.createStore();
+
+    createStore.navigate()
+      .waitForElementVisible('body', 1000)
+      .submitEmptyField()
+      .waitForElementVisible('body', 1000)
+      .assert.containsText('body', 'Silakan isi informasi toko Anda');
+  });
+
+  it('#2 - fail by giving only one field', (client) => {
+    const createStore = client.page.createStore();
+
+    createStore.navigate()
+      .waitForElementVisible('body', 1000)
+      .setValue('@storeNameField', 'Warung Mantap')
+      .click('@submitStoreButton')
+      .waitForElementVisible('body', 1000)
+      .assert.containsText('body', 'Silakan isi informasi toko Anda');
+
+    createStore.navigate()
+      .waitForElementVisible('body', 1000)
+      .setValue('@storeLocationField', 'Palu')
+      .click('@submitStoreButton')
+      .waitForElementVisible('body', 1000)
+      .assert.containsText('body', 'Silakan isi informasi toko Anda');
+
+    createStore.navigate()
+      .waitForElementVisible('body', 1000)
+      .setValue('@storeAddressField', 'Jl. Kancil')
+      .click('@submitStoreButton')
+      .waitForElementVisible('body', 1000)
+      .assert.containsText('body', 'Silakan isi informasi toko Anda');
+  });
+
+  it('#3 - fail missing one field', (client) => {
+    const createStore = client.page.createStore();
+
+    createStore.navigate()
+      .waitForElementVisible('body', 1000)
+      .setValue('@storeNameField', 'Warung Ijo')
+      .setValue('@storeLocationField', 'Palu')
+      .setValue('@storeAddressField', '')
+      .click('@submitStoreButton')
+      .waitForElementVisible('body', 1000)
+      .assert.containsText('body', 'Silakan isi informasi toko Anda');
+
+    createStore.navigate()
+      .waitForElementVisible('body', 1000)
+      .setValue('@storeNameField', 'Warung Ijo')
+      .setValue('@storeLocationField', '')
+      .setValue('@storeAddressField', 'Jl. Kancil')
+      .click('@submitStoreButton')
+      .waitForElementVisible('body', 1000)
+      .assert.containsText('body', 'Silakan isi informasi toko Anda');
+
+    createStore.navigate()
+      .waitForElementVisible('body', 1000)
+      .setValue('@storeNameField', '')
+      .setValue('@storeLocationField', 'Palu')
+      .setValue('@storeAddressField', 'Jl. Kancil')
+      .click('@submitStoreButton')
+      .waitForElementVisible('body', 1000)
+      .assert.containsText('body', 'Silakan isi informasi toko Anda');
+  });
+
+
+  it('success - by giving valid input', (client) => {
+    const createStore = client.page.createStore();
+
+    createStore.navigate()
+      .waitForElementVisible('body', 1000)
       .submitStoreInformation()
       .waitForElementVisible('body', 1000)
       .assert.containsText('body', 'Daftar Produk');
   });
+
+  // it('should be prompted to fill store information', (client) => {
+  //   const login = client.page.login();
+
+  //   login.navigate()
+  //     .waitForElementVisible('body', 1000)
+  //     .click('@fbLoginLink')
+  //     .waitForElementVisible('body', 1000)
+  //     .fbLogin()
+  //     .submitStoreInformation()
+  //     .waitForElementVisible('body', 1000)
+  //     .assert.containsText('body', 'Daftar Produk');
+  // });
 });
