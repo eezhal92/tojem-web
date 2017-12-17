@@ -1,17 +1,27 @@
-import database from '../models';
+/* eslint class-methods-use-this: [2, { exceptMethods: [createStoreForm] }] */
 
-/**
- * Onboarding controller
- */
-class Onboarding {
-  constructor(db) {
-    this.database = db;
+import autoBind from 'auto-bind';
+import onBoardingService from '../services/onboarding-service';
 
-    this.createStoreForm = this.createStoreForm.bind(this);
-    this.createStore = this.createStore.bind(this);
+export class OnBoardingController {
+  /**
+   * Create a new OnBoardingController instance.
+   *
+   * @param  {Tojem.Service.onBoardingService} onbService
+   * @return {any}
+   */
+  constructor(onbService) {
+    this.obService = onbService;
+
+    autoBind(this);
   }
 
-  // eslint-disable-next-line
+  /**
+   *
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @return {Express.Response}
+   */
   createStoreForm(request, response) {
     const data = { user: request.user, csrfToken: request.csrfToken() };
 
@@ -21,24 +31,20 @@ class Onboarding {
   /**
    * Menyimpan record store baru ke database.
    *
-   * @param {Express.Request} request
-   * @param {Express.Response} response
-   * @param {function} next
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @param  {function}         next
+   * @return {Express.Response}
    */
   createStore(request, response, next) {
-    const ownerId = request.user.id;
-    const {
-      name,
-      location,
-      address,
-    } = request.body;
+    const data = {
+      ownerId: request.user.id,
+      name: request.body.name,
+      location: request.body.location,
+      address: request.body.address,
+    };
 
-    this.database.store.create({
-      ownerId,
-      name,
-      location,
-      address,
-    })
+    this.obService.create(data)
       .then((store) => {
         // @todo maybe it should be extracted into a dedicated function. it's duplicated
         // @see app/middlewares/store.js
@@ -52,4 +58,4 @@ class Onboarding {
   }
 }
 
-export default new Onboarding(database);
+export default new OnBoardingController(onBoardingService);
