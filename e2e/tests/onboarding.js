@@ -20,7 +20,7 @@ describe('Seller-user onboarding', () => {
   });
 
   it('#1 - fail by giving empty field', (client) => {
-    const createStore = client.page.createStore();
+    const createStore = client.page['create-store']();
 
     createStore.navigate()
       .waitForElementVisible('body', 1000)
@@ -30,7 +30,7 @@ describe('Seller-user onboarding', () => {
   });
 
   it('#2 - fail by giving only one field', (client) => {
-    const createStore = client.page.createStore();
+    const createStore = client.page['create-store']();
 
     createStore.navigate()
       .waitForElementVisible('body', 1000)
@@ -55,7 +55,7 @@ describe('Seller-user onboarding', () => {
   });
 
   it('#3 - fail missing one field', (client) => {
-    const createStore = client.page.createStore();
+    const createStore = client.page['create-store']();
 
     createStore.navigate()
       .waitForElementVisible('body', 1000)
@@ -85,9 +85,8 @@ describe('Seller-user onboarding', () => {
       .assert.containsText('body', 'Silakan isi informasi toko Anda');
   });
 
-
   it('success - by giving valid input', (client) => {
-    const createStore = client.page.createStore();
+    const createStore = client.page['create-store']();
 
     createStore.navigate()
       .waitForElementVisible('body', 1000)
@@ -95,17 +94,4 @@ describe('Seller-user onboarding', () => {
       .waitForElementVisible('body', 1000)
       .assert.containsText('body', 'Daftar Produk');
   });
-
-  // it('should be prompted to fill store information', (client) => {
-  //   const login = client.page.login();
-
-  //   login.navigate()
-  //     .waitForElementVisible('body', 1000)
-  //     .click('@fbLoginLink')
-  //     .waitForElementVisible('body', 1000)
-  //     .fbLogin()
-  //     .submitStoreInformation()
-  //     .waitForElementVisible('body', 1000)
-  //     .assert.containsText('body', 'Daftar Produk');
-  // });
 });

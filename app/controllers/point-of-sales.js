@@ -1,10 +1,10 @@
 /* eslint class-methods-use-this: [2, { exceptMethods: [
-  showTransactionForm, processTransaction
+  showTransactionForm
 ]}] */
 
 import autoBind from 'auto-bind';
 
-export class PointOfSales {
+export class PointOfSalesController {
   /**
    * Create a new PointOfSales instance.
    *
@@ -22,20 +22,8 @@ export class PointOfSales {
    * @return {Express.Response}
    */
   showTransactionForm(request, response) {
-    response.render('backstore/pos/create');
-  }
-
-  /**
-   * Process transaction.
-   *
-   * @param  {Express.Request}  request
-   * @param  {Express.Response} response
-   * @param  {function}         next
-   * @return {Express.Response}
-   */
-  processTransaction(request, response, next) {
-    // ...
+    response.render('backstore/point-of-sales/create');
   }
 }
 
-export default new PointOfSales();
+export default new PointOfSalesController();

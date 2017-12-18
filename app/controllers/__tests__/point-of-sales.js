@@ -1,11 +1,10 @@
-import { PointOfSales } from '../pos';
+import { PointOfSalesController } from '../point-of-sales';
 
-describe('app/controllers/pos - point of sales', () => {
+describe('app/controllers/point-of-sales', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  const next = jest.fn();
   const request = {};
   const response = {
     render: jest.fn(),
@@ -13,17 +12,11 @@ describe('app/controllers/pos - point of sales', () => {
   };
 
   it('should call .render view transaction form', () => {
-    const pos = new PointOfSales();
+    const pos = new PointOfSalesController();
 
     pos.showTransactionForm(request, response);
 
-    expect(response.render).toBeCalledWith('backstore/pos/create');
+    expect(response.render).toBeCalledWith('backstore/point-of-sales/create');
     expect(response.render).toHaveBeenCalledTimes(1);
-  });
-
-  it.skip('pos.showTransactionForm', () => {
-    const pos = new PointOfSales();
-
-    pos.showTransactionForm(request, response, next);
   });
 });

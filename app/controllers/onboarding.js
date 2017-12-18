@@ -7,11 +7,11 @@ export class OnBoardingController {
   /**
    * Create a new OnBoardingController instance.
    *
-   * @param  {Tojem.Service.onBoardingService} onbService
+   * @param  {Tojem.Service.OnBoardingService} onboardingService
    * @return {any}
    */
-  constructor(onbService) {
-    this.obService = onbService;
+  constructor(onboardingService) {
+    this.onBoardingService = onboardingService;
 
     autoBind(this);
   }
@@ -44,7 +44,7 @@ export class OnBoardingController {
       address: request.body.address,
     };
 
-    this.obService.create(data)
+    this.onBoardingService.create(data)
       .then((store) => {
         // @todo maybe it should be extracted into a dedicated function. it's duplicated
         // @see app/middlewares/store.js

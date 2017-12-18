@@ -12,7 +12,7 @@ describe('app/controllers/onboarding', () => {
     redirect: jest.fn(),
   };
 
-  const onbService = {
+  const onboardingService = {
     create: jest.fn(n => Promise.resolve(n)),
   };
 
@@ -41,27 +41,26 @@ describe('app/controllers/onboarding', () => {
       address: request.body.address,
     };
 
-    onbService.create.mockImplementation(() => Promise.resolve(data));
+    onboardingService.create.mockImplementation(() => Promise.resolve(data));
 
-    const onboarding = new OnBoardingController(onbService);
+    const onboarding = new OnBoardingController(onboardingService);
 
     await Promise.resolve()
       .then(onboarding.createStore(request, response, next));
 
-    expect(onbService.create).toBeCalledWith(data);
-    expect(onbService.create).toHaveBeenCalledTimes(1);
+    expect(onboardingService.create).toBeCalledWith(data);
+    expect(onboardingService.create).toHaveBeenCalledTimes(1);
 
     expect(response.redirect).toBeCalledWith('/backstore/products');
     expect(response.redirect).toHaveBeenCalledTimes(1);
-    expect(response.redirect).not.toHaveBeenCalledTimes(2);
     expect(next).not.toBeCalled();
   });
 
   it('should call `next` if service error', async () => {
     const error = new Error('Service Error');
-    onbService.create.mockImplementation(() => Promise.reject(error));
+    onboardingService.create.mockImplementation(() => Promise.reject(error));
 
-    const onboarding = new OnBoardingController(onbService);
+    const onboarding = new OnBoardingController(onboardingService);
 
     await Promise.resolve()
       .then(onboarding.createStore(request, response, next));
