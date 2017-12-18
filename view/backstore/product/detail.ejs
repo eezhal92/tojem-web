@@ -4,14 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Detail Produk : <%= product.name %> | tojem</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="container">
-    <h1 class="product-name"><%= product.name %></h1>
-    <a class="btn" href="/backstore/products">Daftar Produk</a>
-    <hr>
-    <p>Rp. <%= product.price.toLocaleString() %></p>
-    <p><%= product.description %></p>
+  <div class="container mx-auto">
+    <div class="flex">
+      <div class="p-4 w-full">
+        <h1 class="product-name mt-1 mb-4"><%= product.name %></h1>
+        <a class="rounded-sm border border-grey text-sm p-2" href="/backstore/products">Lihat Semua Produk</a>
+      </div>
+    </div>
+
+
+    <div class="flex">
+      <div class="p-4 w-full">
+        <div class="mb-4">
+          <div class="mb-2">Harga</div>
+          <div class="product-price">Rp. <%= product.price.toLocaleString() %></div>
+        </div>
+
+        <div class="mb-4">
+          <div class="mb-2">Deskripsi</div>
+          <div><%= product.description %></div>
+        </div>
+
+      </div>
+    </div>
   </div>
 </body>
 </html>

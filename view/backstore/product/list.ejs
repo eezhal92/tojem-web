@@ -4,22 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Daftar Produk | tojem</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Daftar Produk</h1>
-    <a class="btn btn-add-product" href="/backstore/products/create">Tambah Produk</a>
-    <a class="btn btn-new-transaction" href="/backstore/pos">Transaksi Baru</a>
-    <hr>
-    <div class="product-list">
-      <% products.forEach((product) => { %>
-        <div>
-          <div><%= product.name %></div>
-          <div>Rp. <%= product.price.toLocaleString() %></div>
-          <a href="/backstore/products/<%= product.id %>/edit">Ubah</a>
-          <a href="/backstore/products/<%= product.id %>">Lihat</a>
+  <div class="container mx-auto">
+    <div class="flex">
+      <div class="w-full p-4">
+        <h1 class="mt-2 mb-4">Daftar Produk</h1>
+        <a class="btn-add-product rounded-sm border border-grey text-sm p-2 no-underline" href="/backstore/products/create">Tambah Produk</a>
+        <a class="btn-new-transaction rounded-sm text-white bg-blue no-underline border border-blue text-sm p-2" href="/backstore/pos">Transaksi Baru</a>
+      </div>
+    </div>
+
+    <div class="flex">
+      <div class="w-full p-4">
+        <% if (!products.length) { %>
+        <div class="bg-blue-lightest border-t border-b border-blue text-blue-dark px-4 py-3" role="alert">
+          <div class="flex">
+            <div class="py-1"><svg class="fill-current h-6 w-6 text-blue mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+            <div>
+              <p class="font-bold">Belum Ada Produk</p>
+              <p class="text-sm">Silakan buat data produk Anda terlebih dahulu.</p>
+            </div>
+          </div>
         </div>
-      <% }) %>
+        <% } %>
+
+        <% products.forEach((product) => { %>
+          <div class="flex">
+            <div class="w-full p-4 border border-grey mb-4 rounded">
+              <div><%= product.name %></div>
+              <div>Rp. <%= product.price.toLocaleString() %></div>
+              <a href="/backstore/products/<%= product.id %>/edit">Ubah</a>
+              <a href="/backstore/products/<%= product.id %>">Lihat</a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
     </div>
   </div>
 </body>

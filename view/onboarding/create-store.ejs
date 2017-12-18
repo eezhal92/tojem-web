@@ -2,26 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="/css/style.css">
   <title>Buat toko | tojem</title>
 </head>
 <body>
-  <h1>Selamat Datang, <%= user.name %>!</h1>
-  <h2>Silakan isi informasi toko Anda</h2>
-  <form class="onboarding-form" method="POST" action="/onboard/create-store">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <div>
-      <label for="name">Nama Toko</label>
-      <input id="name" type="text" name="name" placeholder="Toko Keren">
+  <div class="container mx-auto">
+    <div class="p-4">
+      <h1 class="mb-1 mb-4">Selamat Datang, <%= user.name %>!</h1>
+      <h2>Silakan isi informasi toko Anda</h2>
     </div>
-    <div>
-      <label for="location">Lokasi</label>
-      <input id="location" type="text" name="location" placeholder="Palu, Sulteng">
+
+    <div class="p-4">
+      <form class="onboarding-form" method="POST" action="/onboard/create-store">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div class="mb-2">
+          <label class="block mb-2" for="name">Nama Toko</label>
+          <input  class="block p-1 border border-grey w-full" id="name" type="text" name="name" placeholder="Toko Keren">
+        </div>
+        <div class="mb-2">
+          <label class="block mb-2" for="location">Lokasi</label>
+          <input  class="block p-1 border border-grey w-full" id="location" type="text" name="location" placeholder="Palu, Sulteng">
+        </div>
+        <div class="mb-2">
+          <label class="block mb-2" for="address">Alamat</label>
+          <textarea  class="block p-1 border border-grey w-full" id="address" name="address" cols="30" rows="3"></textarea>
+        </div>
+        <button id="submit" class="border border-blue p-2 rounded-sm text-center text-blue float-right" type="submit">Buat toko</button>
+      </form>
     </div>
-    <div>
-      <label for="address">Alamat</label>
-      <textarea id="address" name="address" cols="30" rows="3"></textarea>
-    </div>
-    <button id="submit" type="submit">Buat toko</button>
-  </form>
+  </div>
 </body>
 </html>

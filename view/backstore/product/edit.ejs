@@ -3,34 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Ubah Product | tojem</title>
+  <title>Ubah Produk | tojem</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Ubah Produk</h1>
-    <a class="btn" href="/backstore/products">Kembali</a>
-
-    <hr>
-
-    <form action="/backstore/products/<%= product.id %>" method="post">
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <div>
-        <label for="name">Nama</label>
-        <input id="name" type="text" name="name" value="<%= product.name %>">
+  <div class="container mx-auto">
+    <div class="flex">
+      <div class="p-4 w-full">
+        <h1 class="mt-1 mb-4">
+          Ubah Produk
+          <a class="float-right no-underline rounded-sm border border-grey text-sm p-2" href="/backstore/products">Kembali</a>
+        </h1>
       </div>
+    </div>
 
-      <div>
-        <label for="price">Harga</label>
-        <input id="price" type="number" name="price" value="<%= product.price %>">
+    <div class="flex">
+      <div class="p-4 w-full">
+        <form action="/backstore/products/<%= product.id %>" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="mb-4">
+            <label class="block mb-1" for="name">Nama</label>
+            <input class="block p-1 border border-grey w-full" id="name" type="text" name="name" value="<%= product.name %>">
+          </div>
+
+          <div class="mb-4">
+            <label class="block mb-1" for="price">Harga</label>
+            <input class="block p-1 border border-grey w-full" id="price" type="number" name="price" value="<%= product.price %>">
+          </div>
+
+          <div class="mb-4">
+            <label class="block mb-1" for="description">Deskripsi</label>
+            <textarea class="block p-1 border border-grey w-full" id="description" name="description" rows="3"><%= product.description %></textarea>
+          </div>
+
+          <button class="border border-blue p-2 rounded-sm text-center text-blue float-right" type="submit">Perbarui</button>
+        </form>
       </div>
+    </div>
 
-      <div>
-        <label for="description">Deskripsi</label>
-        <textarea id="description" name="description" rows="3"><%= product.description %></textarea>
-      </div>
-
-      <button type="submit">Perbarui</button>
-    </form>
   </div>
 </body>
 </html>

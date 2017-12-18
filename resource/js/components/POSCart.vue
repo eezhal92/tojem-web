@@ -1,5 +1,5 @@
 <template>
-  <div class="hello w-full">
+  <div class="hello w-full text-lg ">
     <div v-if="errorMessage" id="error-message" class="bg-red-lightest border-l-4 border-red text-red-dark p-4" role="alert">
       <p class="font-bold">Gagal</p>
       <p>{{ errorMessage }}.</p>
@@ -14,35 +14,30 @@
       <div class="py-4">Belum ada barang.</div>
     </div>
 
-    <cart-item v-for="item in items" :item="item" key="item.id"></cart-item>
-
-    <div class="p-2 bg-white border border-dashed rounded-lg border-grey text-grey">
-      Tambah <div class="float-right">+</div>
-    </div>
+    <cart-item v-for="item in items" :item="item" key="item.id" v-on:removed="removeItem"></cart-item>
 
     <div class="cart-amount my-2">
-      <div>
+      <div class="block mb-2">
         <strong>Grand Total: <span class="float-right">{{ total | rupiah }}</span></strong>
       </div>
-      <div>
+      <div class="block mb-2">
         <strong>Cash
           <span class="float-right">
-            Rp.<input class="bg-grey-light" id="customer-cash" type="number" min="0" v-model="cash">
+            <input class="bg-grey-light no-outline text-right font-bold" style="padding: 0" id="customer-cash" v-money="money" v-model.lazy="formattedCash">
           </span>
         </strong>
       </div>
-
+      <div class="block mb-2">
+        <strong>Kembali<span class="float-right" id="customer-changes">{{ changes | rupiah }}</span></strong>
+      </div>
     </div>
 
-    <div>
-      <strong>Kembali<span class="float-right" id="customer-changes">{{ changes | rupiah }}</span></strong>
-    </div>
 
-    <div class="cart-action">
-      <button @click="emptyCart" class="font-semibold rounded-full px-4 py-1 leading-normal bg-white border border-blue text-blue hover:bg-blue hover:text-white">
+    <div class="cart-action text-right mt-4">
+      <button @click="emptyCart" class="font-semibold rounded px-6 py-2 leading-normal bg-white border border-blue text-blue hover:bg-blue hover:text-white">
         Transaksi Baru
       </button>
-      <button id="pay-button" v-if="!success" @click="pay" class="font-semibold rounded-full px-4 py-1 leading-normal bg-blue border border-blue text-white hover:bg-blue hover:text-white">Bayar</button>
+      <button id="pay-button" v-if="!success" @click="pay" class="font-semibold rounded px-6 py-2 leading-normal bg-blue border border-blue text-white hover:bg-blue hover:text-white">Bayar</button>
     </div>
   </div>
 </template>
@@ -58,10 +53,18 @@ export default {
   data() {
     return {
       items: [],
-      cash: 0,
-      changes: 0,
+      formattedCash: 'Rp. 0',
       errorMessage: '',
+      changes: 0,
       success: false,
+      money: {
+        decimal: '.',
+        thousands: ',',
+        prefix: 'Rp. ',
+        suffix: '',
+        precision: 0,
+        masked: false,
+      },
     };
   },
   created() {
@@ -105,6 +108,9 @@ export default {
 
       return true;
     },
+    removeItem(productId) {
+      this.items = this.items.filter(item => item.id !== productId);
+    },
     clearError() {
       this.errorMessage = '';
     },
@@ -129,7 +135,6 @@ export default {
     },
     emptyCart() {
       this.items = [];
-      this.cash = 0;
       this.changes = 0;
       this.errorMessage = '';
       this.success = false;
@@ -138,6 +143,11 @@ export default {
   computed: {
     total() {
       return this.items.reduce((total, item) => total + (item.price * item.qty), 0);
+    },
+    cash() {
+      const splittedString = this.formattedCash.split('Rp. ');
+
+      return Number(splittedString[1].split(',').join(''));
     },
   },
   components: {

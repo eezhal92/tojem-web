@@ -30,6 +30,7 @@ describe('Create product', () => {
       .setValue('@productDescriptionField', 'A very special pizza')
       .click('@saveProductButton')
       .waitForElementVisible('body', 1000)
-      .assert.containsText('.product-name', 'Pizza');
+      .assert.containsText('@productName', 'Pizza')
+      .assert.containsText('@productPrice', 'Rp. 40');
   });
 });
