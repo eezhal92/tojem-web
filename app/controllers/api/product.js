@@ -1,10 +1,11 @@
+import autoBind from 'auto-bind';
 import { productService as ps } from 'app/services';
 
 class Product {
   constructor(productService) {
     this.productService = productService;
 
-    this.showAll = this.showAll.bind(this);
+    autoBind(this);
   }
 
   showAll(request, response, next) {

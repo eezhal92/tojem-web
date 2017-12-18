@@ -19,6 +19,7 @@
   "dependencies": {
     "@std/esm": "^0.17.3",
     "@tojem/command": "ssh://git@bitbucket.org:cc-id/tojem-command.git",
+    "auto-bind": "^1.1.0",
     "body-parser": "^1.18.2",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "^1.4.3",

@@ -22,7 +22,7 @@ describe('Create product', () => {
       .waitForElementVisible('body', 1000)
       .assert.containsText('body', 'Buat Produk');
 
-    const createProduct = client.page.createProduct();
+    const createProduct = client.page['create-product']();
 
     createProduct.navigate()
       .setValue('@productNameField', 'Pizza')

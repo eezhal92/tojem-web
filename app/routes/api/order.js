@@ -7,7 +7,7 @@ import express from 'express';
 import order from 'app/controllers/api/order';
 import { inputValidation } from 'app/middlewares';
 
-import constraints from './constraints/order';
+import constraints from 'app/constraints/api/order';
 
 const router = express.Router();
 

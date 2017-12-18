@@ -5,11 +5,11 @@
 import express from 'express';
 
 import product from './product';
-import pos from './pos';
+import pointOfSales from './point-of-sales';
 
 const router = express.Router();
 
 router.use('/products', product);
-router.use('/pos', pos);
+router.use('/pos', pointOfSales);
 
 export default router;

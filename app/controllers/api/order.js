@@ -1,14 +1,22 @@
+import autoBind from 'auto-bind';
 import os from 'app/services/order';
 import { ORDER_TYPE_ON_SITE, validateOrder } from 'app/lib/order';
 
-class Order {
+export class OrderApi {
   constructor(orderService) {
     this.orderService = orderService;
 
-    this.processTransaction = this.processTransaction.bind(this);
+    autoBind(this);
   }
 
-  // eslint-disable-next-line
+  /**
+   * Process order transaction.
+   *
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @param  {function}         next
+   * @return {Express.Response}
+   */
   async processTransaction(request, response, next) {
     try {
       const { type, items } = request.body;
@@ -26,4 +34,4 @@ class Order {
   }
 }
 
-export default new Order(os);
+export default new OrderApi(os);

@@ -9,7 +9,7 @@ export class ProductService {
    * Find all products by spesific store
    *
    * @param  {Tojem.Model.Store} store
-   * @return {Tojem.Product[]}
+   * @return {Tojem.Model.Product[]}
    */
   findAllByStore(store) {
     return this.database.product.findAll({

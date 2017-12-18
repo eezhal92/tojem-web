@@ -6,33 +6,28 @@ import csrf from 'csurf';
 import express from 'express';
 import ces from 'connect-ensure-login';
 
-import db from '../models';
-import { hasStore } from '../middlewares';
-import onboarding from '../controllers/onboarding';
+import db from 'app/models';
+import { hasStore } from 'app/middlewares';
+import onboardingController from 'app/controllers/onboarding';
+import onboardingConstraint from 'app/constraints/onboarding';
+import inputValidation from 'app/middlewares/input-validation';
 
 const router = express.Router();
+const defaultMiddlewares = [
+  ces.ensureLoggedIn('/login'),
+  hasStore(db, {
+    condition: true,
+    redirectPath: '/backstore/products',
+  }),
+  csrf({ cookie: true }),
+];
 
-/**
- * @todo add request payload validation middleware
- */
 router.route('/onboard/create-store')
-  .get(
-    ces.ensureLoggedIn('/login'),
-    hasStore(db, {
-      condition: true,
-      redirectPath: '/backstore/products',
-    }),
-    csrf({ cookie: true }),
-    onboarding.createStoreForm,
-  )
+  .get(...defaultMiddlewares, onboardingController.createStoreForm)
   .post(
-    ces.ensureLoggedIn('/login'),
-    hasStore(db, {
-      condition: true,
-      redirectPath: '/backstore/products',
-    }),
-    csrf({ cookie: true }),
-    onboarding.createStore,
+    ...defaultMiddlewares,
+    inputValidation(onboardingConstraint),
+    onboardingController.createStore,
   );
 
 export default router;
