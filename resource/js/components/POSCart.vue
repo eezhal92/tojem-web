@@ -1,5 +1,15 @@
 <template>
   <div class="hello w-full text-lg ">
+    <div class="block mb-2">
+      <strong>Transaksi</strong>
+      <div class="float-right">
+        <select v-model="type" id="order-type">
+          <option value="on_site">On-site</option>
+          <option value="cod">Cash On Delivery</option>
+        </select>
+      </div>
+    </div>
+
     <div v-if="errorMessage" id="error-message" class="bg-red-lightest border-l-4 border-red text-red-dark p-4" role="alert">
       <p class="font-bold">Gagal</p>
       <p>{{ errorMessage }}.</p>
@@ -14,7 +24,7 @@
       <div class="py-4">Belum ada barang.</div>
     </div>
 
-    <cart-item v-for="item in items" :item="item" key="item.id" v-on:removed="removeItem"></cart-item>
+    <cart-item v-for="item in items" :item="item" :key="item.id" v-on:removed="removeItem"></cart-item>
 
     <div class="cart-amount my-2">
       <div class="block mb-2">
@@ -53,6 +63,7 @@ export default {
   data() {
     return {
       items: [],
+      type: 'on_site',
       formattedCash: 'Rp. 0',
       errorMessage: '',
       changes: 0,
@@ -124,7 +135,7 @@ export default {
       }
 
       axios.post('/api/orders', {
-        type: 'on_site',
+        type: this.type,
         items: this.items,
       })
         .then(response => response.data)
@@ -135,7 +146,9 @@ export default {
     },
     emptyCart() {
       this.items = [];
+      this.type = 'on_site';
       this.changes = 0;
+      this.formattedCash = 'Rp. 0';
       this.errorMessage = '';
       this.success = false;
     },

@@ -23,17 +23,26 @@
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <div class="mb-4">
             <label class="block mb-1" for="name">Nama</label>
-            <input class="block p-1 border border-grey w-full" id="name" type="text" name="name" placeholder="Apa nama produk Anda?">
+            <input class="block p-1 border border-grey w-full" id="name" type="text" name="name" placeholder="Apa nama produk Anda?" value="<%= error.getOldInput('name') %>">
+            <% if (error.getMessage('name')) { %>
+              <div><small><%= error.getMessage('name') %></small></div>
+            <% } %>
           </div>
 
           <div class="mb-4">
             <label class="block mb-1" for="price">Harga</label>
             <input class="block p-1 border border-grey w-full" id="price" v-model="price" v-money="money" name="price" placeholder="15000">
+            <% if (error.getMessage('price')) { %>
+              <div><small><%= error.getMessage('price') %></small></div>
+            <% } %>
           </div>
 
           <div class="mb-4">
             <label class="block mb-1" for="description">Deskripsi</label>
             <textarea class="block p-1 border border-grey w-full" id="description" name="description" rows="3" placeholder="Deskripsikan menarik tentang produk Anda"></textarea>
+            <% if (error.getMessage('description')) { %>
+              <div><small><%= error.getMessage('description') %></small></div>
+            <% } %>
           </div>
 
           <button id="save-product-button" class="border border-blue p-2 rounded-sm text-center text-blue float-right" type="submit">Tambah</button>
@@ -47,10 +56,16 @@
   <script>
     Vue.use(VMoney, { precision: 0 });
 
+    <% if (error.getOldInput('price')) { %>
+    const price = <%= error.getOldInput('price') %>;
+    <% } else { %>
+    const price = 'Rp. 0';
+    <% } %>
+
     new Vue({
       el: '#app',
       data: {
-        price: 'Rp. 0',
+        price: price,
         money: {
           decimal: '.',
           thousands: ',',

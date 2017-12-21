@@ -1,11 +1,15 @@
-import { NotFoundError } from 'app/lib/errors';
+import { NotFoundError, UnprocessableEntityError } from 'app/lib/errors';
 
 import serverError from '../server-error';
 
 describe('middlewares/server-error', () => {
-  const request = {};
+  const request = {
+    flash: jest.fn(),
+  };
   const response = {
     render: jest.fn(),
+    status: jest.fn(),
+    json: jest.fn(),
     redirect: jest.fn(),
   };
   const next = jest.fn();
@@ -47,6 +51,49 @@ describe('middlewares/server-error', () => {
     expect(next).not.toBeCalled();
 
     process.env.NODE_ENV = 'test';
+  });
+
+  it('should return json payload when handling UnprocessableEntityError and request is ajax', () => {
+    request.xhr = true;
+    response.status.mockImplementation(() => response);
+
+    const constraintErrors = {
+      name: ['should at least 6 character'],
+    };
+
+    const error = new UnprocessableEntityError(constraintErrors);
+
+    serverError(error, request, response, next);
+
+    expect(response.status).toBeCalledWith(422);
+    expect(response.json).toBeCalledWith({ errors: constraintErrors });
+    expect(next).not.toBeCalled();
+
+    delete request.xhr;
+  });
+
+  it('should flash errorConstraints and oldInputs handling UnprocessableEntityError and request is not ajax', () => {
+    request.xhr = false;
+
+    const constraintErrors = {
+      name: ['should at least 5 character'],
+    };
+    const error = new UnprocessableEntityError(constraintErrors);
+    const requestPayload = {
+      name: 'Baks',
+    };
+    request.body = requestPayload;
+
+    serverError(error, request, response, next);
+
+    expect(request.flash).toHaveBeenCalledTimes(2);
+    expect(request.flash).toBeCalledWith('errors', constraintErrors);
+    expect(request.flash).toBeCalledWith('oldInputs', requestPayload);
+    expect(response.status).not.toBeCalled();
+    expect(response.json).not.toBeCalled();
+    expect(next).not.toBeCalled();
+
+    delete request.xhr;
   });
 
   it('should throw error when is not production mode', () => {

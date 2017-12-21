@@ -1,5 +1,5 @@
 import database from '../models';
-import { ORDER_TYPE_ON_SITE, ORDER_CHANNEL_OFFLINE } from '../lib/order';
+import { ORDER_TYPE_ON_SITE, ORDER_TYPE_COD, ORDER_CHANNEL_OFFLINE } from '../lib/order';
 
 export class OrderService {
   constructor(db) {
@@ -11,6 +11,21 @@ export class OrderService {
       const order = await this.database.order.create({
         channel: ORDER_CHANNEL_OFFLINE,
         type: ORDER_TYPE_ON_SITE,
+      });
+
+      await this.saveOrderItems(order, items);
+
+      return order;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async createCashOnDeliveryOrder(items = []) {
+    try {
+      const order = await this.database.order.create({
+        channel: ORDER_CHANNEL_OFFLINE,
+        type: ORDER_TYPE_COD,
       });
 
       await this.saveOrderItems(order, items);

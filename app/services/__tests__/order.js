@@ -1,4 +1,4 @@
-import { ORDER_TYPE_ON_SITE, ORDER_CHANNEL_OFFLINE } from 'app/lib/order';
+import { ORDER_TYPE_ON_SITE, ORDER_TYPE_COD, ORDER_CHANNEL_OFFLINE } from 'app/lib/order';
 
 import { OrderService } from '../order';
 
@@ -131,6 +131,68 @@ describe('services/order', () => {
 
       expect(db.order.create).toBeCalledWith({
         type: ORDER_TYPE_ON_SITE,
+        channel: ORDER_CHANNEL_OFFLINE,
+      });
+      expect(saveOrderItemsSpy).not.toBeCalled();
+    });
+  });
+
+  describe('createCashOnDeliveryOrder', () => {
+    const resolvedOrder = {
+      type: ORDER_TYPE_COD,
+      channel: ORDER_CHANNEL_OFFLINE,
+    };
+
+    const db = {
+      order: {
+        create: jest.fn(() => Promise.resolve(resolvedOrder)),
+      },
+      orderItem: {
+        create: () => {},
+      },
+    };
+
+    it('should create offline, cod order', async () => {
+      const orderService = new OrderService(db);
+      const saveOrderItemsSpy = jest.spyOn(orderService, 'saveOrderItems');
+
+      const items = [
+        {
+          id: 1,
+          name: 'Fried Noodle',
+          price: 10,
+          qty: 2,
+        },
+      ];
+
+      await orderService.createCashOnDeliveryOrder(items);
+
+      expect(db.order.create).toBeCalledWith({
+        type: ORDER_TYPE_COD,
+        channel: ORDER_CHANNEL_OFFLINE,
+      });
+      expect(saveOrderItemsSpy).toBeCalledWith(resolvedOrder, items);
+    });
+
+    it('should throw error when model fail to perform operation', async () => {
+      db.order.create.mockImplementationOnce(() => Promise.reject(new Error('Unexpected error')));
+
+      const orderService = new OrderService(db);
+      const saveOrderItemsSpy = jest.spyOn(orderService, 'saveOrderItems');
+
+      const items = [
+        {
+          id: 1,
+          name: 'Fried Noodle',
+          price: 10,
+          qty: 2,
+        },
+      ];
+
+      await expect(orderService.createCashOnDeliveryOrder(items)).rejects.toThrow('Unexpected error');
+
+      expect(db.order.create).toBeCalledWith({
+        type: ORDER_TYPE_COD,
         channel: ORDER_CHANNEL_OFFLINE,
       });
       expect(saveOrderItemsSpy).not.toBeCalled();

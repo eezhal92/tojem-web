@@ -29,7 +29,7 @@ export default {
       this.$emit('removed', this.item.id);
     },
     checkQty() {
-      if (parseInt(this.item.qty) === 0) {
+      if (parseInt(this.item.qty, 10) === 0) {
         this.$emit('removed', this.item.id);
       }
     },

@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="container mx-auto">
+  <div id="app" class="container mx-auto">
     <div class="flex">
       <div class="p-4 w-full">
         <h1 class="mt-1 mb-4">
@@ -19,21 +19,27 @@
 
     <div class="flex">
       <div class="p-4 w-full">
-        <form action="/backstore/products/<%= product.id %>" method="post">
+        <form id="edit-product-form" action="/backstore/products/<%= product.id %>" method="post" @submit="updateProduct">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <div class="mb-4">
             <label class="block mb-1" for="name">Nama</label>
-            <input class="block p-1 border border-grey w-full" id="name" type="text" name="name" value="<%= product.name %>">
+            <input class="block p-1 border border-grey w-full" id="name" type="text" name="name" value="<%= error.getOldInput('name') || product.name %>">
+            <% if (error.getMessage('name')) { %>
+              <div><small><%= error.getMessage('name') %></small></div>
+            <% } %>
           </div>
 
           <div class="mb-4">
             <label class="block mb-1" for="price">Harga</label>
-            <input class="block p-1 border border-grey w-full" id="price" type="number" name="price" value="<%= product.price %>">
+            <input class="block p-1 border border-grey w-full" id="price" v-model="price" v-money="money" name="price" placeholder="15000">
+            <% if (error.getMessage('price')) { %>
+              <div><small><%= error.getMessage('price') %></small></div>
+            <% } %>
           </div>
 
           <div class="mb-4">
             <label class="block mb-1" for="description">Deskripsi</label>
-            <textarea class="block p-1 border border-grey w-full" id="description" name="description" rows="3"><%= product.description %></textarea>
+            <textarea class="block p-1 border border-grey w-full" id="description" name="description" rows="3"><%= error.getOldInput('description') || product.description %></textarea>
           </div>
 
           <button class="border border-blue p-2 rounded-sm text-center text-blue float-right" type="submit">Perbarui</button>
@@ -42,5 +48,47 @@
     </div>
 
   </div>
+
+  <script src="https://unpkg.com/vue@2.5.11/dist/vue.js"></script>
+  <script src="https://unpkg.com/v-money@0.8.1/dist/v-money.js"></script>
+  <script>
+    Vue.use(VMoney, { precision: 0 });
+
+    <% if (error.getOldInput('price')) { %>
+    const price = <%= error.getOldInput('price') %>;
+    <% } else { %>
+    const price = <%= product.price %>;
+    <% } %>
+
+    new Vue({
+      el: '#app',
+      data: {
+        price: price,
+        money: {
+          decimal: '.',
+          thousands: ',',
+          prefix: 'Rp. ',
+          suffix: '',
+          precision: 0,
+          masked: false,
+        },
+      },
+      methods: {
+        updateProduct(event) {
+          event.preventDefault();
+
+          const priceEl = document.querySelector('input[name=price]');
+
+          const price = this.price.split('Rp. ')[1].split(',').join('');
+
+          priceEl.value = price;
+
+          const formEl = document.querySelector('#edit-product-form');
+
+          formEl.submit();
+        },
+      },
+    });
+  </script>
 </body>
 </html>
