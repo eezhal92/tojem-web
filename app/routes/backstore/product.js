@@ -22,7 +22,12 @@ router.post(
 );
 router.get('/:id', product.showById);
 router.get('/:id/edit', csrfProtection, product.showEditForm);
-router.post('/:id', csrfProtection, product.update);
+router.post(
+  '/:id',
+  csrfProtection,
+  inputValidation(createProductConstraints),
+  product.update,
+);
 router.delete('/:id', product.deactivate);
 
 export default router;

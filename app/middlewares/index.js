@@ -1,6 +1,7 @@
 import path from 'path';
 import express from 'express';
 import passport from 'passport';
+import flash from 'connect-flash';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
@@ -15,6 +16,7 @@ const middlewares = [
   bodyParser.json(),
   // @todo change session driver to sequelize
   session({ secret: 'keyboard cat', resave: true, saveUninitialized: true }),
+  flash(),
   passport.initialize(),
   passport.session(),
 ];

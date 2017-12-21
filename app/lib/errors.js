@@ -17,9 +17,38 @@ export class AuthorizationError extends HttpError {
 }
 
 export class UnprocessableEntityError extends HttpError {
-  constructor(constraintErrors) {
+  constructor(constraintErrors = {}, oldInput = {}) {
     super('Cannot process your request');
     this.code = 422;
     this.constraintErrors = constraintErrors;
+    this.oldInput = oldInput;
+  }
+
+  length() {
+    return Object.keys(this.constraintErrors).length;
+  }
+
+  getOldInput(fieldName) {
+    const value = this.oldInput[fieldName];
+
+    if (!value) {
+      return '';
+    }
+
+    return value;
+  }
+
+  getMessage(fieldName) {
+    if (!this.length()) {
+      return null;
+    }
+
+    const fieldErrors = this.constraintErrors[fieldName];
+
+    if (!fieldErrors) {
+      return null;
+    }
+
+    return fieldErrors.join(' ');
   }
 }

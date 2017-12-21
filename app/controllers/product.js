@@ -3,7 +3,7 @@
 ]}] */
 
 import autoBind from 'auto-bind';
-import { NotFoundError } from '../lib/errors';
+import { NotFoundError, UnprocessableEntityError } from '../lib/errors';
 import { productService as ps } from '../services';
 
 export class ProductController {
@@ -69,7 +69,12 @@ export class ProductController {
    * @return {Express.Response}
    */
   showCreateForm(request, response) {
-    const data = { csrfToken: request.csrfToken() };
+    const inputError = new UnprocessableEntityError(
+      request.flash('errors')[0],
+      request.flash('oldInputs')[0],
+    );
+
+    const data = { csrfToken: request.csrfToken(), error: inputError };
 
     response.render('backstore/product/create', data);
   }
@@ -107,9 +112,14 @@ export class ProductController {
    * @return {Express.Response}
    */
   showEditForm(request, response, next) {
+    const inputError = new UnprocessableEntityError(
+      request.flash('errors')[0],
+      request.flash('oldInputs')[0],
+    );
+
     this.productService.findById(request.params.id)
       .then((product) => {
-        const data = { product, csrfToken: request.csrfToken() };
+        const data = { product, csrfToken: request.csrfToken(), error: inputError };
 
         response.render('backstore/product/edit', data);
       })

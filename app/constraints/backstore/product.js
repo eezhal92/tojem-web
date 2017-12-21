@@ -2,7 +2,7 @@ import Validator from 'validatorjs';
 
 export const createProductConstraints = (data) => {
   const rules = {
-    name: 'required',
+    name: 'required|min:2',
     price: 'required|numeric|min:1',
   };
 
