@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const sequelize = require('@tojem/command/sequelize');
 
-describe('On-site Point of sales', () => {
+describe('Point of sales', () => {
   before((client, done) => {
     sequelize.execSilent('db:seed:all', ['--seeders-path', 'database/seeders/e2e'], { test: true })
       .then(() => done());
@@ -88,24 +88,51 @@ describe('On-site Point of sales', () => {
       .assert.containsText('#error-message', 'Cash tidak cukup');
   });
 
-  it('can process transaction', (client) => {
-    client.setCookie({
-      'connect.sid': cookie,
+  describe('On-site order', () => {
+    it('can process transaction', (client) => {
+      client.setCookie({
+        'connect.sid': cookie,
+      });
+
+      const pos = client.page.pos();
+
+      pos.navigate()
+        .waitForElementVisible('body', 1000)
+        .assert.containsText('body', 'Belum ada barang')
+        .assert.elementNotPresent('#error-message')
+        .click('#add-product-item-1') // item price: 10,000
+        .setValue('@orderTypeSelectField', 'on_site')
+        .setValue('@customerCashField', 50000)
+        .click('@payButton')
+        .assert.elementNotPresent('#error-message')
+        .assert.elementPresent('#success-message')
+        .assert.containsText('#success-message', 'Transaksi berhasil')
+        .assert.containsText('#customer-changes', 'Rp. 40,000')
+        .assert.elementNotPresent('@payButton');
     });
+  });
 
-    const pos = client.page.pos();
+  describe('Cash on delivery order', () => {
+    it('can process transaction', (client) => {
+      client.setCookie({
+        'connect.sid': cookie,
+      });
 
-    pos.navigate()
-      .waitForElementVisible('body', 1000)
-      .assert.containsText('body', 'Belum ada barang')
-      .assert.elementNotPresent('#error-message')
-      .click('#add-product-item-1') // item price: 10,000
-      .setValue('@customerCashField', 50000)
-      .click('@payButton')
-      .assert.elementNotPresent('#error-message')
-      .assert.elementPresent('#success-message')
-      .assert.containsText('#success-message', 'Transaksi berhasil')
-      .assert.containsText('#customer-changes', 'Rp. 40,000')
-      .assert.elementNotPresent('@payButton');
+      const pos = client.page.pos();
+
+      pos.navigate()
+        .waitForElementVisible('body', 1000)
+        .assert.containsText('body', 'Belum ada barang')
+        .assert.elementNotPresent('#error-message')
+        .click('#add-product-item-1') // item price: 10,000
+        .setValue('@orderTypeSelectField', 'cod')
+        .setValue('@customerCashField', 50000)
+        .click('@payButton')
+        .assert.elementNotPresent('#error-message')
+        .assert.elementPresent('#success-message')
+        .assert.containsText('#success-message', 'Transaksi berhasil')
+        .assert.containsText('#customer-changes', 'Rp. 40,000')
+        .assert.elementNotPresent('@payButton');
+    });
   });
 });

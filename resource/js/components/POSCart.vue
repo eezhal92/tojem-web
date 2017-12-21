@@ -3,7 +3,7 @@
     <div class="block mb-2">
       <strong>Transaksi</strong>
       <div class="float-right">
-        <select v-model="type">
+        <select v-model="type" id="order-type">
           <option value="on_site">On-site</option>
           <option value="cod">Cash On Delivery</option>
         </select>

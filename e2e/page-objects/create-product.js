@@ -7,5 +7,6 @@ module.exports = {
     saveProductButton: { selector: '#save-product-button' },
     productName: { selector: '.product-name' },
     productPrice: { selector: '.product-price' },
+    productDescription: { selector: '.product-description' },
   },
 };

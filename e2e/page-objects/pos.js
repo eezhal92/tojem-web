@@ -1,6 +1,9 @@
 module.exports = {
-  url: 'http://localhost:3000/backstore/pos',
+  url: `${process.env.TEST_BASE_URL}/backstore/pos`,
   elements: {
+    orderTypeSelectField: {
+      selector: '#order-type',
+    },
     payButton: {
       selector: '#pay-button',
     },
