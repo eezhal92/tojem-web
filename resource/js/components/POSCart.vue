@@ -24,7 +24,7 @@
       <div class="py-4">Belum ada barang.</div>
     </div>
 
-    <cart-item v-for="item in items" :item="item" key="item.id" v-on:removed="removeItem"></cart-item>
+    <cart-item v-for="item in items" :item="item" :key="item.id" v-on:removed="removeItem"></cart-item>
 
     <div class="cart-amount my-2">
       <div class="block mb-2">
