@@ -41,6 +41,21 @@ module.exports = {
         browserName: 'chrome',
       },
     },
+
+    headless: {
+      javascriptEnabled: true,
+      screenshots: {
+        enabled: true,
+        path: 'e2e/screenshots',
+        on_failure: true,
+      },
+      desiredCapabilities: {
+        browserName: 'chrome',
+        chromeOptions: {
+          args: ['headless', 'disable-gpu'],
+        },
+      },
+    },
   },
 
   test_runner: 'mocha',
