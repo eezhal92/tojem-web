@@ -3,11 +3,10 @@
  */
 
 import express from 'express';
-
-import home from 'app/controllers/home';
+import homeController from 'app/controllers/home-controller';
 
 const router = express.Router();
 
-router.get('/', home.showHomePage);
+router.get('/', homeController.showHomePage);
 
 export default router;

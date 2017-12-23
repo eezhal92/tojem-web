@@ -1,6 +1,4 @@
-/* eslint class-methods-use-this: [2, { exceptMethods: [
-  getLoginForm, redirectOnAuthenticated
-]}] */
+/* eslint class-methods-use-this: [2, { exceptMethods: [getLoginForm, redirectOnAuthenticated]}] */
 
 import autoBind from 'auto-bind';
 
@@ -8,7 +6,7 @@ export class AuthController {
   /**
    * Create a new AuthController instance.
    *
-   * @return {any}
+   * @return {mix}
    */
   constructor() {
     autoBind(this);

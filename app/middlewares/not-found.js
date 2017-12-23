@@ -1,7 +1,17 @@
-import { NotFoundError } from '../lib/errors';
+import { NotFoundError } from 'app/lib/errors';
 
-export default function notFound(request, response, next) {
+/**
+ * Handling if route not found.
+ *
+ * @param  {express.Request}  request
+ * @param  {express.Response} response
+ * @param  {function}         next
+ * @return {mix}
+ */
+function notFound(request, response, next) {
   const error = new NotFoundError();
 
   return next(error);
 }
+
+export default notFound;

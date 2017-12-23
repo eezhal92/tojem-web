@@ -1,6 +1,6 @@
-import { PointOfSalesController } from '../point-of-sales';
+import { PointOfSalesController } from '../point-of-sales-controller';
 
-describe('app/controllers/point-of-sales', () => {
+describe('app/controllers/point-of-sales-controller', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });

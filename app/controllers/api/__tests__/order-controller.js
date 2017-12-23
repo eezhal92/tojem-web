@@ -1,8 +1,9 @@
-import { ORDER_TYPE_ON_SITE, ORDER_TYPE_COD, InvalidOrderTypeError } from 'app/lib/order';
 import { AuthorizationError } from 'app/lib/errors';
-import { OrderApi } from '../order';
+import { ORDER_TYPE_ON_SITE, ORDER_TYPE_COD, InvalidOrderTypeError } from 'app/lib/order';
 
-describe('app/controllers/api/order', () => {
+import { OrderApiController } from '../order-controller';
+
+describe('app/controllers/api/order-controller', () => {
   const authorizationError = new AuthorizationError();
 
   const orderService = {
@@ -25,7 +26,7 @@ describe('app/controllers/api/order', () => {
       request.user = null;
       request.body = { type: ORDER_TYPE_ON_SITE };
 
-      const orderApi = new OrderApi(orderService);
+      const orderApi = new OrderApiController(orderService);
 
       await orderApi.processTransaction(request, response, next);
 
@@ -40,7 +41,7 @@ describe('app/controllers/api/order', () => {
       request.user = {};
       request.body = { type: 'random_invalid_type' };
 
-      const orderApi = new OrderApi(orderService);
+      const orderApi = new OrderApiController(orderService);
 
       await orderApi.processTransaction(request, response, next);
 
@@ -55,7 +56,7 @@ describe('app/controllers/api/order', () => {
       request.user = { id: 1 };
       request.body = { items: [], type: ORDER_TYPE_ON_SITE };
 
-      const orderApi = new OrderApi(orderService);
+      const orderApi = new OrderApiController(orderService);
 
       await orderApi.processTransaction(request, response, next);
 
@@ -72,7 +73,7 @@ describe('app/controllers/api/order', () => {
       request.user = { id: 1 };
       request.body = { items: [], type: ORDER_TYPE_COD };
 
-      const orderApi = new OrderApi(orderService);
+      const orderApi = new OrderApiController(orderService);
 
       await orderApi.processTransaction(request, response, next);
 

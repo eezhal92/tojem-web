@@ -1,14 +1,14 @@
 /* eslint class-methods-use-this: [2, { exceptMethods: [createStoreForm] }] */
 
 import autoBind from 'auto-bind';
-import onBoardingService from '../services/onboarding-service';
+import onBoardingService from 'app/services/onboarding';
 
 export class OnBoardingController {
   /**
    * Create a new OnBoardingController instance.
    *
    * @param  {Tojem.Service.OnBoardingService} onboardingService
-   * @return {any}
+   * @return {mix}
    */
   constructor(onboardingService) {
     this.onBoardingService = onboardingService;

@@ -5,12 +5,11 @@
 import csrf from 'csurf';
 import express from 'express';
 import ces from 'connect-ensure-login';
-
 import db from 'app/models';
-import { hasStore } from 'app/middlewares';
-import onboardingController from 'app/controllers/onboarding';
-import onboardingConstraint from 'app/constraints/onboarding';
+import { hasStore } from 'app/middlewares/store';
 import inputValidation from 'app/middlewares/input-validation';
+import { onBoardingTransaction } from 'app/constraints/onboarding';
+import onboardingController from 'app/controllers/onboarding-controller';
 
 const router = express.Router();
 const defaultMiddlewares = [
@@ -26,7 +25,7 @@ router.route('/onboard/create-store')
   .get(...defaultMiddlewares, onboardingController.createStoreForm)
   .post(
     ...defaultMiddlewares,
-    inputValidation(onboardingConstraint),
+    inputValidation(onBoardingTransaction),
     onboardingController.createStore,
   );
 

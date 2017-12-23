@@ -18,12 +18,13 @@ export function storeSession(db) {
 
 /**
  * Fungsi factory untuk mengecek apakah seller telah membuat store
- * @param {models.db} db
- * @param {bool} options.condition
- * @param {string} options.redirectPath
+ *
+ * @param  {models.db} db
+ * @param  {bool}      options.condition
+ * @param  {string}    options.redirectPath
  * @return {function}
  */
-export default function hasStore(db, { condition = false, redirectPath = '/' } = {}) {
+export function hasStore(db, { condition = false, redirectPath = '/' } = {}) {
   /**
    * @param {Express.Request} request
    * @param {Express.Response} response

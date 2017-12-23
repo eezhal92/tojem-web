@@ -1,10 +1,7 @@
-/* eslint-disable import/prefer-default-export */
-
 import ExtendableError from 'es6-error';
 import { AuthorizationError } from 'app/lib/errors';
 
 export const ORDER_CHANNEL_OFFLINE = 'offline';
-
 export const ORDER_TYPE_ON_SITE = 'on_site';
 export const ORDER_TYPE_COD = 'cod';
 

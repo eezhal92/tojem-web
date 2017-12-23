@@ -1,17 +1,15 @@
-/* eslint class-methods-use-this: [2, { exceptMethods: [
-  showCreateForm, deactivate
-]}] */
+/* eslint class-methods-use-this: [2, { exceptMethods: [showCreateForm, deactivate] }] */
 
 import autoBind from 'auto-bind';
-import { NotFoundError, UnprocessableEntityError } from '../lib/errors';
-import { productService as ps } from '../services';
+import ps from 'app/services/product';
+import { NotFoundError, UnprocessableEntityError } from 'app/lib/errors';
 
 export class ProductController {
   /**
    * Create a new ProductController instance.
    *
    * @param  {Tojem.Service.ProductService} productService
-   * @return {any}
+   * @return {mix}
    */
   constructor(productService) {
     this.productService = productService;

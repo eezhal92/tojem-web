@@ -1,7 +1,17 @@
-import { NotFoundError, UnprocessableEntityError } from '../lib/errors';
+import { NotFoundError, UnprocessableEntityError } from 'app/lib/errors';
 
-// eslint-disable-next-line no-unused-vars
-export default function serverError(error, request, response, next) {
+/**
+ * Handling if the server was error.
+ *
+ * @param  {any}              error
+ * @param  {express.Request}  request
+ * @param  {express.Response} response
+ * @param  {function}         next
+ * @return {mix}
+ *
+ * @throws {Error}
+ */
+function serverError(error, request, response, next) {
   if (error.code === 'EBADCSRFTOKEN') {
     return response.redirect('back');
   }
@@ -29,3 +39,5 @@ export default function serverError(error, request, response, next) {
 
   throw error;
 }
+
+export default serverError;

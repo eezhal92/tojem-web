@@ -1,14 +1,28 @@
-import database from '../models';
-import { ORDER_TYPE_ON_SITE, ORDER_TYPE_COD, ORDER_CHANNEL_OFFLINE } from '../lib/order';
+import dbModels from 'app/models';
+import { ORDER_TYPE_ON_SITE, ORDER_TYPE_COD, ORDER_CHANNEL_OFFLINE } from 'app/lib/order';
 
 export class OrderService {
-  constructor(db) {
-    this.database = db;
+  /**
+   * Create a new OrderService instance.
+   *
+   * @param  {Tojem.Model} models
+   * @return {mix}
+   */
+  constructor(models) {
+    this.models = models;
   }
 
+  /**
+   * Create a new transaction provided 'on-site'.
+   *
+   * @param  {object[]}  items
+   * @return {mix}
+   *
+   * @throws {Error}
+   */
   async createOnSiteOrder(items = []) {
     try {
-      const order = await this.database.order.create({
+      const order = await this.models.order.create({
         channel: ORDER_CHANNEL_OFFLINE,
         type: ORDER_TYPE_ON_SITE,
       });
@@ -21,9 +35,17 @@ export class OrderService {
     }
   }
 
+  /**
+   * Create a new transaction provided 'cash on delivery'.
+   *
+   * @param  {object[]}  items
+   * @return {mix}
+   *
+   * @throws {Error}
+   */
   async createCashOnDeliveryOrder(items = []) {
     try {
-      const order = await this.database.order.create({
+      const order = await this.models.order.create({
         channel: ORDER_CHANNEL_OFFLINE,
         type: ORDER_TYPE_COD,
       });
@@ -36,9 +58,17 @@ export class OrderService {
     }
   }
 
+  /**
+   * Persistence order transaction into database.
+   * @param  {objec}    order
+   * @param  {object[]} items
+   * @return {Promise}
+   *
+   * @throws {Error}
+   */
   async saveOrderItems(order, items) {
     try {
-      const promises = items.map(item => this.database.orderItem.create({
+      const promises = items.map(item => this.models.orderItem.create({
         orderId: order.id,
         productId: item.id,
         productName: item.name,
@@ -53,4 +83,4 @@ export class OrderService {
   }
 }
 
-export default new OrderService(database);
+export default new OrderService(dbModels);

@@ -1,8 +1,14 @@
-import database from '../models';
+import dbModels from 'app/models';
 
 export class ProductService {
-  constructor(db) {
-    this.database = db;
+  /**
+   * Create a new ProductService instance.
+   *
+   * @param  {Tojem.Model} models
+   * @return {mix}
+   */
+  constructor(models) {
+    this.models = models;
   }
 
   /**
@@ -12,7 +18,7 @@ export class ProductService {
    * @return {Tojem.Model.Product[]}
    */
   findAllByStore(store) {
-    return this.database.product.findAll({
+    return this.models.product.findAll({
       where: { storeId: store.id },
     });
   }
@@ -32,7 +38,7 @@ export class ProductService {
     description,
     price,
   } = {}) {
-    return this.database.product.create({
+    return this.models.product.create({
       storeId,
       name,
       price,
@@ -47,8 +53,8 @@ export class ProductService {
    * @return {Tojem.Model.Product}
    */
   findById(productId) {
-    return this.database.product.findById(productId);
+    return this.models.product.findById(productId);
   }
 }
 
-export default new ProductService(database);
+export default new ProductService(dbModels);

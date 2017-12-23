@@ -1,4 +1,4 @@
-import store from '../store';
+import { hasStore } from '../store';
 
 describe('middlewares/store', () => {
   const request = {
@@ -18,7 +18,7 @@ describe('middlewares/store', () => {
   });
 
   it('should call next with error when operation is broken', async () => {
-    const middleware = store(db);
+    const middleware = hasStore(db);
 
     await middleware(request, response, next);
 
@@ -32,7 +32,7 @@ describe('middlewares/store', () => {
 
     let middleware;
 
-    middleware = store(db, { condition: true, redirectPath: '/' });
+    middleware = hasStore(db, { condition: true, redirectPath: '/' });
 
     await middleware(request, response, next);
 
@@ -41,7 +41,7 @@ describe('middlewares/store', () => {
 
     db.store.findAll = () => Promise.resolve([{ id: 1, name: 'Cool Store' }]);
 
-    middleware = store(db, { condition: false, redirectPath: '/' });
+    middleware = hasStore(db, { condition: false, redirectPath: '/' });
 
     await middleware(request, response, next);
 
@@ -54,7 +54,7 @@ describe('middlewares/store', () => {
 
     let middleware;
 
-    middleware = store(db, { condition: false, redirectPath: '/' });
+    middleware = hasStore(db, { condition: false, redirectPath: '/' });
 
     await middleware(request, response, next);
 
@@ -64,7 +64,7 @@ describe('middlewares/store', () => {
 
     db.store.findAll = () => Promise.resolve([{ id: 1, name: 'Cool Store' }]);
 
-    middleware = store(db, { condition: true, redirectPath: '/somewhere' });
+    middleware = hasStore(db, { condition: true, redirectPath: '/somewhere' });
 
     await middleware(request, response, next);
 
