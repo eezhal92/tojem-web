@@ -7,5 +7,6 @@ describe('database', () => {
     expect('store' in db).toBe(true);
     expect('order' in db).toBe(true);
     expect('orderItem' in db).toBe(true);
+    expect('session' in db).toBe(true);
   });
 });
