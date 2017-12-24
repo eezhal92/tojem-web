@@ -1,6 +1,6 @@
-import { HomeController } from '../home';
+import { HomeController } from '../home-controller';
 
-describe('app/controllers/home', () => {
+describe('app/controllers/home-controller', () => {
   const request = { user: {} };
   const response = {
     render: jest.fn(),

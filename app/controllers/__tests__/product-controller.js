@@ -1,6 +1,6 @@
-import { ProductController } from '../product';
+import { ProductController } from '../product-controller';
 
-describe('app/controllers/product', () => {
+describe('app/controllers/product-controller', () => {
   const next = jest.fn();
   const request = {};
   const response = {

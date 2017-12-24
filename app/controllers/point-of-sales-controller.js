@@ -1,14 +1,12 @@
-/* eslint class-methods-use-this: [2, { exceptMethods: [
-  showTransactionForm
-]}] */
+/* eslint class-methods-use-this: [2, { exceptMethods: [showTransactionForm] }] */
 
 import autoBind from 'auto-bind';
 
 export class PointOfSalesController {
   /**
-   * Create a new PointOfSales instance.
+   * Create a new PointOfSalesController instance.
    *
-   * @return {void}
+   * @return {mix}
    */
   constructor() {
     autoBind(this);

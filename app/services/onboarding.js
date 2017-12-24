@@ -1,14 +1,14 @@
-import model from '../models';
+import dbModels from 'app/models';
 
 export class OnBoardingService {
   /**
    * Create a new OnBoardingService instance.
    *
-   * @param  {Tojem.Model} database
-   * @return {void}
+   * @param  {Tojem.Model} models
+   * @return {mix}
    */
-  constructor(database) {
-    this.database = database;
+  constructor(models) {
+    this.models = models;
   }
 
   /**
@@ -26,8 +26,8 @@ export class OnBoardingService {
       ...input,
     };
 
-    return this.database.store.create(data);
+    return this.models.store.create(data);
   }
 }
 
-export default new OnBoardingService(model);
+export default new OnBoardingService(dbModels);

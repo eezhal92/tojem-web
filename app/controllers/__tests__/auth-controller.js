@@ -1,6 +1,6 @@
-import { AuthController } from '../auth';
+import { AuthController } from '../auth-controller';
 
-describe('app/controllers/auth', () => {
+describe('app/controllers/auth-controller', () => {
   const request = {};
   const response = {
     render: jest.fn(),

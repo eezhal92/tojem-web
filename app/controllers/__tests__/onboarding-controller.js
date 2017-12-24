@@ -1,6 +1,6 @@
-import { OnBoardingController } from '../onboarding';
+import { OnBoardingController } from '../onboarding-controller';
 
-describe('app/controllers/onboarding', () => {
+describe('app/controllers/onboarding-controller', () => {
   const next = jest.fn();
   const request = {
     session: jest.fn(),

@@ -4,15 +4,14 @@
 
 import express from 'express';
 import ces from 'connect-ensure-login';
-
-import db from '../models';
-import auth from '../controllers/auth';
-import passport from '../lib/passport';
-import { hasStore, storeSession } from '../middlewares';
+import db from 'app/models';
+import passport from 'app/lib/passport';
+import authController from 'app/controllers/auth-controller';
+import { hasStore, storeSession } from 'app/middlewares/store';
 
 const router = express.Router();
 
-router.get('/login', ces.ensureLoggedOut('/'), auth.getLoginForm);
+router.get('/login', ces.ensureLoggedOut('/'), authController.getLoginForm);
 router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 router.get(
   '/auth/facebook/callback',
@@ -22,7 +21,7 @@ router.get(
     redirectPath: '/onboard/create-store',
   }),
   storeSession(db),
-  auth.redirectOnAuthenticated,
+  authController.redirectOnAuthenticated,
 );
 
 export default router;

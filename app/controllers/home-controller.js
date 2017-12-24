@@ -6,7 +6,7 @@ export class HomeController {
   /**
    * Create a new HomeController instance.
    *
-   * @return {void}
+   * @return {mix}
    */
   constructor() {
     autoBind(this);

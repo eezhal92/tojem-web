@@ -1,6 +1,6 @@
-import { OnBoardingService } from '../onboarding-service';
+import { OnBoardingService } from '../onboarding';
 
-describe('app/service/onboarding-service', () => {
+describe('app/service/onboarding', () => {
   const db = {
     store: {
       create: jest.fn(n => Promise.resolve(n)),

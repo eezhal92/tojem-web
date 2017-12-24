@@ -4,3 +4,4 @@ coverage
 *.log
 public/js
 public/css
+e2e/screenshots

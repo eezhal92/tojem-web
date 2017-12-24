@@ -1,6 +1,12 @@
-import { UnprocessableEntityError } from '../lib/errors';
+import { UnprocessableEntityError } from 'app/lib/errors';
 
-export default function inputValidation(validationFactory) {
+/**
+ * Handling input request body.
+ *
+ * @param  {function<Tojem.Constraint>} validationFactory
+ * @return {function}
+ */
+function inputValidation(validationFactory) {
   return (req, res, next) => {
     const validation = validationFactory(req.body);
 
@@ -11,3 +17,5 @@ export default function inputValidation(validationFactory) {
     return next();
   };
 }
+
+export default inputValidation;

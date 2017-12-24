@@ -1,7 +1,6 @@
 import passport from 'passport';
 import FacebookStrategy from 'passport-facebook';
-
-import db from '../models';
+import db from 'app/models';
 
 const fbStrategyOptions = {
   clientID: process.env.FACEBOOK_APP_ID,

@@ -3,10 +3,10 @@
  */
 
 import express from 'express';
-import product from 'app/controllers/api/product';
+import productApiController from 'app/controllers/api/product-controller';
 
 const router = express.Router();
 
-router.get('/', product.showAll);
+router.get('/', productApiController.showAll);
 
 export default router;
