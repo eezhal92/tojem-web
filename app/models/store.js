@@ -4,13 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     address: DataTypes.TEXT,
     location: DataTypes.STRING,
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Store.belongsTo(models.user);
-      },
-    },
   });
+
+  Store.associate = (models) => {
+    Store.belongsTo(models.user, { foreignKey: 'ownerId' });
+  };
 
   return Store;
 };

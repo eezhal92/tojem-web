@@ -76,6 +76,7 @@ describe('services/order', () => {
   });
 
   describe('createOnSiteOrder', () => {
+    const storeId = 100;
     const resolvedOrder = {
       type: ORDER_TYPE_ON_SITE,
       channel: ORDER_CHANNEL_OFFLINE,
@@ -103,9 +104,10 @@ describe('services/order', () => {
         },
       ];
 
-      await orderService.createOnSiteOrder(items);
+      await orderService.createOnSiteOrder(storeId, items);
 
       expect(db.order.create).toBeCalledWith({
+        storeId,
         type: ORDER_TYPE_ON_SITE,
         channel: ORDER_CHANNEL_OFFLINE,
       });
@@ -127,9 +129,10 @@ describe('services/order', () => {
         },
       ];
 
-      await expect(orderService.createOnSiteOrder(items)).rejects.toThrow('Unexpected error');
+      await expect(orderService.createOnSiteOrder(storeId, items)).rejects.toThrow('Unexpected error');
 
       expect(db.order.create).toBeCalledWith({
+        storeId,
         type: ORDER_TYPE_ON_SITE,
         channel: ORDER_CHANNEL_OFFLINE,
       });
@@ -138,6 +141,7 @@ describe('services/order', () => {
   });
 
   describe('createCashOnDeliveryOrder', () => {
+    const storeId = 100;
     const resolvedOrder = {
       type: ORDER_TYPE_COD,
       channel: ORDER_CHANNEL_OFFLINE,
@@ -165,9 +169,10 @@ describe('services/order', () => {
         },
       ];
 
-      await orderService.createCashOnDeliveryOrder(items);
+      await orderService.createCashOnDeliveryOrder(storeId, items);
 
       expect(db.order.create).toBeCalledWith({
+        storeId,
         type: ORDER_TYPE_COD,
         channel: ORDER_CHANNEL_OFFLINE,
       });
@@ -189,9 +194,10 @@ describe('services/order', () => {
         },
       ];
 
-      await expect(orderService.createCashOnDeliveryOrder(items)).rejects.toThrow('Unexpected error');
+      await expect(orderService.createCashOnDeliveryOrder(storeId, items)).rejects.toThrow('Unexpected error');
 
       expect(db.order.create).toBeCalledWith({
+        storeId,
         type: ORDER_TYPE_COD,
         channel: ORDER_CHANNEL_OFFLINE,
       });

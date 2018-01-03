@@ -15,14 +15,16 @@ export class OrderService {
   /**
    * Create a new transaction provided 'on-site'.
    *
+   * @param  number      storeId
    * @param  {object[]}  items
    * @return {mix}
    *
    * @throws {Error}
    */
-  async createOnSiteOrder(items = []) {
+  async createOnSiteOrder(storeId, items = []) {
     try {
       const order = await this.models.order.create({
+        storeId,
         channel: ORDER_CHANNEL_OFFLINE,
         type: ORDER_TYPE_ON_SITE,
       });
@@ -38,14 +40,16 @@ export class OrderService {
   /**
    * Create a new transaction provided 'cash on delivery'.
    *
+   * @param  number      storeId
    * @param  {object[]}  items
    * @return {mix}
    *
    * @throws {Error}
    */
-  async createCashOnDeliveryOrder(items = []) {
+  async createCashOnDeliveryOrder(storeId, items = []) {
     try {
       const order = await this.models.order.create({
+        storeId,
         channel: ORDER_CHANNEL_OFFLINE,
         type: ORDER_TYPE_COD,
       });
