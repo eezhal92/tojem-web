@@ -11,7 +11,11 @@ describe('app/controllers/api/order-controller', () => {
     createCashOnDeliveryOrder: jest.fn().mockImplementation(() => Promise.resolve()),
   };
 
-  const request = {};
+  const request = {
+    session: {
+      store: { id: 1 },
+    },
+  };
   const response = {
     json: jest.fn(),
   };
@@ -60,7 +64,10 @@ describe('app/controllers/api/order-controller', () => {
 
       await orderApi.processTransaction(request, response, next);
 
-      expect(orderService.createOnSiteOrder).toBeCalledWith(request.body.items);
+      expect(orderService.createOnSiteOrder).toBeCalledWith(
+        request.session.store.id,
+        request.body.items,
+      );
       expect(orderService.createOnSiteOrder).toHaveBeenCalledTimes(1);
       expect(orderService.createCashOnDeliveryOrder).not.toBeCalled();
 
@@ -77,7 +84,10 @@ describe('app/controllers/api/order-controller', () => {
 
       await orderApi.processTransaction(request, response, next);
 
-      expect(orderService.createCashOnDeliveryOrder).toBeCalledWith(request.body.items);
+      expect(orderService.createCashOnDeliveryOrder).toBeCalledWith(
+        request.session.store.id,
+        request.body.items,
+      );
       expect(orderService.createCashOnDeliveryOrder).toHaveBeenCalledTimes(1);
       expect(orderService.createOnSiteOrder).not.toBeCalled();
 

@@ -3,13 +3,11 @@ module.exports = (sequelize, DataTypes) => {
     facebookId: DataTypes.STRING,
     name: DataTypes.STRING,
     email: DataTypes.STRING,
-  }, {
-    classMethods: {
-      associate: (models) => {
-        User.hasMany(models.store, { foreignKey: 'ownerId' });
-      },
-    },
   });
+
+  User.associate = (models) => {
+    User.hasMany(models.store, { foreignKey: 'ownerId' });
+  };
 
   return User;
 };

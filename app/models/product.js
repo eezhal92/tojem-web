@@ -4,12 +4,6 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     price: DataTypes.INTEGER,
     description: DataTypes.TEXT,
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Product.belongsTo(models.price);
-      },
-    },
   });
 
   return Product;

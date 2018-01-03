@@ -29,10 +29,12 @@ export class OrderApiController {
 
       validateOrder(type, request);
 
+      const storeId = request.session.store.id;
+
       if (type === ORDER_TYPE_ON_SITE) {
-        this.orderService.createOnSiteOrder(items);
+        this.orderService.createOnSiteOrder(storeId, items);
       } else if (type === ORDER_TYPE_COD) {
-        this.orderService.createCashOnDeliveryOrder(items);
+        this.orderService.createCashOnDeliveryOrder(storeId, items);
       }
 
       response.json({ message: 'Order has been created' });

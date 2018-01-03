@@ -7,12 +7,11 @@ module.exports = (sequelize, DataTypes) => {
     qty: DataTypes.INTEGER,
   }, {
     tableName: 'order_items',
-    classMethods: {
-      associate: (models) => {
-        OrderItem.belongsTo(models.Order);
-      },
-    },
   });
+
+  OrderItem.associate = (models) => {
+    OrderItem.belongsTo(models.order);
+  };
 
   return OrderItem;
 };
