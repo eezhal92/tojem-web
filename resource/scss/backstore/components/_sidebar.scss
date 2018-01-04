@@ -1,0 +1,17 @@
+.bs-sidebar {
+  @apply .bg-white .h-screen .hidden;
+  @apply .z-50 .fixed;
+  @apply .pin-y .pin-l .overflow-y-scroll;
+  @apply .scrolling-touch;
+  @apply .w-4/5;
+  @apply .flex-none .border-r .border-grey-light .flex-col;
+  @apply .text-blue-darkest;
+}
+
+@screen md {
+  .bs-sidebar {
+    @apply .overflow-visible .scrolling-auto;
+    @apply .flex .w-full;
+    max-width: 15rem;
+  }
+}
