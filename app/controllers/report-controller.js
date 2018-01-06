@@ -26,25 +26,7 @@ export class ReportController {
       }],
     })
       .then((orders) => {
-        const list = orders.map((o) => {
-          const order = o.dataValues;
-
-          order.totalAmount = order.orderItems
-            .map(orderItem => orderItem.productPrice)
-            .reduce((acc, price) => acc + price, 0);
-
-          return order;
-        });
-
-        const data = {
-          ordersNumber: list.length,
-          ordersAmount: list
-            .map(order => order.totalAmount)
-            .reduce((acc, amount) => acc + amount, 0),
-          orders: list,
-        };
-
-        response.render('backstore/report/dashboard', data);
+        response.render('backstore/report/dashboard');
       })
       .catch((error) => {
         next(error);

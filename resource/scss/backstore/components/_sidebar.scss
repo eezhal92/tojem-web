@@ -8,6 +8,10 @@
   @apply .text-blue-darkest;
 }
 
+.bs-sidebar--open {
+  display: block;
+}
+
 @screen md {
   .bs-sidebar {
     @apply .overflow-visible .scrolling-auto;

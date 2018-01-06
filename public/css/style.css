@@ -607,8 +607,10 @@ ul {
   list-style: none;
 }
 
-.main-content {
-  margin-left: 240px;
+@media (min-width: 768px) {
+  .main-content {
+    margin-left: 240px;
+  }
 }
 
 .bs-sidebar {
@@ -634,6 +636,10 @@ ul {
       -ms-flex-direction: column;
           flex-direction: column;
   color: #12283a;
+}
+
+.bs-sidebar--open {
+  display: block;
 }
 
 @media (min-width: 768px) {

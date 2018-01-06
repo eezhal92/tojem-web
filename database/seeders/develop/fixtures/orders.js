@@ -24,7 +24,7 @@ let orders = [];
 let lastId = 0;
 
 const now = new Date();
-const lastYear = dateFns.subMonths(dateFns.subYears(now, 1), 2);
+const lastYear = dateFns.subMonths(dateFns.subYears(now, 1), 1);
 
 for (let i = 0; i < 12; i++) { // eslint-disable-line no-plusplus
   const month = dateFns.addMonths(lastYear, i + 1);
@@ -73,7 +73,7 @@ function createOrderItems({
 let orderItems = [];
 orderIds.forEach((id) => {
   orderItems = orderItems.concat(createOrderItems({
-    orderId: 1,
+    orderId: id,
     date: orders[id - 1].createdAt,
   }));
 });

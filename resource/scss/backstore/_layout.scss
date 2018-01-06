@@ -8,5 +8,11 @@ ul {
 }
 
 .main-content {
-  margin-left: 240px;
+  // margin-left: 240px;
+}
+
+@screen md {
+  .main-content {
+    margin-left: 240px;
+  }
 }

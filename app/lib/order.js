@@ -24,3 +24,36 @@ export function validateOrder(type, request) {
 
   return true;
 }
+
+
+export function mapForReport(orders) {
+  return orders.map((o) => {
+    const order = o.dataValues;
+
+    if (order.orderItems) {
+      order.amount = order.orderItems
+        .map(orderItem => orderItem.productPrice)
+        .reduce((acc, price) => acc + price, 0);
+    }
+
+    return order;
+  });
+}
+
+export function summaryForSales(orders) {
+  const mappedOrders = mapForReport(orders);
+
+  return mappedOrders.map(({
+    type,
+    channel,
+    amount,
+    orderItems,
+    createdAt,
+  }) => ({
+    type,
+    channel,
+    amount,
+    itemsCount: orderItems.length,
+    date: createdAt,
+  }));
+}
