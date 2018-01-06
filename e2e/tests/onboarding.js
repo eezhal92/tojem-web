@@ -9,6 +9,8 @@ describe('Seller-user onboarding', () => {
     });
   });
 
+  let cookie;
+
   it('should be prompted to fill store information', (client) => {
     const login = client.page.login();
 
@@ -17,9 +19,18 @@ describe('Seller-user onboarding', () => {
       .click('@fbLoginLink')
       .waitForElementVisible('body', 1000)
       .fbLogin();
+
+    // eslint-disable-next-line prefer-arrow-callback
+    client.getCookie('connect.sid', function cb(result) {
+      cookie = result.value;
+    });
   });
 
   it('#1 - fail by giving empty field', (client) => {
+    client.setCookie({
+      'connect.sid': cookie,
+    });
+
     const createStore = client.page['create-store']();
 
     createStore.navigate()
@@ -30,6 +41,10 @@ describe('Seller-user onboarding', () => {
   });
 
   it('#2 - fail by giving only one field', (client) => {
+    client.setCookie({
+      'connect.sid': cookie,
+    });
+
     const createStore = client.page['create-store']();
 
     createStore.navigate()
@@ -55,6 +70,10 @@ describe('Seller-user onboarding', () => {
   });
 
   it('#3 - fail missing one field', (client) => {
+    client.setCookie({
+      'connect.sid': cookie,
+    });
+
     const createStore = client.page['create-store']();
 
     createStore.navigate()
@@ -86,6 +105,10 @@ describe('Seller-user onboarding', () => {
   });
 
   it('success - by giving valid input', (client) => {
+    client.setCookie({
+      'connect.sid': cookie,
+    });
+
     const createStore = client.page['create-store']();
 
     createStore.navigate()

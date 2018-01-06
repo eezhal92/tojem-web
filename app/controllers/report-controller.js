@@ -1,8 +1,10 @@
 /* eslint class-methods-use-this: [2, { exceptMethods: [getDashboard] }] */
 
 import autoBind from 'auto-bind';
-import os from 'app/services/order';
+
 import models from 'app/models';
+import os from 'app/services/order';
+import viewData from 'app/lib/view-data';
 import { NotFoundError, UnprocessableEntityError } from 'app/lib/errors';
 
 export class ReportController {
@@ -26,7 +28,9 @@ export class ReportController {
       }],
     })
       .then((orders) => {
-        response.render('backstore/report/dashboard');
+        const data = viewData.wrapForRequest(request);
+
+        response.render('backstore/report/dashboard', data);
       })
       .catch((error) => {
         next(error);

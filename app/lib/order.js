@@ -53,7 +53,7 @@ export function summaryForSales(orders) {
     type,
     channel,
     amount,
-    itemsCount: orderItems.length,
+    itemsCount: orderItems.reduce((total, item) => total + (1 * item.qty), 0),
     date: createdAt,
   }));
 }

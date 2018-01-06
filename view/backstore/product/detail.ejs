@@ -6,28 +6,36 @@
   <title>Detail Produk : <%= product.name %> | tojem</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
-  <div class="container mx-auto">
-    <div class="flex">
-      <div class="p-4 w-full">
-        <h1 class="product-name mt-1 mb-4"><%= product.name %></h1>
-        <a class="rounded-sm border border-grey text-sm p-2" href="/backstore/products">Lihat Semua Produk</a>
-      </div>
-    </div>
+<body class="font-sans font-normal text-black leading-normal bg-grey-lightest">
+  <div id="app">
+    <%- include('../_partials/sidebar') %>
 
+    <div class="main-content">
 
-    <div class="flex">
-      <div class="p-4 w-full">
-        <div class="mb-4">
-          <div class="mb-2">Harga</div>
-          <div class="product-price">Rp. <%= product.price.toLocaleString() %></div>
+      <%- include('../_partials/header', { viewData }) %>
+
+      <div class="container mx-auto px-2 sm:px-4 md:px-8 pb-4">
+        <div class="flex">
+          <div class="p-4 w-full">
+            <h1 class="product-name mt-1 mb-4"><%= product.name %></h1>
+          </div>
         </div>
 
-        <div class="mb-4">
-          <div class="mb-2">Deskripsi</div>
-          <div class="product-description"><%= product.description %></div>
-        </div>
 
+        <div class="flex">
+          <div class="p-4 w-full">
+            <div class="mb-4">
+              <div class="mb-2 text-grey-darker">Harga</div>
+              <div class="product-price text-green text-3xl">Rp. <%= product.price.toLocaleString() %></div>
+            </div>
+
+            <div class="mb-4">
+              <div class="mb-2 text-grey-darker">Deskripsi</div>
+              <div class="product-description"><%= product.description || 'Belum ada deskripsi' %></div>
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
   </div>
