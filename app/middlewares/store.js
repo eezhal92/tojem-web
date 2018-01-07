@@ -1,7 +1,7 @@
 import viewData from 'app/lib/view-data';
 
 export function storeSession(db) {
-  return (request, response, next) => {
+  return (request, response, next) =>
     db.store.findAll({ where: { ownerId: request.user.id } })
       .then((stores) => {
         if (stores.length) {
@@ -15,7 +15,6 @@ export function storeSession(db) {
       .catch((error) => {
         next(error);
       });
-  };
 }
 
 /**

@@ -1,4 +1,11 @@
-import { ORDER_TYPE_ON_SITE, ORDER_TYPE_COD, ORDER_CHANNEL_OFFLINE, ORDER_CHANNEL_ONLINE } from 'app/lib/order';
+import { Op } from 'sequelize';
+
+import {
+  ORDER_TYPE_COD,
+  ORDER_TYPE_ON_SITE,
+  ORDER_CHANNEL_ONLINE,
+  ORDER_CHANNEL_OFFLINE,
+} from 'app/lib/order';
 
 import { OrderService } from '../order';
 
@@ -202,6 +209,64 @@ describe('services/order', () => {
         channel: ORDER_CHANNEL_ONLINE,
       });
       expect(saveOrderItemsSpy).not.toBeCalled();
+    });
+  });
+
+  describe('findAllForStoreWithinRange', () => {
+    const db = {
+      orderItem: {},
+      order: {
+        findAll: jest.fn(() => Promise.resolve([])),
+      },
+    };
+
+    it('should not include order items when withItems is false', async () => {
+      const storeId = 1;
+      const startDate = '2018-01-01';
+      const endDate = '2018-01-07';
+
+      const orderService = new OrderService(db);
+
+      await orderService.findAllForStoreWithinRange({
+        storeId,
+        startDate,
+        endDate,
+      });
+
+      expect(db.order.findAll).toBeCalledWith({
+        where: {
+          storeId,
+          createdAt: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+      });
+    });
+
+    it('should include order items when withItems is true', async () => {
+      const storeId = 1;
+      const startDate = '2018-01-01';
+      const endDate = '2018-01-07';
+      const withItems = true;
+
+      const orderService = new OrderService(db);
+
+      await orderService.findAllForStoreWithinRange({
+        storeId,
+        startDate,
+        endDate,
+        withItems,
+      });
+
+      expect(db.order.findAll).toBeCalledWith({
+        where: {
+          storeId,
+          createdAt: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+        include: [db.orderItem],
+      });
     });
   });
 });

@@ -28,7 +28,7 @@ export class OrderService {
    *
    * @throws {Error}
    */
-  async createOnSiteOrder(storeId, items = []) {
+  async createOnSiteOrder(storeId, items) {
     try {
       const order = await this.models.order.create({
         storeId,
@@ -53,7 +53,7 @@ export class OrderService {
    *
    * @throws {Error}
    */
-  async createCashOnDeliveryOrder(storeId, items = []) {
+  async createCashOnDeliveryOrder(storeId, items) {
     try {
       const order = await this.models.order.create({
         storeId,
@@ -93,32 +93,26 @@ export class OrderService {
     }
   }
 
-  async findAllForStoreWithinRange({
+  findAllForStoreWithinRange({
     storeId,
     startDate,
     endDate,
     withItems = false,
   }) {
-    try {
-      const options = {
-        where: {
-          storeId,
-          createdAt: {
-            [Op.between]: [startDate, endDate],
-          },
+    const options = {
+      where: {
+        storeId,
+        createdAt: {
+          [Op.between]: [startDate, endDate],
         },
-      };
+      },
+    };
 
-      if (withItems === true) {
-        options.include = [this.models.orderItem];
-      }
-
-      const orders = await this.models.order.findAll(options);
-
-      return orders;
-    } catch (error) {
-      throw error;
+    if (withItems === true) {
+      options.include = [this.models.orderItem];
     }
+
+    return this.models.order.findAll(options);
   }
 }
 

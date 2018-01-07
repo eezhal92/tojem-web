@@ -37,7 +37,7 @@ export class ProductService {
     name,
     description,
     price,
-  } = {}) {
+  }) {
     return this.models.product.create({
       storeId,
       name,
