@@ -1,4 +1,4 @@
-import { ORDER_TYPE_ON_SITE, ORDER_TYPE_COD, ORDER_CHANNEL_OFFLINE } from 'app/lib/order';
+import { ORDER_TYPE_ON_SITE, ORDER_TYPE_COD, ORDER_CHANNEL_OFFLINE, ORDER_CHANNEL_ONLINE } from 'app/lib/order';
 
 import { OrderService } from '../order';
 
@@ -174,7 +174,7 @@ describe('services/order', () => {
       expect(db.order.create).toBeCalledWith({
         storeId,
         type: ORDER_TYPE_COD,
-        channel: ORDER_CHANNEL_OFFLINE,
+        channel: ORDER_CHANNEL_ONLINE,
       });
       expect(saveOrderItemsSpy).toBeCalledWith(resolvedOrder, items);
     });
@@ -199,7 +199,7 @@ describe('services/order', () => {
       expect(db.order.create).toBeCalledWith({
         storeId,
         type: ORDER_TYPE_COD,
-        channel: ORDER_CHANNEL_OFFLINE,
+        channel: ORDER_CHANNEL_ONLINE,
       });
       expect(saveOrderItemsSpy).not.toBeCalled();
     });

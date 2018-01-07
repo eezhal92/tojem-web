@@ -45,6 +45,7 @@ for (let i = 0; i < 365; i++) { // eslint-disable-line no-plusplus
       storeId: 1,
       type: randomType,
       date,
+      channel: randomType === 'cod' ? 'online' : 'offline',
     });
 
     orders = orders.concat(o);

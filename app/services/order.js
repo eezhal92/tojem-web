@@ -1,7 +1,12 @@
 import { Op } from 'sequelize';
 
 import dbModels from 'app/models';
-import { ORDER_TYPE_ON_SITE, ORDER_TYPE_COD, ORDER_CHANNEL_OFFLINE } from 'app/lib/order';
+import {
+  ORDER_TYPE_COD,
+  ORDER_TYPE_ON_SITE,
+  ORDER_CHANNEL_ONLINE,
+  ORDER_CHANNEL_OFFLINE,
+} from 'app/lib/order';
 
 export class OrderService {
   /**
@@ -52,7 +57,7 @@ export class OrderService {
     try {
       const order = await this.models.order.create({
         storeId,
-        channel: ORDER_CHANNEL_OFFLINE,
+        channel: ORDER_CHANNEL_ONLINE,
         type: ORDER_TYPE_COD,
       });
 
