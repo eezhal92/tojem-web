@@ -4,7 +4,6 @@ import Vue from 'vue';
 import axios from 'axios';
 import SalesAmountOverview from '../components/SalesAmountOverview.vue';
 import SalesNumberOverview from '../components/SalesNumberOverview.vue';
-import SalesChannel from '../components/SalesChannel.vue';
 import SalesChannelType from '../components/SalesChannelType.vue';
 
 Vue.filter('rupiah', value => `Rp. ${value.toLocaleString()}`);
@@ -21,6 +20,7 @@ new Vue({
   },
   methods: {
     setDateCode(event) {
+      this.dateCode = event.target.value;
       this.fetchSales(event.target.value);
     },
     fetchSales(dateCode) {
@@ -31,10 +31,18 @@ new Vue({
         });
     },
   },
+  computed: {
+    dateFormat() {
+      if (this.dateCode === 'today') {
+        return 'YYYY-MM-DD HH:00:00';
+      }
+
+      return 'YYYY-MM-DD';
+    },
+  },
   components: {
     SalesAmountOverview,
     SalesNumberOverview,
-    SalesChannel,
     SalesChannelType,
   },
 });

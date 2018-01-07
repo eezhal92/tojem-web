@@ -21,22 +21,24 @@ function createOrder({
 
 const orderIds = [];
 let orders = [];
+
 let lastId = 0;
+let lastDay = dateFns.subYears(new Date(), 1);
 
-const now = new Date();
-const lastYear = dateFns.subMonths(dateFns.subYears(now, 1), 1);
+for (let i = 0; i < 365; i++) { // eslint-disable-line no-plusplus
+  const day = dateFns.addDays(lastDay, 1);
+  lastDay = day;
 
-for (let i = 0; i < 12; i++) { // eslint-disable-line no-plusplus
-  const month = dateFns.addMonths(lastYear, i + 1);
+  const random = _.random(2, 5);
 
-  for (let j = 0; j < 5; j++) { // eslint-disable-line no-plusplus
+  for (let j = 0; j < random; j++) { // eslint-disable-line no-plusplus
     lastId += 1;
 
     const randomType = _.shuffle(types)[0];
 
     orderIds.push(lastId);
 
-    const orderDate = dateFns.setHours(month, j + 1);
+    const orderDate = dateFns.setHours(day, j + 1);
     const date = dateFns.format(orderDate, 'YYYY-MM-DD HH:mm:ss');
 
     const o = createOrder({

@@ -41,19 +41,15 @@
         </div>
 
         <div id="sales-amount" class="p-2 border shadow-xs rounded bg-white">
-          <sales-amount-overview :sales="sales"></sales-amount-overview>
+          <sales-amount-overview :sales="sales" :date-format="dateFormat"></sales-amount-overview>
         </div>
 
         <div id="sales-number" class="mt-4 p-2 border shadow-xs rounded bg-white">
-          <sales-number-overview :sales="sales"></sales-number-overview>
+          <sales-number-overview :sales="sales" :date-format="dateFormat"></sales-number-overview>
         </div>
 
         <div class="flex">
-          <div id ="channel" class="w-1/2 lg:w-1/4 mt-4">
-            <sales-channel :sales="sales"></sales-channel>
-          </div>
-
-          <div id ="channel" class="w-1/2 lg:w-1/4 mt-4 ml-4">
+          <div id ="channel" class="w-full lg:w-1/2 mt-4">
             <sales-channel-type :sales="sales"></sales-channel-type>
           </div>
         </div>

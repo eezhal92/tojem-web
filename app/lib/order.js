@@ -32,7 +32,7 @@ export function mapForReport(orders) {
 
     if (order.orderItems) {
       order.amount = order.orderItems
-        .map(orderItem => orderItem.productPrice)
+        .map(orderItem => orderItem.productPrice * orderItem.qty)
         .reduce((acc, price) => acc + price, 0);
     }
 
