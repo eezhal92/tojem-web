@@ -60,28 +60,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.29.0/date_fns.min.js"></script>
   <script src="/js/report-overview.js"></script>
-  <script>
-    var sidebarBtn = document.querySelector('#sidebar-btn');
-    var sidebar =  document.querySelector('#sidebar');
-    var closeButton = document.querySelector('#close-btn');
-
-    sidebarBtn.addEventListener('click', (event) => {
-      var isOpen = sidebar.classList.contains('bs-sidebar--open');
-
-      if (!isOpen) {
-        sidebar.classList.add('bs-sidebar--open');
-        closeButton.classList.remove('hidden');
-      }
-    });
-
-    closeButton.addEventListener('click', (event) => {
-      var isOpen = sidebar.classList.contains('bs-sidebar--open');
-
-      if (isOpen) {
-        sidebar.classList.remove('bs-sidebar--open');
-        closeButton.classList.add('hidden');
-      }
-    });
-  </script>
+  <script src="/js/bs-nav.js"></script>
 </body>
 </html>
