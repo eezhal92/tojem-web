@@ -23,5 +23,6 @@ router.get(
   storeSession(db),
   authController.redirectOnAuthenticated,
 );
+router.get('/logout', ces.ensureLoggedIn('/'), authController.logout);
 
 export default router;
