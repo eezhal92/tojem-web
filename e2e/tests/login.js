@@ -17,7 +17,7 @@ describe('Login page', () => {
         .waitForElementVisible('body', 1000)
         .click('@loginLink')
         .waitForElementVisible('body', 1000)
-        .expect.element('body').text.to.contain('Fb login');
+        .expect.element('body').text.to.contain('Masuk dengan facebook');
     });
 
     it('cannot visit login page, when already logged in', (client) => {
