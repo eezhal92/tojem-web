@@ -1,0 +1,59 @@
+<div id="sidebar" style="z-index: 1100;" class="bs-sidebar bg-white">
+  <div class="py-6 px-2">
+    <button id="close-btn" class="bg-white p-2 rounded md:hidden hidden p-2">
+      <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <line x1="6" y1="18" x2="18" y2="6" stroke="#424242" stroke-width="2"></line>
+        <line x1="6" y1="6" x2="18" y2="18" stroke="#424242" stroke-width="2"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div class="py-4 px-8">
+    <div class="lg:hidden">
+      <a href="/backstore/pos" class="btn-new-transaction bg-teal text-white p-2 rounded">Transaksi Baru</a>
+    </div>
+  </div>
+
+  <div class="p-8 flex-1 overflow-y-scroll">
+    <nav class="text-base overflow-y-scroll">
+      <div class="mb-8">
+        <ul>
+          <li class="mb-3">
+            <a class="hover:underline text-grey-darkest">Dashboard</a>
+          </li>
+        </ul>
+      </div>
+      <div class="mb-8">
+        <p class="mb-4 text-grey-dark uppercase tracking-wide font-bold text-xs">Produk</p>
+        <ul>
+          <li class="mb-3">
+            <a href="/backstore/products/create" class="hover:underline text-grey-darkest">Tambah Baru</a>
+          </li>
+          <li class="mb-3">
+            <a href="/backstore/products" class="hover:underline text-grey-darkest">Daftar</a>
+          </li>
+        </ul>
+      </div>
+      <div class="mb-8">
+        <p class="mb-4 text-grey-dark uppercase tracking-wide font-bold text-xs">Order</p>
+        <ul>
+          <li class="mb-3">
+            <a href="#" class="hover:underline text-grey-darkest">Semua</a>
+          </li>
+        </ul>
+      </div>
+      <div class="mb-8">
+        <p class="mb-4 text-grey-dark uppercase tracking-wide font-bold text-xs">Laporan</p>
+        <ul>
+          <li class="mb-3">
+            <a href="/backstore/report" class="hover:underline text-grey-darkest">Ringkasan</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="lg:hidden p-8">
+    <a href="/logout" class="text-grey-darker">Log Out</a>
+  </div>
+</div>

@@ -6,30 +6,43 @@
   <link rel="stylesheet" href="/css/style.css">
   <title>Buat toko | tojem</title>
 </head>
-<body>
+<body class="font-sans font-normal text-black leading-normal bg-grey-lightest">
   <div class="container mx-auto">
-    <div class="p-4">
-      <h1 class="mb-1 mb-4">Selamat Datang, <%= user.name %>!</h1>
-      <h2>Silakan isi informasi toko Anda</h2>
-    </div>
+    <div class="flex justify-center">
+    <div class="w-full md:w-3/5">
+      <div class="p-4 mt-8">
+        <h1 class="mb-1 mb-4">Selamat Datang, <%= user.name %>!</h1>
+        <p class="text-lg">Silakan isi informasi toko Anda sebelum mulai menggunakan</p>
+      </div>
 
-    <div class="p-4">
-      <form class="onboarding-form" method="POST" action="/onboard/create-store">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <div class="mb-2">
-          <label class="block mb-2" for="name">Nama Toko</label>
-          <input  class="block p-1 border border-grey w-full" id="name" type="text" name="name" placeholder="Toko Keren">
-        </div>
-        <div class="mb-2">
-          <label class="block mb-2" for="location">Lokasi</label>
-          <input  class="block p-1 border border-grey w-full" id="location" type="text" name="location" placeholder="Palu, Sulteng">
-        </div>
-        <div class="mb-2">
-          <label class="block mb-2" for="address">Alamat</label>
-          <textarea  class="block p-1 border border-grey w-full" id="address" name="address" cols="30" rows="3"></textarea>
-        </div>
-        <button id="submit" class="border border-blue p-2 rounded-sm text-center text-blue float-right" type="submit">Buat toko</button>
-      </form>
+      <div class="p-4">
+        <form class="onboarding-form" method="POST" action="/onboard/create-store">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="mb-2">
+            <label class="block mb-2" for="name">Nama Toko</label>
+            <input  class="block p-1 border border-grey w-full" id="name" type="text" name="name" placeholder="Toko Keren">
+            <% if (error.getMessage('name')) { %>
+              <div class="text-red"><small><%= error.getMessage('name') %></small></div>
+            <% } %>
+          </div>
+          <div class="mb-2">
+            <label class="block mb-2" for="location">Lokasi</label>
+            <input  class="block p-1 border border-grey w-full" id="location" type="text" name="location" placeholder="Palu, Sulteng">
+            <% if (error.getMessage('location')) { %>
+              <div class="text-red"><small><%= error.getMessage('location') %></small></div>
+            <% } %>
+          </div>
+          <div class="mb-2">
+            <label class="block mb-2" for="address">Alamat</label>
+            <textarea  class="block p-1 border border-grey w-full" id="address" name="address" cols="30" rows="3"></textarea>
+            <% if (error.getMessage('address')) { %>
+              <div class="text-red"><small><%= error.getMessage('address') %></small></div>
+            <% } %>
+          </div>
+          <button id="submit" class="border border-blue p-2 rounded text-white bg-blue text-center text-white float-right" type="submit">Buat toko</button>
+        </form>
+      </div>
+    </div>
     </div>
   </div>
 </body>

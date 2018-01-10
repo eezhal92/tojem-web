@@ -2,6 +2,7 @@
 
 import autoBind from 'auto-bind';
 import onBoardingService from 'app/services/onboarding';
+import { UnprocessableEntityError } from 'app/lib/errors';
 
 export class OnBoardingController {
   /**
@@ -23,7 +24,17 @@ export class OnBoardingController {
    * @return {Express.Response}
    */
   createStoreForm(request, response) {
-    const data = { user: request.user, csrfToken: request.csrfToken() };
+    // todo: need to be extracted into separate function
+    const inputError = new UnprocessableEntityError(
+      request.flash('errors')[0],
+      request.flash('oldInputs')[0],
+    );
+
+    const data = {
+      user: request.user,
+      csrfToken: request.csrfToken(),
+      error: inputError,
+    };
 
     response.render('onboarding/create-store', data);
   }

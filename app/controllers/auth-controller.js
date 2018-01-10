@@ -1,4 +1,6 @@
-/* eslint class-methods-use-this: [2, { exceptMethods: [getLoginForm, redirectOnAuthenticated]}] */
+/* eslint class-methods-use-this: [2, {
+  exceptMethods: [getLoginForm, logout, redirectOnAuthenticated]
+}] */
 
 import autoBind from 'auto-bind';
 
@@ -34,6 +36,24 @@ export class AuthController {
    */
   redirectOnAuthenticated(request, response) {
     response.redirect('/backstore/products');
+  }
+
+  /**
+   * Log user out.
+   *
+   * @param  {Express.Request}   request
+   * @param  {Express.Response}  response
+   * @param  {function}          next
+   * @return {Express.Response}
+   */
+  logout(request, response, next) {
+    request.session.destroy((error) => {
+      if (error) {
+        return next(error);
+      }
+
+      return response.redirect('/');
+    });
   }
 }
 

@@ -2,11 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>tojem - jualan jadi mudah | tojem</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .bg-fb {
+      background-color: #4080ff;
+    }
+
+    .border-fb {
+      border-color: #4080ff;
+    }
+
+    .text-fb {
+      color: #4080ff;
+    }
+  </style>
 </head>
-<body>
-  <h1>Log In</h1>
-  <a class="fb-login-link" href="/auth/facebook">Fb login</a>
+<body class="bg-fb font-sans font-normal text-black leading-normal text-white">
+  <div class="container mx-auto">
+    <div class="mx-4">
+      <div class="py-2 text-sm text-right">
+        <a class="text-white" href="/">Ke halaman utama</a>
+      </div>
+
+      <h1 class="mt-4 mb-8">Log In</h1>
+      <p class="text-lg">Punya bisnis? Mulai atur dan dapatkan laporan bisnis Anda, gratis!</p>
+      <br>
+      <a class="fb-login-link bg-white rounded border border-fb text-fb p-2" href="/auth/facebook">Masuk dengan facebook 😎</a>
+    </div>
+  </div>
 </body>
 </html>
 

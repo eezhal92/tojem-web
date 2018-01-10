@@ -2,6 +2,7 @@ import ExtendableError from 'es6-error';
 import { AuthorizationError } from 'app/lib/errors';
 
 export const ORDER_CHANNEL_OFFLINE = 'offline';
+export const ORDER_CHANNEL_ONLINE = 'online';
 export const ORDER_TYPE_ON_SITE = 'on_site';
 export const ORDER_TYPE_COD = 'cod';
 
@@ -23,4 +24,37 @@ export function validateOrder(type, request) {
   }
 
   return true;
+}
+
+
+export function mapForReport(orders) {
+  return orders.map((o) => {
+    const order = o.dataValues;
+
+    if (order.orderItems) {
+      order.amount = order.orderItems
+        .map(orderItem => orderItem.productPrice * orderItem.qty)
+        .reduce((acc, price) => acc + price, 0);
+    }
+
+    return order;
+  });
+}
+
+export function summaryForSales(orders) {
+  const mappedOrders = mapForReport(orders);
+
+  return mappedOrders.map(({
+    type,
+    channel,
+    amount,
+    orderItems,
+    createdAt,
+  }) => ({
+    type,
+    channel,
+    amount,
+    itemsCount: orderItems.reduce((total, item) => total + (1 * item.qty), 0),
+    date: createdAt,
+  }));
 }

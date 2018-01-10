@@ -1,3 +1,5 @@
+import { UnprocessableEntityError } from 'app/lib/errors';
+
 import { OnBoardingController } from '../onboarding-controller';
 
 describe('app/controllers/onboarding-controller', () => {
@@ -5,6 +7,7 @@ describe('app/controllers/onboarding-controller', () => {
   const request = {
     session: jest.fn(),
     user: jest.fn(),
+    flash: () => [],
     csrfToken: jest.fn(),
   };
   const response = {
@@ -26,7 +29,7 @@ describe('app/controllers/onboarding-controller', () => {
     onboarding.createStoreForm(request, response);
 
     expect(response.render).toBeCalledWith('onboarding/create-store', {
-      user: request.user, csrfToken: request.csrfToken(),
+      user: request.user, csrfToken: request.csrfToken(), error: new UnprocessableEntityError(),
     });
     expect(response.render).toHaveBeenCalledTimes(1);
   });

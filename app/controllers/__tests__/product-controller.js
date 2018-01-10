@@ -1,8 +1,19 @@
+import viewData from 'app/lib/view-data';
+
 import { ProductController } from '../product-controller';
 
 describe('app/controllers/product-controller', () => {
+  const testSessionId = 'test-session-id';
+
+  // setup default view data
+  viewData.createFor(testSessionId);
+
   const next = jest.fn();
-  const request = {};
+  const request = {
+    session: {
+      id: testSessionId,
+    },
+  };
   const response = {
     render: jest.fn(),
     redirect: jest.fn(),
@@ -26,7 +37,7 @@ describe('app/controllers/product-controller', () => {
     await Promise.resolve()
       .then(product.showAll(request, response, next));
 
-    expect(response.render).toBeCalledWith('backstore/product/list', { products: [] });
+    expect(response.render).toBeCalledWith('backstore/product/list', { products: [], viewData: {} });
     expect(response.render).toHaveBeenCalledTimes(1);
     expect(next).not.toBeCalled();
   });

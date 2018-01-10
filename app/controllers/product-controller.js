@@ -2,6 +2,7 @@
 
 import autoBind from 'auto-bind';
 import ps from 'app/services/product';
+import viewData from 'app/lib/view-data';
 import { NotFoundError, UnprocessableEntityError } from 'app/lib/errors';
 
 export class ProductController {
@@ -28,7 +29,9 @@ export class ProductController {
   showAll(request, response, next) {
     this.productService.findAllByStore({ id: 1 })
       .then((products) => {
-        response.render('backstore/product/list', { products });
+        const data = viewData.wrapForRequest(request, { products });
+
+        response.render('backstore/product/list', data);
       })
       .catch((error) => {
         next(error);
@@ -52,7 +55,9 @@ export class ProductController {
           return;
         }
 
-        response.render('backstore/product/detail', { product });
+        const data = viewData.wrapForRequest(request, { product });
+
+        response.render('backstore/product/detail', data);
       })
       .catch((error) => {
         next(error);
@@ -72,7 +77,10 @@ export class ProductController {
       request.flash('oldInputs')[0],
     );
 
-    const data = { csrfToken: request.csrfToken(), error: inputError };
+    const data = viewData.wrapForRequest(request, {
+      csrfToken: request.csrfToken(),
+      error: inputError,
+    });
 
     response.render('backstore/product/create', data);
   }
@@ -117,7 +125,11 @@ export class ProductController {
 
     this.productService.findById(request.params.id)
       .then((product) => {
-        const data = { product, csrfToken: request.csrfToken(), error: inputError };
+        const data = viewData.wrapForRequest(request, {
+          product,
+          error: inputError,
+          csrfToken: request.csrfToken(),
+        });
 
         response.render('backstore/product/edit', data);
       })

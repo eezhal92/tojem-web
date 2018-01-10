@@ -6,47 +6,53 @@
   <title>Ubah Produk | tojem</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
-  <div id="app" class="container mx-auto">
-    <div class="flex">
-      <div class="p-4 w-full">
-        <h1 class="mt-1 mb-4">
-          Ubah Produk
-          <a class="float-right no-underline rounded-sm border border-grey text-sm p-2" href="/backstore/products">Kembali</a>
-        </h1>
+<body class="font-sans font-normal text-black leading-normal bg-grey-lightest">
+  <div id="app">
+    <%- include('../_partials/sidebar') %>
+
+    <div class="main-content">
+
+      <%- include('../_partials/header', { viewData }) %>
+
+      <div class="container mx-auto px-2 sm:px-4 md:px-8 pb-4">
+        <div class="flex">
+          <div class="p-4 w-full">
+            <h1 class="mt-1 mb-4">Ubah Produk</h1>
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="p-4 w-full">
+            <form id="edit-product-form" action="/backstore/products/<%= product.id %>" method="post" @submit="updateProduct">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <div class="mb-4">
+                <label class="block mb-1" for="name">Nama</label>
+                <input class="block p-1 border border-grey w-full" id="name" type="text" name="name" value="<%= error.getOldInput('name') || product.name %>" placeholder="Nama yang menarik mungkin ide yang bagus">
+                <% if (error.getMessage('name')) { %>
+                  <div class="text-red"><small><%= error.getMessage('name') %></small></div>
+                <% } %>
+              </div>
+
+              <div class="mb-4">
+                <label class="block mb-1" for="price">Harga</label>
+                <input class="block p-1 border border-grey w-full" id="price" v-model="price" v-money="money" name="price" placeholder="15000">
+                <% if (error.getMessage('price')) { %>
+                  <div class="text-red"><small><%= error.getMessage('price') %></small></div>
+                <% } %>
+              </div>
+
+              <div class="mb-4">
+                <label class="block mb-1" for="description">Deskripsi</label>
+                <textarea class="block p-1 border border-grey w-full" id="description" name="description" rows="3" placeholder="Deskripsi menarik tentang produk Anda"><%= error.getOldInput('description') || product.description %></textarea>
+              </div>
+
+              <button class="border border-blue p-2 rounded-sm text-center text-blue float-right" type="submit">Perbarui</button>
+            </form>
+          </div>
+        </div>
+
       </div>
     </div>
-
-    <div class="flex">
-      <div class="p-4 w-full">
-        <form id="edit-product-form" action="/backstore/products/<%= product.id %>" method="post" @submit="updateProduct">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <div class="mb-4">
-            <label class="block mb-1" for="name">Nama</label>
-            <input class="block p-1 border border-grey w-full" id="name" type="text" name="name" value="<%= error.getOldInput('name') || product.name %>">
-            <% if (error.getMessage('name')) { %>
-              <div><small><%= error.getMessage('name') %></small></div>
-            <% } %>
-          </div>
-
-          <div class="mb-4">
-            <label class="block mb-1" for="price">Harga</label>
-            <input class="block p-1 border border-grey w-full" id="price" v-model="price" v-money="money" name="price" placeholder="15000">
-            <% if (error.getMessage('price')) { %>
-              <div><small><%= error.getMessage('price') %></small></div>
-            <% } %>
-          </div>
-
-          <div class="mb-4">
-            <label class="block mb-1" for="description">Deskripsi</label>
-            <textarea class="block p-1 border border-grey w-full" id="description" name="description" rows="3"><%= error.getOldInput('description') || product.description %></textarea>
-          </div>
-
-          <button class="border border-blue p-2 rounded-sm text-center text-blue float-right" type="submit">Perbarui</button>
-        </form>
-      </div>
-    </div>
-
   </div>
 
   <script src="https://unpkg.com/vue@2.5.11/dist/vue.js"></script>
@@ -90,5 +96,6 @@
       },
     });
   </script>
+  <script src="/js/bs-nav.js"></script>
 </body>
 </html>

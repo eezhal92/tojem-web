@@ -3,51 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Buat Product | tojem</title>
+  <title>Tambah Product | tojem</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
-  <div id="app" class="container mx-auto">
-    <div class="flex">
-      <div class="p-4 w-full">
-        <h1 class="mt-1 mb-4">
-          Buat Produk
-          <a class="btn no-underline rounded-sm border border-grey text-sm p-2 float-right" href="/backstore/products">Kembali</a>
-        </h1>
+<body class="font-sans font-normal text-black leading-normal bg-grey-lightest">
+  <div id="app">
+    <%- include('../_partials/sidebar') %>
+
+    <div class="main-content">
+
+      <%- include('../_partials/header', { viewData }) %>
+
+      <div class="container mx-auto px-2 sm:px-4 md:px-8 pb-4">
+        <div class="flex">
+          <div class="p-4 w-full">
+            <h1 class="mt-1 mb-4">Tambah Produk</h1>
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="p-4 w-full">
+            <form id="add-product-form" @submit="submitProduct" action="/backstore/products/create" method="post">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <div class="mb-4">
+                <label class="block mb-1" for="name">Nama</label>
+                <input class="block p-1 border border-grey w-full" id="name" type="text" name="name" placeholder="Apa nama produk Anda?" value="<%= error.getOldInput('name') %>">
+                <% if (error.getMessage('name')) { %>
+                  <div class="text-red"><small><%= error.getMessage('name') %></small></div>
+                <% } %>
+              </div>
+
+              <div class="mb-4">
+                <label class="block mb-1" for="price">Harga</label>
+                <input class="block p-1 border border-grey w-full" id="price" v-model="price" v-money="money" name="price" placeholder="15000">
+                <% if (error.getMessage('price')) { %>
+                  <div class="text-red"><small><%= error.getMessage('price') %></small></div>
+                <% } %>
+              </div>
+
+              <div class="mb-4">
+                <label class="block mb-1" for="description">Deskripsi</label>
+                <textarea class="block p-1 border border-grey w-full" id="description" name="description" rows="3" placeholder="Deskripsi menarik tentang produk Anda"></textarea>
+                <% if (error.getMessage('description')) { %>
+                  <div><small><%= error.getMessage('description') %></small></div>
+                <% } %>
+              </div>
+
+              <button id="save-product-button" class="border border-blue p-2 rounded-sm text-center text-blue float-right" type="submit">Tambah</button>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="flex">
-      <div class="p-4 w-full">
-        <form id="add-product-form" @submit="submitProduct" action="/backstore/products/create" method="post">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <div class="mb-4">
-            <label class="block mb-1" for="name">Nama</label>
-            <input class="block p-1 border border-grey w-full" id="name" type="text" name="name" placeholder="Apa nama produk Anda?" value="<%= error.getOldInput('name') %>">
-            <% if (error.getMessage('name')) { %>
-              <div><small><%= error.getMessage('name') %></small></div>
-            <% } %>
-          </div>
-
-          <div class="mb-4">
-            <label class="block mb-1" for="price">Harga</label>
-            <input class="block p-1 border border-grey w-full" id="price" v-model="price" v-money="money" name="price" placeholder="15000">
-            <% if (error.getMessage('price')) { %>
-              <div><small><%= error.getMessage('price') %></small></div>
-            <% } %>
-          </div>
-
-          <div class="mb-4">
-            <label class="block mb-1" for="description">Deskripsi</label>
-            <textarea class="block p-1 border border-grey w-full" id="description" name="description" rows="3" placeholder="Deskripsikan menarik tentang produk Anda"></textarea>
-            <% if (error.getMessage('description')) { %>
-              <div><small><%= error.getMessage('description') %></small></div>
-            <% } %>
-          </div>
-
-          <button id="save-product-button" class="border border-blue p-2 rounded-sm text-center text-blue float-right" type="submit">Tambah</button>
-        </form>
-      </div>
     </div>
   </div>
 
@@ -92,5 +99,6 @@
       },
     });
   </script>
+  <script src="/js/bs-nav.js"></script>
 </body>
 </html>

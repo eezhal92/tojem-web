@@ -1,5 +1,12 @@
+import { Op } from 'sequelize';
+
 import dbModels from 'app/models';
-import { ORDER_TYPE_ON_SITE, ORDER_TYPE_COD, ORDER_CHANNEL_OFFLINE } from 'app/lib/order';
+import {
+  ORDER_TYPE_COD,
+  ORDER_TYPE_ON_SITE,
+  ORDER_CHANNEL_ONLINE,
+  ORDER_CHANNEL_OFFLINE,
+} from 'app/lib/order';
 
 export class OrderService {
   /**
@@ -21,7 +28,7 @@ export class OrderService {
    *
    * @throws {Error}
    */
-  async createOnSiteOrder(storeId, items = []) {
+  async createOnSiteOrder(storeId, items) {
     try {
       const order = await this.models.order.create({
         storeId,
@@ -46,11 +53,11 @@ export class OrderService {
    *
    * @throws {Error}
    */
-  async createCashOnDeliveryOrder(storeId, items = []) {
+  async createCashOnDeliveryOrder(storeId, items) {
     try {
       const order = await this.models.order.create({
         storeId,
-        channel: ORDER_CHANNEL_OFFLINE,
+        channel: ORDER_CHANNEL_ONLINE,
         type: ORDER_TYPE_COD,
       });
 
@@ -84,6 +91,28 @@ export class OrderService {
     } catch (error) {
       throw error;
     }
+  }
+
+  findAllForStoreWithinRange({
+    storeId,
+    startDate,
+    endDate,
+    withItems = false,
+  }) {
+    const options = {
+      where: {
+        storeId,
+        createdAt: {
+          [Op.between]: [startDate, endDate],
+        },
+      },
+    };
+
+    if (withItems === true) {
+      options.include = [this.models.orderItem];
+    }
+
+    return this.models.order.findAll(options);
   }
 }
 

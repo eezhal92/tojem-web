@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Statistik</title>
+  <meta name="viewport" content="initial-scale=1,width=device-width">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="font-sans font-normal text-black leading-normal">
+  <div id="app">
+    <%- include('../_partials/sidebar') %>
+
+    <div class="main-content bg-grey-lightest">
+
+      <%- include('../_partials/header', { viewData }) %>
+
+      <div class="container mx-auto px-2 sm:px-4 md:px-8 pb-4">
+        <div class="mb-4">
+          <div class="w-full">
+            <h1 class="my-4">Ringkasan Laporan</h1>
+          </div>
+          <div class="w-full">
+            <!-- <div class="relative"> -->
+              <select id="test" @change="setDateCode" class="block appearance-none bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded" name="">
+                <option value="last_7_days">7 hari terakhir</option>
+                <option value="today">Hari ini</option>
+                <option value="yesterday">Kemarin</option>
+                <option value="this_week">Minggu Ini</option>
+                <option value="last_week">Minggu Kemarin</option>
+                <option value="last_14_days">14 hari terakhir</option>
+                <option value="last_28_days">28 hari terakhir</option>
+                <option value="last_30_days">30 hari terakhir</option>
+                <option value="last_90_days">90 hari terakhir</option>
+                <option value="this_quarter">Triwulan sampai saat ini</option>
+                <option value="last_1_year">12 bulan terakhir</option>
+                <option value="this_year">Tahun ini</option>
+                <option value="last_year">Tahun lalu</option>
+              </select>
+            <!-- </div> -->
+          </div>
+        </div>
+
+        <div id="sales-amount" class="p-2 border shadow-xs rounded bg-white">
+          <sales-amount-overview :sales="sales" :date-format="dateFormat"></sales-amount-overview>
+        </div>
+
+        <div id="sales-number" class="mt-4 p-2 border shadow-xs rounded bg-white">
+          <sales-number-overview :sales="sales" :date-format="dateFormat"></sales-number-overview>
+        </div>
+
+        <div class="flex">
+          <div id ="channel" class="w-full lg:w-1/2 mt-4">
+            <sales-channel-type :sales="sales"></sales-channel-type>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.29.0/date_fns.min.js"></script>
+  <script src="/js/report-overview.js"></script>
+  <script src="/js/bs-nav.js"></script>
+</body>
+</html>

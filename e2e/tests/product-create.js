@@ -39,7 +39,7 @@ describe('Create product', () => {
       .setValue('@productDescriptionField', 'A very special pizza')
       .click('@saveProductButton')
       .waitForElementVisible('body', 1000)
-      .assert.containsText('body', 'Buat Produk')
+      .assert.containsText('body', 'Tambah Produk')
       .assert.elementNotPresent('@productName')
       .assert.elementNotPresent('@productPrice');
   });
@@ -56,7 +56,7 @@ describe('Create product', () => {
       .setValue('@productDescriptionField', 'A very special pizza')
       .click('@saveProductButton')
       .waitForElementVisible('body', 1000)
-      .assert.containsText('body', 'Buat Produk')
+      .assert.containsText('body', 'Tambah Produk')
       .assert.elementNotPresent('@productName')
       .assert.elementNotPresent('@productPrice')
       .assert.elementNotPresent('@productDescription');
