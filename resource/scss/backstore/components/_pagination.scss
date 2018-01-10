@@ -1,0 +1,18 @@
+.pagination {
+}
+
+.pagination li {
+  @apply .p-2;
+  display: inline-block;
+  margin: 0;
+
+  &.active {
+    @apply .text-blue;
+    font-weight: bold;
+  }
+
+  &.disabled a {
+    @apply .text-grey;
+    cursor: not-allowed;
+  }
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Transaksi Order</title>
+  <meta name="viewport" content="initial-scale=1,width=device-width">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="font-sans font-normal text-black leading-normal bg-grey-lightest">
+  <div id="app">
+    <%- include('../_partials/sidebar') %>
+
+    <div class="main-content">
+
+      <%- include('../_partials/header', { viewData }) %>
+
+      <div class="container mx-auto px-2 sm:px-4 md:px-8 pb-4">
+        <div class="mb-4">
+          <div class="w-full">
+            <h1 class="my-4">Daftar Transaksi</h1>
+          </div>
+        </div>
+
+        <div>
+          <table class="text-sm md:text-base">
+            <thead>
+              <tr>
+                <th class="border-b-2 border-solid border-grey text-left"><span>Waktu</span></th>
+                <th class="border-b-2 border-solid border-grey text-left"><span>Nilai</span></th>
+                <th class="border-b-2 border-solid border-grey text-left"><span>Channel</span></th>
+                <th class="border-b-2 border-solid border-grey text-left"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% orders.forEach((order) => { %>
+              <tr>
+                <td><%= order.date %></td>
+                <td><span class="hidden md:inline">Rp. </span><%= order.amount.toLocaleString() %></td>
+                <td><%= order.type %></td>
+                <td>
+                  <a href="/backstore/transaction/<%= order.id %>">Lihat</a>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="my-4 text-sm md:text-base">
+          <pagination></pagination>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/vue@2.5.11/dist/vue.js"></script>
+  <script src="https://unpkg.com/vuejs-paginate@1.6.0/dist/index.js"></script>
+  <script>
+    Vue.component('paginate', VuejsPaginate)
+
+    var meta = <%- JSON.stringify(pagination) %>;
+
+    const Pagination = Vue.extend({
+      template: `
+        <paginate
+          :page-count="${meta.pageCount}"
+          :initial-page="${meta.page - 1}"
+          :container-class="'pagination'"
+          :page-range="2"
+          :prev-text="'Sblm'"
+          :next-text="'Sljt'"
+          :click-handler="pageClickHandler">
+        </paginate>
+      `,
+      methods: {
+        pageClickHandler(page) {
+          window.location.href = 'transaction?page=' + page;
+        },
+      },
+    })
+
+    new Vue({
+      el: '#app',
+      components: {
+        'pagination': Pagination,
+      }
+    });
+  </script>
+  <script src="/js/bs-nav.js"></script>
+</body>
+</html>

@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.use(ces.ensureLoggedIn('/login'));
 
-router.get('/', reportController.getDashboard);
+router.get('/', reportController.showDashboard);
 
 export default router;

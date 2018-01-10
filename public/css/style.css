@@ -654,6 +654,51 @@ ul {
   }
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 0.5rem;
+}
+
+table th {
+  border-bottom-width: 2px;
+  border-style: solid;
+  border-color: #b8c2cc;
+  text-align: left;
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: #f1f5f8;
+  border-bottom-width: 1px;
+  border-color: #b8c2cc;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+  border-bottom-width: 1px;
+  border-color: #b8c2cc;
+}
+
+.pagination li {
+  padding: 0.5rem;
+  display: inline-block;
+  margin: 0;
+}
+
+.pagination li.active {
+  color: #3490dc;
+  font-weight: bold;
+}
+
+.pagination li.disabled a {
+  color: #b8c2cc;
+  cursor: not-allowed;
+}
+
 .container {
   width: 100%;
 }
