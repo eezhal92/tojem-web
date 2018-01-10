@@ -1,0 +1,24 @@
+table {
+  @apply .w-full;
+  border-collapse: collapse;
+
+  th, td {
+    @apply .p-2;
+  }
+
+  th {
+    @apply .border-b-2 .border-solid .border-grey .text-left;
+  }
+}
+
+table tbody {
+  tr:nth-child(odd) {
+    @apply ..bg-grey-lighter;
+    @apply .border-b .border-grey;
+  }
+
+  tr:nth-child(even) {
+    @apply .bg-white;
+    @apply .border-b .border-grey;
+  }
+}

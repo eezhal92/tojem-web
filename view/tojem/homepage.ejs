@@ -10,6 +10,14 @@
       max-width: 480px;
       margin: 0 auto;
     }
+
+    .bg-fb {
+      background-color: #4266b2;
+    }
+
+    .bg-fb-lighter {
+      background-color: #4080ff;
+    }
   </style>
 </head>
 <body class="bg-red font-sans font-normal text-black leading-normal text-white">
@@ -25,14 +33,15 @@
         <a class="login-page-link text-white" href="/login">Log In</a>
       <% } %>
       </div>
-
-      <div class="pt-8">
+      <div class="mt-8">
         <p class="text-lg">Cari makanan atau barang yang kamu inginkan, mudah...</p>
-        <br>
+      </div>
+
+      <div class="mt-8">
         <form id="search-form" action="/cari">
-          <input type="text" class="w-full border p-2 rounded border-grey" name="q" placeholder="Saya ingin ...">
+          <input type="text" class="w-full border p-2 rounded border-grey" name="q" placeholder="Saya ingin ..." autocomplete="off">
           <div class="text-center mt-2">
-            <button class="border bg-white border-red text-red p-2 rounded" type="submit">Temukan 🔍</button>
+            <button class="border bg-white border-red text-black p-2 rounded" type="submit">Temukan 🔍</button>
           </div>
         </form>
       </div>

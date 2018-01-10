@@ -5,11 +5,24 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Not Found | tojem</title>
   <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+  </style>
 </head>
-<body>
+<body class="bg-black font-sans font-normal text-white leading-normal text-white">
   <div class="container">
-    <h1>Maaf... <%= message || 'Halaman Tidak Ditemukan' %></h1>
-    <a class="btn" href="/">Daftar Produk</a>
+    <div class="container mx-auto">
+      <div class="mx-4">
+        <h1 class="mt-4 mb-8">😱 Maaf... <%= message || 'Halaman Tidak Ditemukan' %></h1>
+        <p class="text-lg">Tiada hari tanpa masalah. Becanda!</p>
+        <br>
+        <a class="bg-white p-2 rounded text-black" href="/">Ke halaman utama</a>
+
+      </div>
+    </div>
   </div>
 </body>
 </html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Transaksi Order</title>
+  <meta name="viewport" content="initial-scale=1,width=device-width">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="font-sans font-normal text-black leading-normal bg-grey-lightest">
+  <div id="app">
+    <%- include('../_partials/sidebar') %>
+
+    <div class="main-content">
+
+      <%- include('../_partials/header', { viewData }) %>
+
+      <div class="container mx-auto px-2 sm:px-4 md:px-8 pb-4">
+        <div class="mb-4">
+          <div class="w-full">
+            <h1 class="my-4">Detail Transaksi</h1>
+          </div>
+
+          <div class="w-full">
+            <p class="mb-2 text-lg">ID Transaksi <br><span class="font-bold text-2xl">#<%= transaction.id %></span></p>
+            <p class="mb-2 text-lg">Tanggal Transaksi <br><span class="font-bold text-2xl"><%= transaction.date %></span></p>
+            <p class="mb-2 text-lg">Nilai <br><span class="font-bold text-2xl">Rp. <%= transaction.amount.toLocaleString() %></span></p>
+          </div>
+        </div>
+
+
+        <table>
+          <thead>
+            <tr>
+              <th>Nama Produk</th>
+              <th>Harga</th>
+              <th>Qty</th>
+              <th>Jumlah</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% items.forEach((order) => { %>
+            <tr>
+              <td><%= order.productName %></td>
+              <td>Rp. <%= order.productPrice.toLocaleString() %></td>
+              <td><%= order.qty %></td>
+              <td>Rp. <%= (order.productPrice * order.qty).toLocaleString() %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/bs-nav.js"></script>
+</body>
+</html>

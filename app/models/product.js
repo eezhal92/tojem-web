@@ -6,5 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
   });
 
+  Product.associate = (models) => {
+    Product.belongsTo(models.store);
+  };
+
   return Product;
 };

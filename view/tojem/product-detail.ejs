@@ -27,7 +27,7 @@
         <div class="overflow-hidden">
           <div class="float-left">
             <form action="/cari">
-              <input type="text" class="border p-1 rounded" name="q" value="<%= query %>" placeholder="Mau cari apa?">
+              <input type="text" class="border p-1 rounded" name="q" value="" placeholder="Mau cari apa?">
               <button type="submit" class="hidden">Temukan</button>
             </form>
           </div>
@@ -46,19 +46,7 @@
   </div>
   <div class="container" style="padding-top: 68px">
     <div class="mx-4">
-      <h1 class="mt-4 mb-8">
-        <% if (query) { %>
-          Hasil pencarian <%= '"' + query + '"' %>
-        <% } else { %>
-          Temukan berbagai barang dan makanan
-        <% } %>
-      </h1>
 
-      <% if (!products.length) { %>
-      <p class="text-lg">😅 Ga ada apa-apa...</p>
-      <% } %>
-
-      <% products.forEach((product) => { %>
       <div class="item bg-white border border-grey mb-4">
         <div style="padding: 0.2rem;">
           <div style="width: 100%; min-height: 220px" class="bg-grey-lighter">
@@ -66,20 +54,22 @@
           </div>
           <div class="p-4">
             <div class="detail">
-              <p class=""><%= product.name %></p>
+              <p class="font-bold text-lg"><%= product.name %></p>
               <p class="text-sm text-grey-darker mt-2"><span>🏪 <%= product.store.name %></span></p>
               <p class="mt-2 text-green font-bold">💰<%= product.price.toLocaleString() %></p>
+              <button class="bg-fb mt-2 text-white p-2 rounded ">☎️ Hubungi Penjual</button>
             </div>
           </div>
         </div>
 
-        <div class="action p-2 border-t border-grey-lighter text-right">
-          <a href="/item/<%= product.id %>" class="bg-white border text-grey-darker p-2 rounded ">👀 Lihat</a>
-          <button class="bg-fb text-white p-2 rounded ">☎️ Hubungi Penjual</button>
+        <div class="action p-4 border-t border-grey-lighter">
+          <%= product.description %>
         </div>
       </div>
-      <% }) %>
 
+      <div class="text-center my-8">
+        <a href="/cari" class="border bg-white border-red text-red p-2 rounded">Cari yang lain🔍</a>
+      </div>
     </div>
   </div>
 </body>

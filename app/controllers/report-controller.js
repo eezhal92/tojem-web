@@ -1,11 +1,9 @@
-/* eslint class-methods-use-this: [2, { exceptMethods: [getDashboard] }] */
+/* eslint class-methods-use-this: [2, { exceptMethods: [showDashboard] }] */
 
 import autoBind from 'auto-bind';
 
-import models from 'app/models';
 import os from 'app/services/order';
 import viewData from 'app/lib/view-data';
-import { NotFoundError, UnprocessableEntityError } from 'app/lib/errors';
 
 export class ReportController {
   /**
@@ -20,21 +18,10 @@ export class ReportController {
     autoBind(this);
   }
 
-  getDashboard(request, response, next) {
-    models.order.findAll({
-      where: { storeId: 1 },
-      include: [{
-        model: models.orderItem,
-      }],
-    })
-      .then((orders) => {
-        const data = viewData.wrapForRequest(request);
+  showDashboard(request, response) {
+    const data = viewData.wrapForRequest(request);
 
-        response.render('backstore/report/dashboard', data);
-      })
-      .catch((error) => {
-        next(error);
-      });
+    response.render('backstore/report/dashboard', data);
   }
 }
 
