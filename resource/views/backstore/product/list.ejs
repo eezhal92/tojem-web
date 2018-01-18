@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Daftar Produk | tojem</title>
+  <title>Daftar Produk | <%= app.title %></title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="font-sans font-normal text-black leading-normal bg-grey-lightest">
@@ -11,8 +11,7 @@
     <%- include('../_partials/sidebar') %>
 
     <div class="main-content">
-
-      <%- include('../_partials/header', { viewData }) %>
+      <%- include('../_partials/header') %>
 
       <div class="container mx-auto px-2 sm:px-4 md:px-8 pb-4">
         <div class="mb-4">

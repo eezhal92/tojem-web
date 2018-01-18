@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Ubah Produk | tojem</title>
+  <title>Buat Product | <%= app.title %></title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="font-sans font-normal text-black leading-normal bg-grey-lightest">
@@ -12,22 +12,23 @@
 
     <div class="main-content">
 
-      <%- include('../_partials/header', { viewData }) %>
+      <%- include('../_partials/header') %>
 
       <div class="container mx-auto px-2 sm:px-4 md:px-8 pb-4">
         <div class="flex">
           <div class="p-4 w-full">
-            <h1 class="mt-1 mb-4">Ubah Produk</h1>
+            <h1 class="mt-1 mb-4">Tambah Produk</h1>
           </div>
         </div>
 
         <div class="flex">
           <div class="p-4 w-full">
-            <form id="edit-product-form" action="/backstore/products/<%= product.id %>" method="post" @submit="updateProduct">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <form id="add-product-form" @submit="submitProduct" action="/backstore/products/create" method="post">
+              <%- csrfField() %>
+
               <div class="mb-4">
                 <label class="block mb-1" for="name">Nama</label>
-                <input class="block p-1 border border-grey w-full" id="name" type="text" name="name" value="<%= error.getOldInput('name') || product.name %>" placeholder="Nama yang menarik mungkin ide yang bagus">
+                <input class="block p-1 border border-grey w-full" id="name" type="text" name="name" placeholder="Apa nama produk Anda?" value="<%= error.getOldInput('name') %>">
                 <% if (error.getMessage('name')) { %>
                   <div class="text-red"><small><%= error.getMessage('name') %></small></div>
                 <% } %>
@@ -43,15 +44,18 @@
 
               <div class="mb-4">
                 <label class="block mb-1" for="description">Deskripsi</label>
-                <textarea class="block p-1 border border-grey w-full" id="description" name="description" rows="3" placeholder="Deskripsi menarik tentang produk Anda"><%= error.getOldInput('description') || product.description %></textarea>
+                <textarea class="block p-1 border border-grey w-full" id="description" name="description" rows="3" placeholder="Deskripsi menarik tentang produk Anda"></textarea>
+                <% if (error.getMessage('description')) { %>
+                  <div><small><%= error.getMessage('description') %></small></div>
+                <% } %>
               </div>
 
-              <button class="border border-blue p-2 rounded-sm text-center text-blue float-right" type="submit">Perbarui</button>
+              <button id="save-product-button" class="border border-blue p-2 rounded-sm text-center text-blue float-right" type="submit">Tambah</button>
             </form>
           </div>
         </div>
-
       </div>
+
     </div>
   </div>
 
@@ -63,7 +67,7 @@
     <% if (error.getOldInput('price')) { %>
     const price = <%= error.getOldInput('price') %>;
     <% } else { %>
-    const price = <%= product.price %>;
+    const price = 'Rp. 0';
     <% } %>
 
     new Vue({
@@ -80,7 +84,7 @@
         },
       },
       methods: {
-        updateProduct(event) {
+        submitProduct(event) {
           event.preventDefault();
 
           const priceEl = document.querySelector('input[name=price]');
@@ -89,7 +93,7 @@
 
           priceEl.value = price;
 
-          const formEl = document.querySelector('#edit-product-form');
+          const formEl = document.querySelector('#add-product-form');
 
           formEl.submit();
         },

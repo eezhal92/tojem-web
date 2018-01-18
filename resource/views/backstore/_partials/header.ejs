@@ -8,12 +8,13 @@
         </svg>
       </button>
 
-      <span class="inline-block p-2 text-white"><%= viewData.store.name %></span>
+      <span class="inline-block p-2 text-white"><%= auth.user.store.name %></span>
     </div>
 
     <div class="float-right hidden md:block">
       <a href="/backstore/pos" class="btn-new-transaction bg-teal text-white p-2 rounded">Transaksi Baru</a>
-      <span class="text-white"><%= viewData.user.name %></span>
+      <span class="text-white">|</span>
+      <span class="text-white"><%= auth.user.name %></span>
       <span class="text-white">|</span>
       <a href="/logout" class="text-white">Keluar</a>
     </div>
