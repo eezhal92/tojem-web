@@ -1,7 +1,3 @@
-/* eslint-env node, mocha */
-
-require('dotenv').config();
-
 describe('Create product', () => {
   let cookie;
 

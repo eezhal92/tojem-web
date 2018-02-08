@@ -1,5 +1,3 @@
-import viewData from 'app/lib/view-data';
-
 export function storeSession(db) {
   return (request, response, next) =>
     db.store.findAll({ where: { ownerId: request.user.id } })

@@ -20,6 +20,16 @@ export class OrderService {
   }
 
   /**
+   * Retrieve Seller-User transaction.
+   *
+   * @param  {object}           user
+   * @return {Tojem.Model.User}
+   */
+  async getTransactionBySellerId(user = {}) {
+    return this.models.user.findById(user.id);
+  }
+
+  /**
    * Create a new transaction provided 'on-site'.
    *
    * @param  number      storeId

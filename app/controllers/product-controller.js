@@ -1,8 +1,7 @@
-/* eslint class-methods-use-this: [2, { exceptMethods: [showCreateForm, deactivate] }] */
-
 import autoBind from 'auto-bind';
+
+import auth from 'app/lib/auth';
 import ps from 'app/services/product';
-import viewData from 'app/lib/view-data';
 import { NotFoundError, UnprocessableEntityError } from 'app/lib/errors';
 
 export class ProductController {
@@ -27,15 +26,11 @@ export class ProductController {
    * @return {Express.Response}
    */
   showAll(request, response, next) {
-    this.productService.findAllByStore({ id: 1 })
-      .then((products) => {
-        const data = viewData.wrapForRequest(request, { products });
-
-        response.render('backstore/product/list', data);
-      })
-      .catch((error) => {
-        next(error);
-      });
+    auth.user.getAllProduct().then((products) => {
+      response.render('backstore/product/list', { products });
+    }).catch((error) => {
+      next(error);
+    });
   }
 
   /**
@@ -55,9 +50,7 @@ export class ProductController {
           return;
         }
 
-        const data = viewData.wrapForRequest(request, { product });
-
-        response.render('backstore/product/detail', data);
+        response.render('backstore/product/detail', { product });
       })
       .catch((error) => {
         next(error);
@@ -72,15 +65,16 @@ export class ProductController {
    * @return {Express.Response}
    */
   showCreateForm(request, response) {
+    // [TODO]: extrack into dedicated variable
+    // request.app.local.error
     const inputError = new UnprocessableEntityError(
       request.flash('errors')[0],
       request.flash('oldInputs')[0],
     );
 
-    const data = viewData.wrapForRequest(request, {
-      csrfToken: request.csrfToken(),
+    const data = {
       error: inputError,
-    });
+    };
 
     response.render('backstore/product/create', data);
   }
@@ -125,11 +119,10 @@ export class ProductController {
 
     this.productService.findById(request.params.id)
       .then((product) => {
-        const data = viewData.wrapForRequest(request, {
+        const data = {
           product,
           error: inputError,
-          csrfToken: request.csrfToken(),
-        });
+        };
 
         response.render('backstore/product/edit', data);
       })

@@ -1,9 +1,6 @@
-/* eslint class-methods-use-this: [2, { exceptMethods: [showDashboard] }] */
-
 import autoBind from 'auto-bind';
 
 import os from 'app/services/order';
-import viewData from 'app/lib/view-data';
 
 export class ReportController {
   /**
@@ -19,9 +16,7 @@ export class ReportController {
   }
 
   showDashboard(request, response) {
-    const data = viewData.wrapForRequest(request);
-
-    response.render('backstore/report/dashboard', data);
+    response.render('backstore/report/dashboard');
   }
 }
 

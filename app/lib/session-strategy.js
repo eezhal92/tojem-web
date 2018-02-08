@@ -11,7 +11,7 @@ import db from 'app/models';
  *
  * @throws {Error}
  */
-function session(env, sessionProvider) {
+function sessionStrategy(env, sessionProvider) {
   if (!env) {
     throw new Error('session: `env` must be set');
   }
@@ -40,4 +40,4 @@ function session(env, sessionProvider) {
   return sessionOptions;
 }
 
-export default session;
+export default sessionStrategy;

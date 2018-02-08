@@ -6,7 +6,7 @@
     "public",
     "storage"
   ],
-  "watch": ["app"],
+  "watch": ["app", "package"],
   "verbose": true,
   "ext": "js json ejs"
 }

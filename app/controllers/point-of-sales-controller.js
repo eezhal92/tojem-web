@@ -1,5 +1,3 @@
-/* eslint class-methods-use-this: [2, { exceptMethods: [showTransactionForm] }] */
-
 import autoBind from 'auto-bind';
 
 export class PointOfSalesController {

@@ -8,12 +8,12 @@ module.exports = {
 
   selenium: {
     start_process: true,
-    // eslint-disable-next-line global-require,import/no-extraneous-dependencies
+    // eslint-disable-next-line import/no-extraneous-dependencies
     server_path: require('selenium-server').path,
     log_path: '',
     port: 4444,
     cli_args: {
-      // eslint-disable-next-line global-require,import/no-extraneous-dependencies
+      // eslint-disable-next-line import/no-extraneous-dependencies
       'webdriver.chrome.driver': require('chromedriver').path,
       'webdriver.gecko.driver': '',
       'webdriver.edge.driver': '',

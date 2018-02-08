@@ -1,7 +1,3 @@
-/* eslint-env node, mocha */
-
-require('dotenv').config();
-
 describe('Seller-user onboarding', () => {
   after((client, done) => {
     client.end(() => {

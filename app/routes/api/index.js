@@ -9,9 +9,12 @@ import product from './product';
 import report from './report';
 
 const router = express.Router();
+const api = express.Router();
+
+api.use('/api', router);
 
 router.use('/orders', order);
 router.use('/products', product);
 router.use('/reports', report);
 
-export default router;
+export default api;

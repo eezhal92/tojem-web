@@ -1,18 +1,17 @@
-const { resolve } = require('path');
-const dotEnv = require('dotenv');
-
-dotEnv.config();
+const path = require('path');
 
 try {
   if (!process.env.NODE_ENV) {
     throw new Error('[App] NODE_ENV value must be set');
   }
 
-  if (resolve(process.env.NODE_PATH) !== resolve(__dirname, '..')) {
-    throw new Error('[App] NODE_PATH value should be equal to root app path');
+  const NODE_PATH = process.env.NODE_PATH.split(path.delimiter);
+
+  if (!NODE_PATH.includes(path.resolve(__dirname, '..'))) {
+    throw new Error('[App]: The root app path should be exist in the NODE_PATH');
   }
 } catch (err) {
-  process.stderr.write(err);
+  console.error(err); // eslint-disable-line
   process.exit(1);
 }
 
