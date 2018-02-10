@@ -1,5 +1,3 @@
-/* eslint class-methods-use-this: [2, { exceptMethods: [createStoreForm] }] */
-
 import autoBind from 'auto-bind';
 import onBoardingService from 'app/services/onboarding';
 import { UnprocessableEntityError } from 'app/lib/errors';

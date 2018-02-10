@@ -11,8 +11,6 @@
 
 ### Local / Development
 
-- Buat database di MySQL
-
 - Install dependensi
 
     `yarn install`
@@ -23,13 +21,17 @@
 
     Lakukan konfigurasi dan sesuaikan environment pada file `.env`.
 
+- Buat database di MySQL
+
+    `tojem db:create`
+
 - Migrasi database
 
-    `node tojem db:migrate`
+    `tojem db:migrate`
 
 - Eksekusi aplikasi untuk development
 
-    `npm run dev` atau `node tojem serve`
+    `npm run dev` atau `tojem serve`
 
 
 ### Production
@@ -40,7 +42,7 @@
 
 - Jalankan aplikasi
 
-    `npm run start` atau `node tojem serve --prod`
+    `npm run start` atau `tojem serve --prod`
 
 ## Testing
 

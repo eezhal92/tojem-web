@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-const { mix } = require('laravel-mix');
+const path = require('path');
+const mix = require('laravel-mix');
 const tailwindcss = require('tailwindcss');
 
 mix.webpackConfig({
@@ -18,5 +19,7 @@ mix.js('resource/js/bs-nav.js', 'public/js');
 mix.sass('resource/scss/style.scss', 'public/css')
   .options({
     processCssUrls: false,
-    postCss: [tailwindcss('./tailwind.js')],
+    postCss: [
+      tailwindcss(path.join(__dirname, 'resource', 'vendors', 'tailwind.js')),
+    ],
   });

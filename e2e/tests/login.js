@@ -1,7 +1,3 @@
-/* eslint-env node, mocha */
-
-require('dotenv').config();
-
 describe('Login page', () => {
   describe('non-user visit login page', () => {
     after((client, done) => {

@@ -2,7 +2,6 @@
  * Mobile nav for backstore
  */
 
-/* eslint-disable no-undef */
 (function init() {
   const sidebarBtn = document.querySelector('#sidebar-btn');
   const sidebar = document.querySelector('#sidebar');

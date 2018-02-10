@@ -1,16 +1,11 @@
-/* eslint class-methods-use-this: [2, { exceptMethods:
-  [showTransactionList, showTransactionDetail]
-}] */
-
 import autoBind from 'auto-bind';
 import sequelize from 'sequelize';
 import format from 'date-fns/format';
 
 import models from 'app/models';
-import viewData from 'app/lib/view-data';
-import { mapForList, orderItemsAmount } from 'app/lib/order';
 import paginateMeta from 'app/lib/pagination';
 import { NotFoundError } from 'app/lib/errors';
+import { mapForList, orderItemsAmount } from 'app/lib/order';
 
 export class TransactionController {
   /**
@@ -44,14 +39,14 @@ export class TransactionController {
 
       const [orders, count] = await Promise.all([findAllPromise, findAndCountPromise]);
 
-      const data = viewData.wrapForRequest(request, {
+      const data = {
         orders: mapForList(orders),
         pagination: paginateMeta({
           limit,
           page: parseInt(page, 10),
           total: count.count,
         }),
-      });
+      };
 
       response.render('backstore/transaction/list', data);
     } catch (error) {
@@ -82,7 +77,7 @@ export class TransactionController {
         transaction.amount = orderItemsAmount(items);
         transaction.date = format(transaction.createdAt, 'dddd, DD MMM YYYY');
 
-        const data = viewData.wrapForRequest(request, { transaction, items });
+        const data = { transaction, items };
 
         return response.render('backstore/transaction/detail', data);
       })

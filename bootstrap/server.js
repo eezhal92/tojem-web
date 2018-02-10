@@ -1,17 +1,17 @@
 import os from 'os';
 import http from 'http';
 import cluster from 'cluster';
+import application from 'tojem/app';
 
-import app from '../app';
-
-const PORT = process.env.PORT || 3000;
+const app = application();
+const { PORT, NODE_ENV } = process.env;
 const numCPUs = os.cpus().length;
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = NODE_ENV === 'production';
 
 const createHttpServer = () => {
   http.createServer(app).listen(PORT, () => {
-    if (process.env.NODE_ENV !== 'production') {
+    if (NODE_ENV !== 'production') {
       process.stdout.write(`\n  Server running on http://localhost:${PORT}\n`);
     }
   });

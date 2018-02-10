@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Jualan Jadi Mudah | <%= app.title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .bg-fb {
+      background-color: #4266b2;
+    }
+
+    .bg-fb-lighter {
+      background-color: #4080ff;
+    }
+  </style>
+</head>
+<body class="bg-red font-sans font-normal text-black leading-normal text-white">
+  <div class="container mx-auto">
+    <div class="mx-4">
+      <div class="py-2 text-sm text-right">
+      <% if (auth.isAuth()) { %>
+        <a class="text-white" href="/backstore/products" title="Kelola toko Anda">Ke backstore</a>
+        <span class="text-white">|</span>
+        <a class="logout-link text-white" href="/logout">Log Out</a>
+      <% } else { %>
+        <a class="login-page-link text-white" href="/login">Log In</a>
+      <% } %>
+      </div>
+
+      <div class="mt-8">
+        <p class="text-lg">Cari makanan atau barang yang kamu inginkan, mudah...</p>
+      </div>
+
+      <div class="mt-8">
+        <form id="search-form" action="/cari">
+          <input type="text" class="w-full border p-2 rounded border-grey" name="q" placeholder="Saya ingin ..." autocomplete="off">
+          <div class="text-center mt-2">
+            <button class="border bg-white border-red text-black p-2 rounded" type="submit">Temukan 🔍</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

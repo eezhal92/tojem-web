@@ -1,5 +1,5 @@
 module.exports = {
-  url: 'http://localhost:3000',
+  url: process.env.TEST_BASE_URL,
   elements: {
     loginLink: {
       selector: '.login-page-link',

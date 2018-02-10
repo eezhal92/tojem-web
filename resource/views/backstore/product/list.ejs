@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Daftar Produk | <%= app.title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="font-sans font-normal text-black leading-normal bg-grey-lightest">
+  <div id="app">
+    <%- include('../_partials/sidebar') %>
+
+    <div class="main-content">
+      <%- include('../_partials/header') %>
+
+      <div class="container mx-auto px-2 sm:px-4 md:px-8 pb-4">
+        <div class="mb-4">
+          <div class="w-full">
+            <h1 class="my-4">Daftar Produk</h1>
+          </div>
+          <div class="w-full">
+            <div class="my-2">
+              <a class="btn-add-product bg-white text-grey-darker rounded-sm border border-grey text-sm p-2 no-underline" href="/backstore/products/create">Tambah Produk</a>
+              <a class="rounded-sm text-white bg-blue no-underline border border-blue text-sm p-2" href="/backstore/pos">Transaksi Baru</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="w-full mt-4">
+            <% if (!products.length) { %>
+            <div class="bg-blue-lightest border border-blue-light text-blue-dark px-4 py-3 rounded relative" role="alert">
+              <strong class="font-bold">Daftar produk Anda masih kosong!</strong>
+              <span class="block sm:inline">Silakan tambahkan produk Anda.</span>
+              <span class="absolute pin-t pin-b pin-r px-4 py-3">
+                <svg class="fill-current h-6 w-6 text-blue" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+              </span>
+            </div>
+            <% } %>
+
+            <% products.forEach((product) => { %>
+              <div class="flex">
+                <div class="w-full border border-grey mb-4 rounded overflow-hidden bg-white">
+                  <div class="info p-4">
+                    <div class="inline-block"><%= product.name %></div>
+                    <div class="inline-block float-right">
+                      <span class="text-green">Rp. <%= product.price.toLocaleString() %></span>
+                    </div>
+                  </div>
+                  <div class="action p-2 text-sm bg-grey-lighter overflow-hidden">
+                    <div class="inline-block float-right">
+                      <a href="/backstore/products/<%= product.id %>/edit">Ubah</a>
+                      <a href="/backstore/products/<%= product.id %>">Lihat</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/js/bs-nav.js"></script>
+</body>
+</html>

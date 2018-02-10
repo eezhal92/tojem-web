@@ -1,11 +1,8 @@
-/* eslint-env node, mocha */
-require('dotenv').config();
-
-const sequelize = require('@tojem/command/sequelize');
+const command = require('tojem/command');
 
 describe('Point of sales', () => {
   before((client, done) => {
-    sequelize.execSilent('db:seed:all', ['--seeders-path', 'database/seeders/e2e'], { test: true })
+    command.run.silent('db:seed:all', ['--seeders-path', 'database/seeders/e2e'], { test: true })
       .then(() => done());
   });
 

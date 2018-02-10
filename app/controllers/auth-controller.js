@@ -1,8 +1,5 @@
-/* eslint class-methods-use-this: [2, {
-  exceptMethods: [getLoginForm, logout, redirectOnAuthenticated]
-}] */
-
 import autoBind from 'auto-bind';
+import auth from 'app/lib/auth';
 
 export class AuthController {
   /**
@@ -51,6 +48,8 @@ export class AuthController {
       if (error) {
         return next(error);
       }
+
+      auth.destroy();
 
       return response.redirect('/');
     });

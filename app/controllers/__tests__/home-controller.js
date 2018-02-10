@@ -1,7 +1,7 @@
 import { HomeController } from '../home-controller';
 
 describe('app/controllers/home-controller', () => {
-  const request = { user: {} };
+  const request = {};
   const response = {
     render: jest.fn(),
     redirect: jest.fn(),
@@ -16,7 +16,7 @@ describe('app/controllers/home-controller', () => {
 
     home.showHomePage(request, response);
 
-    expect(response.render).toBeCalledWith('tojem/homepage', { user: {} });
+    expect(response.render).toBeCalledWith('tojem/homepage');
     expect(response.render).toHaveBeenCalledTimes(1);
   });
 });

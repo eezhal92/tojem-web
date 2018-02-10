@@ -1,7 +1,3 @@
-/* eslint class-methods-use-this: [2, { exceptMethods:
-  [showHomePage, showSearchPage, showProductDetailPage]
-}] */
-
 import autoBind from 'auto-bind';
 import sequelize from 'sequelize';
 
@@ -29,9 +25,7 @@ export class HomeController {
    * @return {Express.Response}
    */
   showHomePage(request, response, next) {
-    const data = { user: request.user };
-
-    response.render('tojem/homepage', data);
+    response.render('tojem/homepage');
   }
 
   /**

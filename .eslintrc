@@ -7,21 +7,25 @@
   },
   "plugins": [
     "import",
-    "jest",
-    "mocha",
-    "vue"
+    "jest"
   ],
   "settings": {
     "import/resolver": {
       "node": {
         "moduleDirectory": [
           "node_modules",
-          "tojem-web"
+          "tojem-web",
+          "package"
         ]
       }
     }
   },
   "rules": {
-    "no-unused-vars": [0, { "argsIgnorePattern": "next" }]
+    "no-unused-vars": [0, { "argsIgnorePattern": "next" }],
+    "no-underscore-dangle": [0, { "varIgnorePattern": ["__filename", "__dirname"] }],
+    "global-require": 0,
+    "class-methods-use-this": 0,
+    "import/no-dynamic-require": 0,
+    "func-names": 0
   }
 }
