@@ -60,6 +60,7 @@
     "husky": "^0.14.3",
     "ify-loader": "^1.1.0",
     "jest": "22.0.4",
+    "js-cookie": "^2.2.0",
     "laravel-mix": "^1.7.2",
     "nightwatch": "^0.9.19",
     "nodemon": "^1.14.12",

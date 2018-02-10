@@ -17,6 +17,8 @@
 </template>
 
 <script>
+/* eslint-disable no-undef */
+
 import dateFns from 'date-fns';
 import groupBy from 'lodash/groupBy';
 
@@ -24,11 +26,12 @@ import Plotly from '../plotly';
 
 export default {
   props: ['sales', 'dateFormat'],
+
   mounted() {
     // eslint-disable-next-line
     this.plotlyEl = document.querySelector('#chart-number');
 
-    const layout = {
+    this.layout = {
       title: 'Order Growth',
       xaxis: {
         title: 'Waktu',
@@ -46,8 +49,28 @@ export default {
       { ...this.soldItemsData, type: 'scatter', name: 'Item Terjual' },
     ];
 
-    Plotly.newPlot(this.plotlyEl, this.plotlyData, layout);
+    Plotly.newPlot(this.plotlyEl, this.plotlyData, this.layout);
+
+    window.addEventListener('resize', this.redrawChart.bind(this), false);
   },
+
+  methods: {
+    redrawChart() {
+      const actualResizeHandler = () => {
+        Plotly.purge(this.plotlyEl);
+        Plotly.newPlot(this.plotlyEl, this.plotlyData, this.layout);
+      };
+
+      // // ignore resize events as long as an actualResizeHandler execution is in the queue
+      if (!this.resizeTimeout) {
+        this.resizeTimeout = setTimeout(() => {
+          this.resizeTimeout = null;
+          actualResizeHandler();
+        }, 66);
+      }
+    },
+  },
+
   computed: {
     transactionNumber() {
       return this.sales.length;
@@ -90,6 +113,7 @@ export default {
       };
     },
   },
+
   watch: {
     sales: {
       deep: true,

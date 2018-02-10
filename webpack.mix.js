@@ -12,6 +12,8 @@ mix.webpackConfig({
   },
 });
 
+mix.js('resource/js/pages/home.js', 'public/js');
+mix.js('resource/js/pages/search-result.js', 'public/js');
 mix.js('resource/js/pages/pos.js', 'public/js');
 mix.js('resource/js/pages/report-overview.js', 'public/js');
 mix.js('resource/js/bs-nav.js', 'public/js');

@@ -10,10 +10,13 @@
 </template>
 
 <script>
+/* eslint-disable no-undef */
+
 import Plotly from '../plotly';
 
 export default {
   props: ['sales'],
+
   mounted() {
     // eslint-disable-next-line
     this.plotlyEl = document.querySelector('#chart-channel-type');
@@ -24,7 +27,27 @@ export default {
     }];
 
     Plotly.newPlot(this.plotlyEl, this.plotlyData);
+
+    window.addEventListener('resize', this.redrawChart.bind(this), false);
   },
+
+  methods: {
+    redrawChart() {
+      const actualResizeHandler = () => {
+        Plotly.purge(this.plotlyEl);
+        Plotly.newPlot(this.plotlyEl, this.plotlyData, this.layout);
+      };
+
+      // // ignore resize events as long as an actualResizeHandler execution is in the queue
+      if (!this.resizeTimeout) {
+        this.resizeTimeout = setTimeout(() => {
+          this.resizeTimeout = null;
+          actualResizeHandler();
+        }, 66);
+      }
+    },
+  },
+
   computed: {
     types() {
       return {
@@ -39,6 +62,7 @@ export default {
       };
     },
   },
+
   watch: {
     sales: {
       deep: true,

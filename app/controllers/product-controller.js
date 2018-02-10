@@ -50,6 +50,12 @@ export class ProductController {
           return;
         }
 
+        if (request.session.store.id !== product.storeId) {
+          next(new NotFoundError('Produk kagak ditemukan'));
+
+          return;
+        }
+
         response.render('backstore/product/detail', { product });
       })
       .catch((error) => {
