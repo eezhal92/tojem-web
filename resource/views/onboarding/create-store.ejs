@@ -4,20 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="/css/style.css">
-  <title>Buat toko | tojem</title>
+  <title>Buat toko | <%= app.name %></title>
 </head>
 <body class="font-sans font-normal text-black leading-normal bg-grey-lightest">
   <div class="container mx-auto">
     <div class="flex justify-center">
     <div class="w-full md:w-3/5">
       <div class="p-4 mt-8">
-        <h1 class="mb-1 mb-4">Selamat Datang, <%= user.name %>!</h1>
+        <h1 class="mb-1 mb-4">Selamat Datang, <%= auth.user.name %>!</h1>
         <p class="text-lg">Silakan isi informasi toko Anda sebelum mulai menggunakan</p>
       </div>
 
       <div class="p-4">
         <form class="onboarding-form" method="POST" action="/onboard/create-store">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <%- csrfField() %>
+
           <div class="mb-2">
             <label class="block mb-2" for="name">Nama Toko</label>
             <input  class="block p-1 border border-grey w-full" id="name" type="text" name="name" placeholder="Toko Keren">

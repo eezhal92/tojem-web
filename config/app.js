@@ -1,5 +1,6 @@
 module.exports = {
-  title: 'Tojem',
+  name: 'Tojem',
+  tagline: 'Jualan Jadi Mudah',
   version: '0.0.0',
   providers: [
     'app/providers/maintenance-provider',
