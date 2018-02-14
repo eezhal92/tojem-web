@@ -1,7 +1,7 @@
 import autoBind from 'auto-bind';
 import sequelize from 'sequelize';
 
-import models from 'app/models';
+import dbModels from 'app/models';
 import { NotFoundError } from 'app/lib/errors';
 
 const { Op } = sequelize;
@@ -12,7 +12,9 @@ export class HomeController {
    *
    * @return {mix}
    */
-  constructor() {
+  constructor(models) {
+    this.models = models;
+
     autoBind(this);
   }
 
@@ -38,7 +40,7 @@ export class HomeController {
    */
   showSearchPage(request, response, next) {
     const opts = {
-      include: [models.store],
+      include: [this.models.store],
     };
     const query = request.query.q || '';
 
@@ -51,11 +53,10 @@ export class HomeController {
       };
     }
 
-    models.product.findAll(opts)
+    this.models.product.findAll(opts)
       .then((products) => {
         const data = {
           products,
-          user: request.user,
           query,
           appId: process.env.FACEBOOK_APP_ID,
         };
@@ -68,20 +69,15 @@ export class HomeController {
   }
 
   showProductDetailPage(request, response, next) {
-    models.product.findById(request.params.id, {
-      include: [models.store],
+    this.models.product.findById(request.params.id, {
+      include: [this.models.store],
     })
       .then((product) => {
         if (!product) {
           return next(new NotFoundError('Item yang dimaksud tidak ditemukan'));
         }
 
-        const data = {
-          user: request.user,
-          product,
-        };
-
-        return response.render('tojem/product-detail', data);
+        return response.render('tojem/product-detail', { product });
       })
       .catch((error) => {
         next(error);
@@ -89,4 +85,4 @@ export class HomeController {
   }
 }
 
-export default new HomeController();
+export default new HomeController(dbModels);
