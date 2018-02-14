@@ -2,7 +2,7 @@ import autoBind from 'auto-bind';
 
 import auth from 'app/lib/auth';
 import ps from 'app/services/product';
-import { NotFoundError, UnprocessableEntityError } from 'app/lib/errors';
+import { NotFoundError } from 'app/lib/errors';
 
 export class ProductController {
   /**
@@ -71,18 +71,7 @@ export class ProductController {
    * @return {Express.Response}
    */
   showCreateForm(request, response) {
-    // [TODO]: extrack into dedicated variable
-    // request.app.local.error
-    const inputError = new UnprocessableEntityError(
-      request.flash('errors')[0],
-      request.flash('oldInputs')[0],
-    );
-
-    const data = {
-      error: inputError,
-    };
-
-    response.render('backstore/product/create', data);
+    response.render('backstore/product/create');
   }
 
   /**
@@ -118,19 +107,9 @@ export class ProductController {
    * @return {Express.Response}
    */
   showEditForm(request, response, next) {
-    const inputError = new UnprocessableEntityError(
-      request.flash('errors')[0],
-      request.flash('oldInputs')[0],
-    );
-
     this.productService.findById(request.params.id)
       .then((product) => {
-        const data = {
-          product,
-          error: inputError,
-        };
-
-        response.render('backstore/product/edit', data);
+        response.render('backstore/product/edit', { product });
       })
       .catch((error) => {
         next(error);
