@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>tojem - jualan jadi mudah | tojem</title>
+  <title><%= app.tagline %> | <%= app.name %></title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     .container {
@@ -21,29 +21,9 @@
   </style>
 </head>
 <body class="bg-grey-lightest font-sans font-normal text-black leading-normal">
-  <div style="position: fixed; top: 0; right: 0; left: 0" class="bg-red">
-    <div class="container">
-      <div class="mx-4 py-2 text-sm">
-        <div class="overflow-hidden">
-          <div class="float-left">
-            <form action="/cari">
-              <input type="text" class="border p-1 rounded" name="q" value="" placeholder="Mau cari apa?">
-              <button type="submit" class="hidden">Temukan</button>
-            </form>
-          </div>
-          <div class="float-right">
-            <% if (user) { %>
-              <a class="text-white" href="/backstore/products" title="Kelola toko Anda">Ke backstore</a>
-              <span class="text-white">|</span>
-              <a class="logout-link text-white" href="/logout">Log Out</a>
-            <% } else { %>
-              <a class="login-page-link text-white" href="/login">Log In</a>
-            <% } %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
+  <%- include('./_partials/header', { query: '' }) %>
+
   <div class="container" style="padding-top: 68px">
     <div class="mx-4">
 

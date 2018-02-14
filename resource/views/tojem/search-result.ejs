@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>tojem - jualan jadi mudah | tojem</title>
+  <title><%= app.tagline %> | <%= app.name %></title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     .container {
@@ -21,30 +21,11 @@
   </style>
 </head>
 <body class="bg-grey-lightest font-sans font-normal text-black leading-normal">
-  <div style="position: fixed; top: 0; right: 0; left: 0" class="bg-red">
-    <div class="container">
-      <div class="mx-4 py-2 text-sm">
-        <div class="overflow-hidden">
-          <div class="float-left">
-            <form action="/cari">
-              <input type="text" class="border p-1 rounded" name="q" value="<%= query %>" placeholder="Mau cari apa?">
-              <button type="submit" class="hidden">Temukan</button>
-            </form>
-          </div>
-          <div class="float-right">
-            <% if (user) { %>
-              <a class="text-white" href="/backstore/products" title="Kelola toko Anda">Ke backstore</a>
-              <span class="text-white">|</span>
-              <a class="logout-link text-white" href="/logout">Log Out</a>
-            <% } else { %>
-              <a class="login-page-link text-white" href="/login">Log In</a>
-            <% } %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container" style="padding-top: 68px">
+  <%- include('./_partials/header', { query }) %>
+
+  <%- include('./_partials/location') %>
+
+  <div class="container">
     <div class="mx-4">
       <h1 class="mt-4 mb-8">
         <% if (query) { %>
@@ -75,12 +56,15 @@
 
         <div class="action p-2 border-t border-grey-lighter text-right">
           <a href="/item/<%= product.id %>" class="bg-white border text-grey-darker p-2 rounded ">👀 Lihat</a>
-          <button class="bg-fb text-white p-2 rounded ">☎️ Hubungi Penjual</button>
+          <a href="https://www.facebook.com/dialog/send?app_id=159369768035937&display=popup&link=http%3A%2F%2Flocalhost%3A3000&redirect_uri=https%3A%2F%2Fshopee.co.id%2FBola-Basket-GG7X-Original-i.5825055.65803759%23close" class="bg-fb text-white p-2 rounded ">☎️ Hubungi Penjual</a>
         </div>
       </div>
       <% }) %>
 
     </div>
   </div>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsFWS_Rjf5jRilvkVDl2GrlyWBfs69AQM"></script>
+  <script src="/js/search-result.js"></script>
 </body>
 </html>
