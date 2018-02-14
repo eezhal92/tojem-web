@@ -9,7 +9,7 @@
           </form>
         </div>
         <div class="float-right">
-          <% if (user) { %>
+          <% if (auth.isAuth()) { %>
             <a class="text-white" href="/backstore/products" title="Kelola toko Anda">Ke backstore</a>
             <span class="text-white">|</span>
             <a class="logout-link text-white" href="/logout">Log Out</a>
