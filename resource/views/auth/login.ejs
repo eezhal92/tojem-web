@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title><%= app.tagline %> | <%= app.name %></title>
-  <link rel="stylesheet" href="/css/style.css">
+  <title>Login | <%= app.name %> - <%= app.tagline %></title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
   <style>
     .container {
       max-width: 480px;
@@ -22,19 +23,73 @@
     .text-fb {
       color: #4080ff;
     }
+
+    .top-nav-container {
+      display: block;
+      height: auto;
+      background-color: #042e4c;
+      border-bottom: 1px solid #1f4361;
+      box-shadow: 0 1px 3px -1px #5ea3dc;
+      font-size: 1.15em;
+    }
+
+    .top-nav-container .top-nav-button-back {
+      display: inline;
+      cursor: pointer;
+      padding: 0.55em;
+    }
+
+    .top-nav-container .top-nav-button-back:hover, .top-nav-button-back:active {
+      background-color: #1f4361;
+    }
+
+    .top-nav-container .top-nav-button-back:focus {
+      outline: none;
+    }
   </style>
 </head>
-<body class="bg-fb font-sans font-normal text-black leading-normal text-white">
+<body class="font-sans font-normal text-black leading-normal">
+  <div class="top-nav-container">
+    <div class="container mx-auto">
+      <div class="py-2 text-white" style="display:block">
+        <div class="top-nav-button-back mr-1" onclick="window.location = '/'">
+          <i class="fa fa-fw fa-arrow-left"></i>
+        </div>
+        <div style="display:inline">
+          <span>Halaman Utama</span>
+          <!-- <span style="float:right;padding-right:0.55em;">Login</span> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container mx-auto">
     <div class="mx-4">
-      <div class="py-2 text-sm text-right">
-        <a class="text-white" href="/">Ke halaman utama</a>
-      </div>
+      <div class="text-center">
+        <div class="mb-8">
+          <h2 class="mt-4 mb-8">Punya bisnis?</h2>
+          <p class="text-lg">
+            Kelola transaksi &amp; <br>
+            dapatkan laporan <br>
+            tentang bisnis Anda! <br>
+            <br>
+            <span class="font-bold" style="color:#e07116;">
+              GRATIS
+              <i class="fa fa-fw fa-smile-o"></i>
+            </span>
+          </p>
+        </div>
 
-      <h1 class="mt-4 mb-8">Log In</h1>
-      <p class="text-lg">Punya bisnis? Mulai kelola transaksi dan dapatkan laporan tentang bisnis Anda, gratis!</p>
-      <br>
-      <a class="fb-login-link bg-white rounded border border-fb text-fb p-2" href="/auth/facebook">Masuk dengan facebook 😎</a>
+        <div class="mb-8">
+          <p class="text-lg">
+            Mulai Sekarang...
+          </p>
+        </div>
+
+        <button data-env="login-facebook" class="bg-fb text-white rounded border border-fb p-2 font-medium" onclick="window.location = '/auth/facebook'">
+          <i class="fa fa-fw fa-facebook"></i> Masuk dengan facebook
+        </button>
+      </div>
     </div>
   </div>
 </body>
