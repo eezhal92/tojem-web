@@ -6,9 +6,9 @@
   "scripts": {
     "prepush": "npm test",
     "test": "npm run lint && jest",
-    "e2e": "tojem test:e2e",
-    "start": "tojem serve --prod",
-    "dev": "tojem serve",
+    "e2e": "./tojem test:e2e",
+    "start": "./tojem serve --prod",
+    "dev": "./tojem serve",
     "asset:dev": "NODE_ENV=development webpack --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "asset:build": "NODE_ENV=development webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "lint": "eslint ."
