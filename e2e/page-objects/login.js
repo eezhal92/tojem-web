@@ -2,7 +2,7 @@ module.exports = {
   url: `${process.env.TEST_BASE_URL}/login`,
 
   elements: {
-    fbLoginLink: { selector: '.fb-login-link' },
+    fbLoginLink: { selector: '[data-env="login-facebook"]' },
     fbEmailField: { selector: 'input#email' },
     fbPasswordField: { selector: 'input#pass' },
     fbLoginButton: { selector: '#loginbutton' },
