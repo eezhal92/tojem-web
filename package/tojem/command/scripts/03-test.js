@@ -13,51 +13,64 @@ module.exports = (command) => {
 
   command('test:e2e')
     .describe('Running browser test (e2e).')
+    .options({
+      name: 'delay',
+      alias: 'D',
+      type: 'number',
+      default: 900,
+      describe: 'Delay time [ms] after server running.',
+    })
     .handler(async function (args, opts) {
       opts = Object.assign({}, opts, { // eslint-disable-line no-param-reassign
         silent: !opts.verbose && true,
         test: true,
       });
 
+      const { delay } = opts;
+      delete opts.delay; // eslint-disable-line no-param-reassign
+
+      const BASE_PATH = path.resolve(this.config.get('dir.base'));
+      const BIN = path.join(BASE_PATH, 'node_modules', '.bin', 'nightwatch');
+      const nightwatchConf = path.resolve(this.config.get('dir.config'), 'nightwatch.js');
+
       await this.run('db:drop', [], opts);
       await this.run('db:create', [], opts);
       await this.run('db:migrate', [], opts);
 
-      const BASE_PATH = path.resolve(this.config.get('dir.base'));
-      const BIN = path.join(BASE_PATH, 'node_modules', '.bin', 'nightwatch');
-      const serverProcess = await this.run('serve', [], opts);
-      const processArgv = [
-        ...args,
-        '--config',
-        path.resolve(this.config.get('dir.config'), 'nightwatch.js'),
-      ];
-
-      const browser = spawn(BIN, processArgv, {
-        stdio: 'inherit',
-        env: {
-          ...this.env(opts),
-          NODE_PATH: [
-            BASE_PATH,
-            path.resolve(this.config.get('dir.package')),
-          ].join(path.delimiter),
-        },
+      const runBrowserTest = (options = {}) => new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(spawn(BIN, args.concat(['--config', nightwatchConf]), {
+            stdio: 'inherit',
+            env: {
+              ...this.env(opts),
+              NODE_PATH: [
+                BASE_PATH,
+                path.resolve(this.config.get('dir.package')),
+              ].join(path.delimiter),
+            },
+          }));
+        }, options.delay || 0);
       });
 
-      require('module').Module._initPaths();
+      this.run('serve', [], opts).then((server) => {
+        const exit = (code) => {
+          process.kill(server.pid);
+          process.exit(code || 0);
+        };
 
-      const killProcess = (code) => {
-        process.kill(serverProcess.pid);
-        process.exit(code || 0);
-      };
+        return runBrowserTest({ delay }).then((browser) => {
+          this.log.info([
+            '> Running - browser test e2e.',
+            `  pid: ${browser.pid}`,
+            `  bin: ${path.basename(browser.spawnfile)}`,
+          ], opts);
 
-      this.log.info([
-        '> Running - browser test e2e.',
-        `  pid: ${browser.pid}`,
-        `  bin: ${path.basename(browser.spawnfile)}`,
-      ], opts);
-
-      browser
-        .on('close', killProcess)
-        .on('exit', killProcess);
+          browser
+            .on('close', exit)
+            .on('exit', exit);
+        });
+      }).catch((error) => {
+        throw error;
+      });
     });
 };

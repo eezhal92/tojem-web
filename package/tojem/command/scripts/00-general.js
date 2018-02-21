@@ -55,19 +55,17 @@ module.exports = (command) => {
         ? path.join(BASE_PATH, 'node_modules', '.bin', 'nodemon')
         : 'node';
 
-      const argv = [
-        path.join(BASE_PATH, 'bootstrap', 'app.js'),
-      ];
+      let argv = ['-r', '@std/esm', path.join(BASE_PATH, 'bootstrap', 'server.js')];
 
-      if (isDev) {
-        argv.push.apply(argv, [
+      if (BIN.includes('nodemon')) {
+        argv = [].concat([
           '--config',
           path.resolve(this.config.get('dir.config'), 'nodemon.json'),
-        ]);
+          '--',
+        ], argv);
       }
 
       const serverProcess = spawn(BIN, argv, processOptions);
-      require('module').Module._initPaths();
 
       if (isDev) {
         this.log.info([
@@ -79,7 +77,6 @@ module.exports = (command) => {
         ], opts);
       }
 
-      return Promise.resolve()
-        .then(() => serverProcess);
+      return Promise.resolve(serverProcess);
     });
 };
