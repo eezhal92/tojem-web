@@ -24,14 +24,12 @@
 
   <%- include('./_partials/header', { query: '' }) %>
 
-  <div class="container" style="padding-top: 68px">
+  <div id="app" class="container" style="padding-top: 68px">
     <div class="mx-4">
 
       <div class="item bg-white border border-grey mb-4">
         <div style="padding: 0.2rem;">
-          <div style="width: 100%; min-height: 220px" class="bg-grey-lighter">
-            <img class="w-full" src="http://lorempixel.com/320/220/food" alt="">
-          </div>
+          <image-carousel :images="<%= JSON.stringify(product.productImages) %>"></image-carousel>
           <div class="p-4">
             <div class="detail">
               <p class="font-bold text-lg"><%= product.name %></p>
@@ -52,5 +50,7 @@
       </div>
     </div>
   </div>
+
+  <script src="/js/product-detail.js"></script>
 </body>
 </html>

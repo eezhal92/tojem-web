@@ -5,8 +5,8 @@ import BaseProvider from 'tojem/providers/base-provider';
 
 class RouteProvider extends BaseProvider {
   handle() {
-    this.mapWebRouter();
     this.mapApiRouter();
+    this.mapWebRouter();
   }
 
   mapWebRouter() {

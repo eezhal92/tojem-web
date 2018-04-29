@@ -31,6 +31,20 @@ class ProductApiController {
         next(error);
       });
   }
+
+  uploadImage(request, response, next) {
+    this.productService.addImages(request.file.images)
+      .then((images) => {
+        response.json({ images });
+      });
+  }
+
+  removeImage(request, response, next) {
+    this.productService.removeImage(request.params.imageId)
+      .then(() => {
+        response.json({ message: 'Gambar berhasil di hapus.' });
+      });
+  }
 }
 
 export default new ProductApiController(ps);
