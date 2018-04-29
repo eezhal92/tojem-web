@@ -1,3 +1,4 @@
+import path from 'path';
 import sharp from 'sharp';
 import Multer from 'multer';
 import Storage from '@google-cloud/storage';
@@ -33,9 +34,17 @@ export const multer = Multer({
   },
 });
 
-export const storage = new Storage({
-  projectId,
-});
+let storageOpts = {};
+
+if (process.env.NODE_ENV === 'production') {
+  storageOpts = {
+    keyFilename: path.resolve('../../.key/gcp-key.json'),
+  };
+} else {
+  storageOpts = { projectId };
+}
+
+export const storage = new Storage(storageOpts);
 
 export const bucket = storage.bucket(CLOUD_BUCKET);
 
