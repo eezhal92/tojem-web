@@ -4,7 +4,7 @@ import Multer from 'multer';
 import Storage from '@google-cloud/storage';
 
 const projectId = process.env.GCP_PROJECT_ID;
-const CLOUD_BUCKET = 'tojem-app-product-images';
+const CLOUD_BUCKET = process.env.GCP_STORAGE_CLOUD_BUCKET;
 
 export const SIZE_SMALL = 'small';
 export const SIZE_MEDIUM = 'medium';
