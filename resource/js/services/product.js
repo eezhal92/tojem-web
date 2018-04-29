@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import axios from 'axios';
 
 /**
@@ -6,16 +7,21 @@ import axios from 'axios';
  * @param  {Function} options.onUploadProgress
  * @return {Promise}
  */
-export default function uploadProductImage({
+export function uploadProductImage({
   productId,
   file,
-  onUploadProgress = () => {}
+  onUploadProgress = () => {},
 }) {
   const payload = new FormData();
 
   payload.append('image', file);
 
   return axios.post(`/api/products/${productId}/images`, payload, {
-    onUploadProgress
-  });
+    onUploadProgress,
+  })
+    .then(response => response.data);
 }
+
+export default {
+  uploadProductImage,
+};

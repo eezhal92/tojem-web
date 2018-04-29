@@ -56,7 +56,7 @@ export class ProductController {
           return;
         }
 
-        response.render('backstore/product/detail', { product });
+        response.render('backstore/product/detail', { product: product.toJSON() });
       })
       .catch((error) => {
         next(error);

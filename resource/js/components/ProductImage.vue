@@ -3,11 +3,19 @@
     <div class="images flex-wrap">
       <div
         v-for="(image, i) in images"
-        :key="image + i"
+        :key="image.url + i"
+        class="images__item w-24 h-24"
+        :style="{ 'background-image': `url('${image.url}')` }"
+      />
+
+      <div
+        v-for="(image, i) in processingImages"
+        :key="`pi-${i}`"
         class="images__item w-24 h-24"
       >
-        <img :src="image" class="image__img">
+        <div class="images__text">Mengunggah...</div>
       </div>
+
       <div
         @click="handleAddButtonClick"
         class="images__item add-button w-24 h-24"
@@ -29,18 +37,20 @@
 import axios from 'axios';
 import * as productService from '../services/product';
 
+const MAXIMUM_UPLOAD = 4;
+
 export default {
-  props: ['productId'],
+  props: ['productId', 'defaultImages'],
 
   data () {
     return {
-      images: [
-        'http://lorempixel.com/96/96/food',
-        'http://lorempixel.com/96/96/people',
-        'http://lorempixel.com/96/96/people',
-        // 'http://lorempixel.com/96/96/people',
-      ],
+      processingImages: [],
+      images: [],
     }
+  },
+
+  mounted () {
+    this.images = this.defaultImages;
   },
 
   methods: {
@@ -53,12 +63,39 @@ export default {
     onUploadProgress (event) {
       console.log(event)
     },
+    validateUpload () {
+      if (this.images.length === MAXIMUM_UPLOAD) {
+        throw new Error('Anda telah mencapai batas maksimum unggah gambar');
+      }
+
+      if (this.processingImages.length === 1) {
+        throw new Error('Mohon tunggu hingga unggahan yang ada telah selesai.');
+      }
+    },
     handleFileInputChange (event) {
+      try {
+        this.validateUpload();
+      } catch (error) {
+        alert(error.message);
+        return;
+      }
+
+      const processingImage = Date.now();
+
+      this.processingImages.push(processingImage)
+
       productService.uploadProductImage({
         productId: this.productId,
-        file: event.files[0],
-        onUploadProgress: this.onUploadProgress
+        file: event.target.files[0],
+        onUploadProgress: this.onUploadProgress,
       })
+        .then((data) => {
+          this.processingImages = this.processingImages.filter(image => image !== processingImage);
+          this.images = this.images.concat(data.images);
+        })
+        .catch(() => {
+          this.processingImages = [];
+        })
     }
   }
 }
@@ -75,12 +112,20 @@ export default {
     display: flex;
 
     &__item {
-      display: inline-block;
       margin-right: .5rem;
       margin-bottom: .5rem;
       border-radius: .25rem;
       background-color: #cecece;
       display: inline-block;
+      background-position: center;
+      background-size: cover;
+    }
+
+    &__text {
+      font-size: .75rem;
+      text-align: center;
+      display: block;
+      margin-top: 2rem;
     }
   }
 
@@ -89,6 +134,7 @@ export default {
     background-color: transparent;
     cursor: pointer;
     &__text {
+      color: #666;
       font-size: 12px;
     }
   }

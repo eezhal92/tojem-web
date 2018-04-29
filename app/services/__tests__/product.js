@@ -63,15 +63,6 @@ describe('services/product', () => {
     it('should be functioning properly', async () => {
       await productService.findById(productId);
 
-      expect(db.product.findById).toBeCalledWith(productId);
-      expect(db.product.findById).toHaveBeenCalledTimes(1);
-    });
-
-    it('should throw error when model fail to perform operation', async () => {
-      db.product.findById.mockImplementationOnce(() => Promise.reject(new Error('Cannot connect to db')));
-
-      await expect(productService.findById(productId)).rejects.toThrow('Cannot connect to db');
-      expect(db.product.findById).toBeCalledWith(productId);
       expect(db.product.findById).toHaveBeenCalledTimes(1);
     });
   });

@@ -31,6 +31,13 @@ class ProductApiController {
         next(error);
       });
   }
+
+  uploadImage(request, response, next) {
+    this.productService.addImages(request.file.images)
+      .then((images) => {
+        response.json({ images });
+      });
+  }
 }
 
 export default new ProductApiController(ps);

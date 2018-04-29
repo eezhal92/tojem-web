@@ -5,6 +5,7 @@
 - Node JS 8.9.0+
 - MySql
 - Yarn 1.2.1+
+- [libvips](https://jcupitt.github.io/libvips/install.html)
 
 
 ## Cara Setup

@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Product.associate = (models) => {
     Product.belongsTo(models.store);
+    Product.hasMany(models.productImage);
   };
 
   return Product;

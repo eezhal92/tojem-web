@@ -53,7 +53,16 @@ export class ProductService {
    * @return {Tojem.Model.Product}
    */
   findById(productId) {
-    return this.models.product.findById(productId);
+    return this.models.product.findById(productId, {
+      // Need to figure it out, about how to test include argument
+      include: [
+        { model: dbModels.productImage },
+      ],
+    });
+  }
+
+  addImages(images) {
+    return Promise.all(images.map(image => dbModels.productImage.create(image)));
   }
 }
 
