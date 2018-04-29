@@ -43,6 +43,15 @@ function serverError(error, request, response, next) {
     return response.render('error/500');
   }
 
+  console.log(request.xhr, error);
+
+  if (request.xhr) {
+    return response.status(500).json({
+      message: error.message,
+      error,
+    });
+  }
+
   throw error;
 }
 

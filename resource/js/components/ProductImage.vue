@@ -7,7 +7,13 @@
         class="images__item w-24 h-24"
         :style="{ 'background-image': `url('${image.url}')` }"
       >
-        <button @click="handleRemoveButtonClick(image.id)" class="image-remove-button">Hapus</button>
+        <button
+          @click="handleRemoveButtonClick(image.id)"
+          class="image-remove-button"
+          title="Hapus gambar"
+        >
+          <i class="mdi mdi-close"></i>
+        </button>
       </div>
 
       <div
@@ -15,7 +21,12 @@
         :key="`pi-${i}`"
         class="images__item w-24 h-24"
       >
-        <div class="images__text">Mengunggah...</div>
+        <div class="loader-wrapper">
+          <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+          </div>
+        </div>
       </div>
 
       <div
@@ -31,17 +42,28 @@
       </div>
     </div>
 
+    <div>
+      <span class="text-sm text-black">
+        <i class="mdi mdi-information"></i> Batas ukuran gambar 1.5MB
+      </span>
+    </div>
+
     <input @change="handleFileInputChange" ref="fileInput" type="file" name="image" class="product-image__file-input">
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Loader from './Loader';
 import * as productService from '../services/product';
 
 const MAXIMUM_UPLOAD = 4;
 
 export default {
+  components: {
+    Loader,
+  },
+
   props: ['productId', 'defaultImages'],
 
   data () {
@@ -60,16 +82,13 @@ export default {
       axios.delete(`/api/products/${this.productId}/images/${imageId}`)
         .then(() => {
           this.images = this.images.filter(image => image.id !== imageId);
-        });
+        })
     },
     handleAddButtonClick () {
       this.triggerFileInputClick();
     },
     triggerFileInputClick () {
       this.$refs.fileInput.click();
-    },
-    onUploadProgress (event) {
-      console.log(event)
     },
     validateUpload () {
       if (this.images.length === MAXIMUM_UPLOAD) {
@@ -95,13 +114,18 @@ export default {
       productService.uploadProductImage({
         productId: this.productId,
         file: event.target.files[0],
-        onUploadProgress: this.onUploadProgress,
       })
         .then((data) => {
           this.processingImages = this.processingImages.filter(image => image !== processingImage);
           this.images = this.images.concat(data.images);
         })
-        .catch(() => {
+        .catch((error) => {
+          const { data } = error.response;
+
+          if (data.error.code === 'LIMIT_FILE_SIZE') {
+            alert('Gagal mengunggah! Ukuran gambar terlalu besar.');
+          }
+
           this.processingImages = [];
         })
     }
@@ -148,6 +172,13 @@ export default {
     }
   }
 
+  .loader-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
   .add-button {
     border: 2px dashed #ccc;
     background-color: transparent;
@@ -155,6 +186,47 @@ export default {
     &__text {
       color: #666;
       font-size: 12px;
+    }
+  }
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+
+    position: relative;
+  }
+
+  .double-bounce1, .double-bounce2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #ffffff;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+    animation: sk-bounce 2.0s infinite ease-in-out;
+  }
+
+  .double-bounce2 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+  }
+
+  @-webkit-keyframes sk-bounce {
+    0%, 100% { -webkit-transform: scale(0.0) }
+    50% { -webkit-transform: scale(1.0) }
+  }
+
+  @keyframes sk-bounce {
+    0%, 100% {
+      transform: scale(0.0);
+      -webkit-transform: scale(0.0);
+    } 50% {
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
     }
   }
 </style>

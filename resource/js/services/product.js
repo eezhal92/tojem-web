@@ -18,6 +18,9 @@ export function uploadProductImage({
 
   return axios.post(`/api/products/${productId}/images`, payload, {
     onUploadProgress,
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+    },
   })
     .then(response => response.data);
 }

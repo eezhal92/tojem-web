@@ -5,46 +5,60 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Detail Produk : <%= product.name %> | <%= app.name %></title>
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/2.3.54/css/materialdesignicons.min.css">
 </head>
 <body class="font-sans font-normal text-black leading-normal bg-grey-lightest">
-  <div id="app">
+  <div>
     <%- include('../_partials/sidebar') %>
 
     <div class="main-content">
 
       <%- include('../_partials/header') %>
 
-      <div class="container mx-auto px-2 sm:px-4 md:px-8 pb-4">
-        <div class="flex">
-          <div class="p-4 w-full">
-            <h1 class="product-name mt-1 mb-4"><%= product.name %></h1>
-          </div>
-        </div>
+      <div id="app" >
 
-        <div class="flex">
-          <div class="p-4 w-full">
-            <product-image
-              :product-id="<%= product.id %>"
-              :default-images="<%= JSON.stringify(product.productImages) %>"
-            />
-          </div>
-        </div>
-
-        <div class="flex">
-          <div class="p-4 w-full">
-            <div class="mb-4">
-              <div class="mb-2 text-grey-darker">Harga</div>
-              <div class="product-price text-green text-3xl">Rp. <%= product.price.toLocaleString() %></div>
+        <div class="container mx-auto px-2 sm:px-4 md:px-8 pb-4">
+          <div class="flex">
+            <div class="p-4 w-full">
+              <h1 class="product-name mt-1 mb-4"><%= product.name %></h1>
             </div>
+          </div>
 
-            <div class="mb-4">
-              <div class="mb-2 text-grey-darker">Deskripsi</div>
-              <div class="product-description"><%= product.description || 'Belum ada deskripsi' %></div>
+          <div class="flex">
+            <div class="p-4 w-full">
+              <product-image
+                :product-id="<%= product.id %>"
+                :default-images="<%= JSON.stringify(product.productImages) %>"
+              />
             </div>
+          </div>
 
+          <div class="flex">
+            <div class="p-4 w-full">
+              <div class="mb-4">
+                <a class="p-2 border rounded-sm mr-1 bg-grey-light" href="/item/<%= product.id %>" target="_blank">
+                  <i class="mdi mdi-eye"></i> Lihat
+                </a>
+                <a href="/backstore/products/<%= product.id %>/edit" class="p-2 border rounded-sm bg-grey-light">
+                  <i class="mdi mdi-pencil"></i> Ubah
+                </a>
+              </div>
+              <div class="mb-4">
+                <div class="mb-2 text-grey-darker">Harga</div>
+                <div class="product-price text-green text-3xl">Rp. <%= product.price.toLocaleString() %></div>
+              </div>
+
+              <div class="mb-4">
+                <div class="mb-2 text-grey-darker">Deskripsi</div>
+                <div class="product-description"><%= product.description || 'Belum ada deskripsi' %></div>
+              </div>
+
+            </div>
           </div>
         </div>
+
       </div>
+
     </div>
   </div>
 
