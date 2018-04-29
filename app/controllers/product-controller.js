@@ -2,6 +2,7 @@ import autoBind from 'auto-bind';
 
 import auth from 'app/lib/auth';
 import ps from 'app/services/product';
+import { bucket } from 'app/lib/images';
 import { NotFoundError } from 'app/lib/errors';
 
 export class ProductController {

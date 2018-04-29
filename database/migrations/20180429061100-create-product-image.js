@@ -11,7 +11,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      type: {
+      name: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      size: {
         allowNull: false,
         type: Sequelize.STRING,
       },

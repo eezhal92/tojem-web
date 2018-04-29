@@ -49,7 +49,7 @@ const uploadImageToGCS = ({
   rawFile,
   fileBuffer,
 }) => new Promise((resolve, reject) => {
-  const gcsname = `products/${productId}/${Date.now()}-${size}-${rawFile.originalname}`;
+  const gcsname = `products/${productId}/${size}/${Date.now()}-${rawFile.originalname}`;
   const file = bucket.file(gcsname);
 
   const stream = file.createWriteStream({
@@ -66,7 +66,8 @@ const uploadImageToGCS = ({
     file.makePublic().then(() => {
       resolve({
         productId,
-        type: size,
+        name: gcsname,
+        size,
         url: getPublicUrl(gcsname),
       });
     });

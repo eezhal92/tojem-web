@@ -1,7 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
   const ProductImage = sequelize.define('productImage', {
     productId: DataTypes.INTEGER,
-    type: DataTypes.STRING,
+    name: DataTypes.STRING,
+    size: DataTypes.STRING,
     url: DataTypes.STRING,
   }, {
     tableName: 'product_images',

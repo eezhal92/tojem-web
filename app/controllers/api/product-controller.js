@@ -38,6 +38,13 @@ class ProductApiController {
         response.json({ images });
       });
   }
+
+  removeImage(request, response, next) {
+    this.productService.removeImage(request.params.imageId)
+      .then(() => {
+        response.json({ message: 'Gambar berhasil di hapus.' });
+      });
+  }
 }
 
 export default new ProductApiController(ps);

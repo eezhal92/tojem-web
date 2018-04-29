@@ -1,4 +1,5 @@
 import dbModels from 'app/models';
+import { bucket } from 'app/lib/images';
 
 export class ProductService {
   /**
@@ -63,6 +64,25 @@ export class ProductService {
 
   addImages(images) {
     return Promise.all(images.map(image => dbModels.productImage.create(image)));
+  }
+
+  removeImage(imageId) {
+    return this.models.productImage.findById(imageId)
+      .then((image) => {
+        if (!image) {
+          throw new Error(`Image ${imageId} was not found`);
+        }
+
+        const { productId, type: size } = image;
+
+        const file = bucket.file(image.name);
+        file.delete();
+
+        return image.destroy();
+      })
+      .catch((error) => {
+        throw error;
+      });
   }
 }
 

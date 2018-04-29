@@ -6,7 +6,9 @@
         :key="image.url + i"
         class="images__item w-24 h-24"
         :style="{ 'background-image': `url('${image.url}')` }"
-      />
+      >
+        <button @click="handleRemoveButtonClick(image.id)" class="image-remove-button">Hapus</button>
+      </div>
 
       <div
         v-for="(image, i) in processingImages"
@@ -54,6 +56,12 @@ export default {
   },
 
   methods: {
+    handleRemoveButtonClick (imageId) {
+      axios.delete(`/api/products/${this.productId}/images/${imageId}`)
+        .then(() => {
+          this.images = this.images.filter(image => image.id !== imageId);
+        });
+    },
     handleAddButtonClick () {
       this.triggerFileInputClick();
     },
@@ -119,6 +127,17 @@ export default {
       display: inline-block;
       background-position: center;
       background-size: cover;
+      position: relative;
+
+      .image-remove-button {
+        position: absolute;
+        padding: .5rem;
+        background: red;
+        color: #fff;
+        font-size: .75rem;
+        top: -1rem;
+        right: 0;
+      }
     }
 
     &__text {

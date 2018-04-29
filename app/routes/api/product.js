@@ -15,5 +15,9 @@ router.post(
   sendUploadToGCS,
   productApiController.uploadImage,
 );
+router.delete(
+  '/:id/images/:imageId',
+  productApiController.removeImage,
+);
 
 export default router;

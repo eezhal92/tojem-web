@@ -40,7 +40,7 @@ export class HomeController {
    */
   showSearchPage(request, response, next) {
     const opts = {
-      include: [this.models.store],
+      include: [this.models.store, this.models.productImage],
     };
     const query = request.query.q || '';
 
@@ -70,7 +70,7 @@ export class HomeController {
 
   showProductDetailPage(request, response, next) {
     this.models.product.findById(request.params.id, {
-      include: [this.models.store],
+      include: [this.models.store, this.models.productImage],
     })
       .then((product) => {
         if (!product) {
