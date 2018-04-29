@@ -34,6 +34,12 @@ function serverError(error, request, response, next) {
   }
 
   if (process.env.NODE_ENV === 'production') {
+    if (request.xhr) {
+      return response.status(500).json({
+        message: 'Server error',
+      });
+    }
+
     return response.render('error/500');
   }
 

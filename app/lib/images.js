@@ -38,7 +38,7 @@ let storageOpts = {};
 
 if (process.env.NODE_ENV === 'production') {
   storageOpts = {
-    keyFilename: path.resolve('../../.key/gcp-key.json'),
+    keyFilename: path.resolve(__dirname, '../../.key/gcp-key.json'),
   };
 } else {
   storageOpts = { projectId };
