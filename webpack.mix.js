@@ -18,8 +18,9 @@ mix.js('resource/js/pages/home.js', 'public/js');
 mix.js('resource/js/pages/search-result.js', 'public/js');
 mix.js('resource/js/pages/pos.js', 'public/js');
 mix.js('resource/js/pages/report-overview.js', 'public/js');
+mix.js('resource/js/pages/product-detail.js', 'public/js');
 
-mix.js('resource/js/pages/backstore/product-detail.js', 'public/js');
+mix.js('resource/js/pages/backstore/product-detail.js', 'public/js/backstore');
 
 mix.sass('resource/scss/style.scss', 'public/css')
   .options({

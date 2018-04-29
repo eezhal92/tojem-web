@@ -68,6 +68,7 @@
     "nightwatch": "^0.9.19",
     "nodemon": "^1.14.12",
     "plotly.js": "^1.31.2",
+    "postcss-import": "^11.1.0",
     "selenium-server": "^3.8.1",
     "tailwindcss": "^0.4.0",
     "v-money": "^0.8.1",
