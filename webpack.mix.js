@@ -23,6 +23,7 @@ mix.js('resource/js/pages/pos.js', 'public/js');
 mix.js('resource/js/pages/report-overview.js', 'public/js');
 mix.js('resource/js/pages/product-detail.js', 'public/js');
 
+mix.js('resource/js/pages/backstore/product-list.js', 'public/js/backstore');
 mix.js('resource/js/pages/backstore/product-detail.js', 'public/js/backstore');
 mix.js('resource/js/pages/backstore/product-create.js', 'public/js/backstore');
 mix.js('resource/js/pages/backstore/product-edit.js', 'public/js/backstore');
