@@ -80,7 +80,7 @@ function initOnboarding({ force = false } = {}) {
 }
 
 if (process.env.NODE_ENV === 'development') {
-  initOnboarding({ force: true });
+  initOnboarding({ force: false });
 } else {
   initOnboarding();
 }
