@@ -33,16 +33,12 @@ export class ProductService {
    * @param  {number} options.price
    * @return {Tojem.Model.Product}
    */
-  create({
-    storeId,
-    name,
-    description,
-    price,
-  }) {
+  create({ storeId, name, description, basePrice, profit }) {
     return this.models.product.create({
       storeId,
       name,
-      price,
+      basePrice,
+      profit,
       description,
     });
   }
@@ -56,18 +52,19 @@ export class ProductService {
   findById(productId) {
     return this.models.product.findById(productId, {
       // Need to figure it out, about how to test include argument
-      include: [
-        { model: dbModels.productImage },
-      ],
+      include: [{ model: dbModels.productImage }],
     });
   }
 
   addImages(images) {
-    return Promise.all(images.map(image => dbModels.productImage.create(image)));
+    return Promise.all(
+      images.map((image) => dbModels.productImage.create(image))
+    );
   }
 
   removeImage(imageId) {
-    return this.models.productImage.findById(imageId)
+    return this.models.productImage
+      .findById(imageId)
       .then((image) => {
         if (!image) {
           throw new Error(`Image ${imageId} was not found`);

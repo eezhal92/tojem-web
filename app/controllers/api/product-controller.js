@@ -25,24 +25,52 @@ class ProductApiController {
   showAll(request, response, next) {
     const { store } = request.session;
 
-    this.productService.findAllByStore(store)
-      .then(products => response.json(products))
+    this.productService
+      .findAllByStore(store)
+      .then((products) => response.json(products))
       .catch((error) => {
         next(error);
       });
   }
 
   uploadImage(request, response, next) {
-    this.productService.addImages(request.file.images)
-      .then((images) => {
-        response.json({ images });
-      });
+    this.productService.addImages(request.file.images).then((images) => {
+      response.json({ images });
+    });
   }
 
   removeImage(request, response, next) {
-    this.productService.removeImage(request.params.imageId)
-      .then(() => {
-        response.json({ message: 'Gambar berhasil di hapus.' });
+    this.productService.removeImage(request.params.imageId).then(() => {
+      response.json({ message: 'Gambar berhasil di hapus.' });
+    });
+  }
+
+  /**
+   * Persistence product into database.
+   *
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @param  {function}         next
+   * @return {Express.Response}
+   */
+  store(request, response, next) {
+    const storeId = request.session.store.id;
+    const data = {
+      storeId,
+      ...request.body,
+    };
+
+    this.productService
+      .create(data)
+      .then((product) => {
+        return response.json({
+          status: { code: 200, codename: 'success' },
+          messages: 'Produk telah ditambahkan',
+          data: product,
+        });
+      })
+      .catch((error) => {
+        next(error);
       });
   }
 }

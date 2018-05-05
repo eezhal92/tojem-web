@@ -27,11 +27,14 @@ export class ProductController {
    * @return {Express.Response}
    */
   showAll(request, response, next) {
-    auth.user.getAllProduct().then((products) => {
-      response.render('backstore/product/list', { products });
-    }).catch((error) => {
-      next(error);
-    });
+    auth.user
+      .getAllProduct()
+      .then((products) => {
+        response.render('backstore/product/list', { products });
+      })
+      .catch((error) => {
+        next(error);
+      });
   }
 
   /**
@@ -43,7 +46,8 @@ export class ProductController {
    * @return {Express.Response}
    */
   showById(request, response, next) {
-    this.productService.findById(request.params.id)
+    this.productService
+      .findById(request.params.id)
       .then((product) => {
         if (!product) {
           next(new NotFoundError('Produk kagak ditemukan'));
@@ -57,7 +61,9 @@ export class ProductController {
           return;
         }
 
-        response.render('backstore/product/detail', { product: product.toJSON() });
+        response.render('backstore/product/detail', {
+          product: product.toJSON(),
+        });
       })
       .catch((error) => {
         next(error);
@@ -76,30 +82,6 @@ export class ProductController {
   }
 
   /**
-   * Persistence product into database.
-   *
-   * @param  {Express.Request}  request
-   * @param  {Express.Response} response
-   * @param  {function}         next
-   * @return {Express.Response}
-   */
-  store(request, response, next) {
-    const storeId = request.session.store.id;
-    const { name, price, description = '' } = request.body;
-    const data = {
-      storeId, name, price, description,
-    };
-
-    this.productService.create(data)
-      .then((product) => {
-        response.redirect(`/backstore/products/${product.id}`);
-      })
-      .catch((error) => {
-        next(error);
-      });
-  }
-
-  /**
    * Show view form edit to change product associated by id.
    *
    * @param  {Express.Request}  request
@@ -108,7 +90,8 @@ export class ProductController {
    * @return {Express.Response}
    */
   showEditForm(request, response, next) {
-    this.productService.findById(request.params.id)
+    this.productService
+      .findById(request.params.id)
       .then((product) => {
         response.render('backstore/product/edit', { product });
       })

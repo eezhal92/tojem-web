@@ -7,17 +7,12 @@ const router = express.Router();
 
 router.get('/', productController.showAll);
 router.get('/create', productController.showCreateForm);
-router.post(
-  '/create',
-  inputValidation(createProductConstraints),
-  productController.store,
-);
 router.get('/:id', productController.showById);
 router.get('/:id/edit', productController.showEditForm);
 router.post(
   '/:id',
   inputValidation(createProductConstraints),
-  productController.update,
+  productController.update
 );
 router.delete('/:id', productController.deactivate);
 

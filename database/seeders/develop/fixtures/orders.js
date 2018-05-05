@@ -4,12 +4,7 @@ const products = require('./products');
 
 const types = ['on_site', 'cod'];
 
-function createOrder({
-  date,
-  storeId,
-  channel = 'offline',
-  type,
-}) {
+function createOrder({ date, storeId, channel = 'offline', type }) {
   return {
     storeId,
     channel,
@@ -25,13 +20,15 @@ let orders = [];
 let lastId = 0;
 let lastDay = dateFns.subYears(new Date(), 1);
 
-for (let i = 0; i < 365; i++) { // eslint-disable-line no-plusplus
+// eslint-disable-next-line no-plusplus
+for (let i = 0; i < 365; i++) {
   const day = dateFns.addDays(lastDay, 1);
   lastDay = day;
 
   const random = _.random(2, 5);
 
-  for (let j = 0; j < random; j++) { // eslint-disable-line no-plusplus
+  // eslint-disable-next-line no-plusplus
+  for (let j = 0; j < random; j++) {
     lastId += 1;
 
     const randomType = _.shuffle(types)[0];
@@ -52,10 +49,7 @@ for (let i = 0; i < 365; i++) { // eslint-disable-line no-plusplus
   }
 }
 
-function createOrderItems({
-  orderId,
-  date,
-}) {
+function createOrderItems({ orderId, date }) {
   const length = _.random(1, 3);
 
   return Array.from({ length }, (v, i) => {
@@ -65,7 +59,7 @@ function createOrderItems({
       orderId,
       productId: i + 1,
       productName: product.name,
-      productPrice: product.price,
+      productPrice: product.basePrice + product.profit,
       qty: _.random(1, 2),
       createdAt: date,
       updatedAt: date,
@@ -75,10 +69,12 @@ function createOrderItems({
 
 let orderItems = [];
 orderIds.forEach((id) => {
-  orderItems = orderItems.concat(createOrderItems({
-    orderId: id,
-    date: orders[id - 1].createdAt,
-  }));
+  orderItems = orderItems.concat(
+    createOrderItems({
+      orderId: id,
+      date: orders[id - 1].createdAt,
+    })
+  );
 });
 
 module.exports = {

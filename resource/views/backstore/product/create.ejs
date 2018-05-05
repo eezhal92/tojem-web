@@ -9,97 +9,14 @@
 <body class="font-sans font-normal text-black leading-normal bg-grey-lightest">
   <div id="app">
     <%- include('../_partials/sidebar') %>
-
     <div class="main-content">
-
       <%- include('../_partials/header') %>
 
-      <div class="container mx-auto px-2 sm:px-4 md:px-8 pb-4">
-        <div class="flex">
-          <div class="p-4 w-full">
-            <h1 class="mt-1 mb-4">Tambah Produk</h1>
-          </div>
-        </div>
-
-        <div class="flex">
-          <div class="p-4 w-full">
-            <form id="add-product-form" @submit="submitProduct" action="/backstore/products/create" method="post">
-              <%- csrfField() %>
-
-              <div class="mb-4">
-                <label class="block mb-1" for="name">Nama</label>
-                <input class="block p-1 border border-grey w-full" id="name" type="text" name="name" placeholder="Apa nama produk Anda?" value="<%= error.getOldInput('name') %>">
-                <% if (error.getMessage('name')) { %>
-                  <div class="text-red"><small><%= error.getMessage('name') %></small></div>
-                <% } %>
-              </div>
-
-              <div class="mb-4">
-                <label class="block mb-1" for="price">Harga</label>
-                <input class="block p-1 border border-grey w-full" id="price" v-model="price" v-money="money" name="price" placeholder="15000">
-                <% if (error.getMessage('price')) { %>
-                  <div class="text-red"><small><%= error.getMessage('price') %></small></div>
-                <% } %>
-              </div>
-
-              <div class="mb-4">
-                <label class="block mb-1" for="description">Deskripsi</label>
-                <textarea class="block p-1 border border-grey w-full" id="description" name="description" rows="3" placeholder="Deskripsi menarik tentang produk Anda"></textarea>
-                <% if (error.getMessage('description')) { %>
-                  <div><small><%= error.getMessage('description') %></small></div>
-                <% } %>
-              </div>
-
-              <button id="save-product-button" class="border border-blue p-2 rounded-sm text-center text-blue float-right" type="submit">Tambah</button>
-            </form>
-          </div>
-        </div>
-      </div>
-
+      <product-create></product-create>
     </div>
   </div>
 
-  <script src="https://unpkg.com/vue@2.5.11/dist/vue.js"></script>
-  <script src="https://unpkg.com/v-money@0.8.1/dist/v-money.js"></script>
-  <script>
-    Vue.use(VMoney, { precision: 0 });
-
-    <% if (error.getOldInput('price')) { %>
-    const price = <%= error.getOldInput('price') %>;
-    <% } else { %>
-    const price = 'Rp. 0';
-    <% } %>
-
-    new Vue({
-      el: '#app',
-      data: {
-        price: price,
-        money: {
-          decimal: '.',
-          thousands: ',',
-          prefix: 'Rp. ',
-          suffix: '',
-          precision: 0,
-          masked: false,
-        },
-      },
-      methods: {
-        submitProduct(event) {
-          event.preventDefault();
-
-          const priceEl = document.querySelector('input[name=price]');
-
-          const price = this.price.split('Rp. ')[1].split(',').join('');
-
-          priceEl.value = price;
-
-          const formEl = document.querySelector('#add-product-form');
-
-          formEl.submit();
-        },
-      },
-    });
-  </script>
+  <script src="/js/backstore/product-create.js"></script>
   <script src="/js/bs-nav.js"></script>
 </body>
 </html>
