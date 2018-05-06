@@ -40,7 +40,18 @@ export function create(payload = {}) {
   }, baseOptions).then(response => response.data);
 }
 
+export function update(payload = {}) {
+  const postAction = '/api/products/update';
+
+  return axios.post(postAction, {
+    ...payload,
+    basePrice: filterNominal(payload.basePrice),
+    profit: filterNominal(payload.profit),
+  }, baseOptions).then(response => response.data);
+}
+
 export default {
   uploadProductImage,
   create,
+  update,
 };

@@ -55,11 +55,14 @@ export class ProductService {
    * @param  {number} productId
    * @return {Tojem.Model.Product}
    */
-  findById(productId) {
-    return this.models.product.findById(productId, {
+  findById(productId, options = {}) {
+    const queryOptions = {
       // Need to figure it out, about how to test include argument
       include: [{ model: dbModels.productImage }],
-    });
+      ...options.query,
+    };
+
+    return this.models.product.findById(productId, queryOptions);
   }
 
   addImages(images) {

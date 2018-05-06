@@ -90,37 +90,19 @@ export class ProductController {
    * @return {Express.Response}
    */
   showEditForm(request, response, next) {
-    this.productService
-      .findById(request.params.id)
+    const queryOptions = {
+      attributes: {
+        exclude: ['storeId', 'createdAt', 'updatedAt'],
+      },
+    };
+
+    this.productService.findById(request.params.id, { query: queryOptions })
       .then((product) => {
         response.render('backstore/product/edit', { product });
       })
       .catch((error) => {
         next(error);
       });
-  }
-
-  /**
-   * Update and persistence the product associated by id.
-   *
-   * @param  {Express.Request}  request
-   * @param  {Express.Response} response
-   * @param  {function}         next
-   * @return {Express.Response}
-   */
-  async update(request, response, next) {
-    const productId = request.params.id;
-
-    try {
-      const product = await this.productService.findById(productId);
-      const { name, price, description } = request.body;
-
-      await product.update({ name, price, description });
-
-      response.redirect(`/backstore/products/${productId}`);
-    } catch (error) {
-      next(error);
-    }
   }
 
   /**

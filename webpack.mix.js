@@ -25,6 +25,7 @@ mix.js('resource/js/pages/product-detail.js', 'public/js');
 
 mix.js('resource/js/pages/backstore/product-detail.js', 'public/js/backstore');
 mix.js('resource/js/pages/backstore/product-create.js', 'public/js/backstore');
+mix.js('resource/js/pages/backstore/product-edit.js', 'public/js/backstore');
 
 mix.sass('resource/scss/style.scss', 'public/css').options({
   processCssUrls: false,

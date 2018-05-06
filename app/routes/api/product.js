@@ -18,6 +18,7 @@ router.post(
   productApiController.uploadImage,
 );
 router.post('/create', inputValidation(createProductConstraints), productApiController.store);
+router.post('/update', inputValidation(createProductConstraints), productApiController.update);
 router.delete(
   '/:id/images/:imageId',
   productApiController.removeImage,

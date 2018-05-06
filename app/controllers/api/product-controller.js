@@ -1,3 +1,4 @@
+import _pick from 'lodash/pick';
 import autoBind from 'auto-bind';
 import ps from 'app/services/product';
 
@@ -68,6 +69,35 @@ class ProductApiController {
       .catch((error) => {
         next(error);
       });
+  }
+
+  /**
+   * Update and persistence the product associated by id.
+   *
+   * @param  {Express.Request}  request
+   * @param  {Express.Response} response
+   * @param  {function}         next
+   * @return {Express.Response}
+   */
+  async update(request, response, next) {
+    try {
+      const product = await this.productService.findById(request.body.id);
+      const data = _pick(request.body, [
+        'name',
+        'basePrice',
+        'description',
+        'profit',
+      ]);
+
+      await product.update(data);
+
+      response.json({
+        status: { code: 200, codename: 'success' },
+        messages: 'Produk telah diperbaharui',
+      });
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
