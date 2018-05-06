@@ -27,7 +27,7 @@ class ProductApiController {
 
     this.productService
       .findAllByStore(store)
-      .then((products) => response.json(products))
+      .then(products => response.json(products))
       .catch((error) => {
         next(error);
       });
@@ -62,13 +62,11 @@ class ProductApiController {
 
     this.productService
       .create(data)
-      .then((product) => {
-        return response.json({
-          status: { code: 200, codename: 'success' },
-          messages: 'Produk telah ditambahkan',
-          data: product,
-        });
-      })
+      .then(product => response.json({
+        status: { code: 200, codename: 'success' },
+        messages: 'Produk telah ditambahkan',
+        data: product,
+      }))
       .catch((error) => {
         next(error);
       });

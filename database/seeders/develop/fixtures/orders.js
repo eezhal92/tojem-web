@@ -4,7 +4,12 @@ const products = require('./products');
 
 const types = ['on_site', 'cod'];
 
-function createOrder({ date, storeId, channel = 'offline', type }) {
+function createOrder({
+  date,
+  storeId,
+  channel = 'offline',
+  type,
+}) {
   return {
     storeId,
     channel,
@@ -69,12 +74,12 @@ function createOrderItems({ orderId, date }) {
 
 let orderItems = [];
 orderIds.forEach((id) => {
-  orderItems = orderItems.concat(
-    createOrderItems({
-      orderId: id,
-      date: orders[id - 1].createdAt,
-    })
-  );
+  const item = createOrderItems({
+    orderId: id,
+    date: orders[id - 1].createdAt,
+  });
+
+  orderItems = orderItems.concat(item);
 });
 
 module.exports = {

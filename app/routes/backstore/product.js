@@ -12,7 +12,7 @@ router.get('/:id/edit', productController.showEditForm);
 router.post(
   '/:id',
   inputValidation(createProductConstraints),
-  productController.update
+  productController.update,
 );
 router.delete('/:id', productController.deactivate);
 

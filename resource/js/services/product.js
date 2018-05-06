@@ -1,6 +1,12 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import axios from 'axios';
-import price from '../lib/price';
+import { filterNominal } from '../lib/price';
+
+const baseOptions = {
+  headers: {
+    'X-Requested-With': 'XMLHttpRequest',
+  },
+};
 
 /**
  * @param  {Number}   options.productId
@@ -18,28 +24,20 @@ export function uploadProductImage({
   payload.append('image', file);
 
   return axios.post(`/api/products/${productId}/images`, payload, {
-      onUploadProgress,
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-    })
-    .then((response) => response.data);
+    ...baseOptions,
+    onUploadProgress,
+  })
+    .then(response => response.data);
 }
 
 export function create(payload = {}) {
   const postAction = '/api/products/create';
 
-  payload = {
+  return axios.post(postAction, {
     ...payload,
-    basePrice: price.filterNominal(payload.basePrice),
-    profit: price.filterNominal(payload.profit),
-  };
-
-  return axios.post(postAction, payload, {
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-    },
-  }).then(response => response.data);
+    basePrice: filterNominal(payload.basePrice),
+    profit: filterNominal(payload.profit),
+  }, baseOptions).then(response => response.data);
 }
 
 export default {

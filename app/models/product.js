@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     price: {
       type: DataTypes.VIRTUAL,
-      get: function () {
+      get() {
         return this.get('basePrice') + this.get('profit');
       },
     },

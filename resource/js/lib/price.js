@@ -5,11 +5,11 @@
  * @return {number}
  */
 export function filterNominal(price = 'Rp. 0') {
-  price = String(price).replace(/(\D+)/g, '');
+  const formattedPrice = String(price).replace(/(\D+)/g, '');
 
-  return parseInt(price, 10);
+  return parseInt(formattedPrice, 10);
 }
 
 export default {
   filterNominal,
-}
+};

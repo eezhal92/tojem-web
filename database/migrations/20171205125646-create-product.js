@@ -34,5 +34,5 @@ module.exports = {
 
     return table;
   },
-  down: (queryInterface) => queryInterface.dropTable('products'),
+  down: queryInterface => queryInterface.dropTable('products'),
 };

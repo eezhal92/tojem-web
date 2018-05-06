@@ -33,7 +33,13 @@ export class ProductService {
    * @param  {number} options.price
    * @return {Tojem.Model.Product}
    */
-  create({ storeId, name, description, basePrice, profit }) {
+  create({
+    storeId,
+    name,
+    description,
+    basePrice,
+    profit,
+  } = {}) {
     return this.models.product.create({
       storeId,
       name,
@@ -57,9 +63,7 @@ export class ProductService {
   }
 
   addImages(images) {
-    return Promise.all(
-      images.map((image) => dbModels.productImage.create(image))
-    );
+    return Promise.all(images.map(image => dbModels.productImage.create(image)));
   }
 
   removeImage(imageId) {

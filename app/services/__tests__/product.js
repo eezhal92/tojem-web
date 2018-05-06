@@ -38,7 +38,8 @@ describe('services/product', () => {
       storeId: 1,
       name: 'Pizza',
       description: 'Nom',
-      price: 15,
+      basePrice: 15,
+      profit: 10,
     };
 
     it('should be functioning properly', async () => {
