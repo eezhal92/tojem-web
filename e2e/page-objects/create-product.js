@@ -2,11 +2,13 @@ module.exports = {
   url: `${process.env.TEST_BASE_URL}/backstore/products/create`,
   elements: {
     productNameField: { selector: 'input[name=name]' },
-    productPriceField: { selector: 'input[name=price]' },
+    productBasePriceField: { selector: 'input[name=basePrice]' },
+    productProfitField: { selector: 'input[name=profit]' },
     productDescriptionField: { selector: 'textarea[name=description]' },
     saveProductButton: { selector: '#save-product-button' },
-    productName: { selector: '.product-name' },
-    productPrice: { selector: '.product-price' },
-    productDescription: { selector: '.product-description' },
+    errorProductName: { selector: '[data-error="product-name"]' },
+    errorProductBasePrice: { selector: '[data-error="product-base-price"]' },
+    errorProductProfit: { selector: '[data-error="product-profit"]' },
+    errorProductDescription: { selector: '[data-error="product-description"]' },
   },
 };

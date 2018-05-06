@@ -13,7 +13,7 @@
             <label class="block mb-1" for="name">Nama</label>
             <input class="block p-1 border border-grey w-full" id="name" v-model="inputField.name" type="text" name="name" placeholder="Apa nama produk Anda?">
 
-            <div class="text-red" v-if="errors.has('name')">
+            <div data-error="product-name" class="text-red" v-if="errors.has('name')">
               <small>{{ errors.get('name') }}</small>
             </div>
           </div>
@@ -22,7 +22,7 @@
             <label class="block mb-1" for="basePrice">Harga Modal</label>
             <input class="block p-1 border border-grey w-full" id="basePrice" v-model="inputField.basePrice" v-money="money" name="basePrice" placeholder="15000">
 
-            <div class="text-red" v-if="errors.has('basePrice')">
+            <div data-error="product-base-price" class="text-red" v-if="errors.has('basePrice')">
               <small>{{ errors.get('basePrice') }}</small>
             </div>
           </div>
@@ -31,7 +31,7 @@
             <label class="block mb-1" for="profit">Profit</label>
             <input class="block p-1 border border-grey w-full" id="profit" v-model="inputField.profit" v-money="money" name="profit" placeholder="15000">
 
-            <div class="text-red" v-if="errors.has('profit')">
+            <div data-error="product-profit" class="text-red" v-if="errors.has('profit')">
               <small>{{ errors.get('profit') }}</small>
             </div>
           </div>
