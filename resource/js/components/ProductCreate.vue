@@ -39,7 +39,7 @@
           <div class="mb-4">
             <div class="block mb-1">Harga Jual</div>
             <span class="block p-1 border border-grey w-full">
-              {{ showSellPrice() }}
+              {{ sellPrice }}
             </span>
           </div>
 
@@ -76,26 +76,20 @@ const defaultInputField = {
 export default {
   data() {
     return {
-      money: {
-        decimal: '.',
-        thousands: ',',
-        prefix: 'Rp. ',
-        suffix: '',
-        precision: 0,
-        masked: false,
-      },
+      money: price.vMoneyFormat,
       inputField: { ...defaultInputField },
       errors: new FormError(),
     };
   },
-  methods: {
-    showSellPrice() {
-      const basePrice = price.filterNominal(this.inputField.basePrice);
-      const profit = price.filterNominal(this.inputField.profit);
-      const sellPrice = basePrice + profit;
+  computed: {
+      sellPrice() {
+        const basePrice = price.filterNominal(this.inputField.basePrice);
+        const profit = price.filterNominal(this.inputField.profit);
 
-      return `Rp. ${sellPrice.toLocaleString('id')}`;
-    },
+        return `Rp. ${(basePrice + profit).toLocaleString('id')}`;
+      },
+  },
+  methods: {
     clearErrorField(event) {
       this.errors.delete(event.target.name);
     },
@@ -110,8 +104,6 @@ export default {
         .then((response) => {
           this.errors.clear();
           this.resetForm();
-
-          console.log({ response });
         })
         .catch(({ response }) => {
           this.errors.set(response.data.errors);

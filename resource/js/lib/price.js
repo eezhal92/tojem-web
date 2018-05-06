@@ -10,6 +10,16 @@ export function filterNominal(price = 'Rp. 0') {
   return parseInt(formattedPrice, 10);
 }
 
+export const vMoneyFormat = {
+  decimal: ',',
+  thousands: '.',
+  prefix: 'Rp. ',
+  suffix: '',
+  precision: 0,
+  masked: false,
+};
+
 export default {
   filterNominal,
+  vMoneyFormat,
 };
