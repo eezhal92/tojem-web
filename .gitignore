@@ -3,6 +3,6 @@ coverage
 .env
 *.log
 public/js
-public/css
+public/css/**
 e2e/screenshots
 .key

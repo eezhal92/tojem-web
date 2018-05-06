@@ -5,6 +5,12 @@ module.exports = (sequelize, DataTypes) => {
     basePrice: DataTypes.INTEGER,
     profit: DataTypes.INTEGER,
     description: DataTypes.TEXT,
+    price: {
+      type: DataTypes.VIRTUAL,
+      get: function () {
+        return this.get('basePrice') + this.get('profit');
+      },
+    },
   });
 
   Product.associate = (models) => {
