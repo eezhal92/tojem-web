@@ -63,8 +63,7 @@ class ProductApiController {
 
     this.productService.create(data)
       .then(product => response.json({
-        status: { code: 200, codename: 'success' },
-        messages: 'Produk telah ditambahkan',
+        message: 'Produk telah ditambahkan',
       }))
       .catch((error) => {
         next(error);
@@ -92,8 +91,7 @@ class ProductApiController {
       await product.update(data);
 
       response.json({
-        status: { code: 200, codename: 'success' },
-        messages: 'Produk telah diperbaharui',
+        message: 'Produk telah diperbaharui',
       });
     } catch (error) {
       next(error);

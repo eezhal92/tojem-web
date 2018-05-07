@@ -58,6 +58,8 @@
         </div>
       </div>
     </div>
+
+    <notification></notification>
   </div>
 </template>
 
@@ -99,11 +101,11 @@ export default {
     submitProduct(event) {
       event.preventDefault();
 
-      productService
-        .create(this.inputField)
+      productService.create(this.inputField)
         .then((response) => {
           this.errors.clear();
           this.resetForm();
+          this.$notification(response.message);
         })
         .catch(({ response }) => {
           this.errors.set(response.data.errors);

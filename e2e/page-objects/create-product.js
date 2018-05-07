@@ -10,5 +10,16 @@ module.exports = {
     errorProductBasePrice: { selector: '[data-error="product-base-price"]' },
     errorProductProfit: { selector: '[data-error="product-profit"]' },
     errorProductDescription: { selector: '[data-error="product-description"]' },
+    notificationElement: { selector: '.notification' },
   },
+  commands: [
+    {
+      assertAllErrorElementsNotPresent() {
+        return this.assert.elementNotPresent('@errorProductName')
+          .assert.elementNotPresent('@errorProductBasePrice')
+          .assert.elementNotPresent('@errorProductProfit')
+          .assert.elementNotPresent('@errorProductDescription');
+      },
+    },
+  ],
 };

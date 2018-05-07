@@ -31,16 +31,18 @@ describe('Create product', () => {
     const createProduct = client.page['create-product']();
 
     createProduct.navigate()
+      .assertAllErrorElementsNotPresent()
+      .assert.elementNotPresent('@notificationElement')
       .setValue('@productBasePriceField', 50000)
       .setValue('@productProfitField', 5000)
       .setValue('@productDescriptionField', 'A very special pizza')
       .click('@saveProductButton')
-      .waitForElementVisible('body', 1000)
       .assert.containsText('body', 'Tambah Produk')
       .assert.elementPresent('@errorProductName')
       .assert.elementNotPresent('@errorProductBasePrice')
       .assert.elementNotPresent('@errorProductProfit')
-      .assert.elementNotPresent('@errorProductDescription');
+      .assert.elementNotPresent('@errorProductDescription')
+      .assert.elementNotPresent('@notificationElement');
   });
 
   it('should fail when base price field is missing', (client) => {
@@ -51,16 +53,40 @@ describe('Create product', () => {
     const createProduct = client.page['create-product']();
 
     createProduct.navigate()
+      .assertAllErrorElementsNotPresent()
+      .assert.elementNotPresent('@notificationElement')
       .setValue('@productNameField', 'Bakso')
       .setValue('@productProfitField', 2000)
       .setValue('@productDescriptionField', 'A very special pizza')
       .click('@saveProductButton')
-      .waitForElementVisible('body', 1000)
-      .assert.containsText('body', 'Tambah Produk')
       .assert.elementNotPresent('@errorProductName')
+      .assert.containsText('body', 'Tambah Produk')
       .assert.elementPresent('@errorProductBasePrice')
       .assert.elementNotPresent('@errorProductProfit')
-      .assert.elementNotPresent('@errorProductDescription');
+      .assert.elementNotPresent('@errorProductDescription')
+      .assert.elementNotPresent('@notificationElement');
+  });
+
+  it('should fail when profit field is missing', (client) => {
+    client.setCookie({
+      'connect.sid': cookie,
+    });
+
+    const createProduct = client.page['create-product']();
+
+    createProduct.navigate()
+      .assertAllErrorElementsNotPresent()
+      .assert.elementNotPresent('@notificationElement')
+      .setValue('@productNameField', 'Biji kopi hitam')
+      .setValue('@productBasePriceField', 50000)
+      .setValue('@productDescriptionField', 'Biji kopi asli')
+      .click('@saveProductButton')
+      .assert.elementNotPresent('@errorProductName')
+      .assert.containsText('body', 'Tambah Produk')
+      .assert.elementNotPresent('@errorProductBasePrice')
+      .assert.elementPresent('@errorProductProfit')
+      .assert.elementNotPresent('@errorProductDescription')
+      .assert.elementNotPresent('@notificationElement');
   });
 
   it('should able to create a product', (client) => {
@@ -71,16 +97,16 @@ describe('Create product', () => {
     const createProduct = client.page['create-product']();
 
     createProduct.navigate()
+      .assertAllErrorElementsNotPresent()
+      .assert.elementNotPresent('@notificationElement')
       .setValue('@productNameField', 'Pizza')
       .setValue('@productBasePriceField', 80000)
       .setValue('@productProfitField', 25000)
       .setValue('@productDescriptionField', 'A very special pizza')
       .click('@saveProductButton')
-      .waitForElementVisible('body', 1000)
-      .assert.elementNotPresent('@errorProductName')
-      .assert.elementNotPresent('@errorProductBasePrice')
-      .assert.elementNotPresent('@errorProductProfit')
-      .assert.elementNotPresent('@errorProductDescription');
+      // TODO: Fixme
+      // .assert.elementPresent('@notificationElement')
+      .assertAllErrorElementsNotPresent();
   });
 
   it('should able to create a product without optional description field', (client) => {
@@ -91,14 +117,14 @@ describe('Create product', () => {
     const createProduct = client.page['create-product']();
 
     createProduct.navigate()
+      .assertAllErrorElementsNotPresent()
+      .assert.elementNotPresent('@notificationElement')
       .setValue('@productNameField', 'Burger')
       .setValue('@productBasePriceField', 50000)
       .setValue('@productProfitField', 15000)
       .click('@saveProductButton')
-      .waitForElementVisible('body', 1000)
-      .assert.elementNotPresent('@errorProductName')
-      .assert.elementNotPresent('@errorProductBasePrice')
-      .assert.elementNotPresent('@errorProductProfit')
-      .assert.elementNotPresent('@errorProductDescription');
+      // TODO: Fixme
+      // .assert.elementPresent('@notificationElement')
+      .assertAllErrorElementsNotPresent();
   });
 });

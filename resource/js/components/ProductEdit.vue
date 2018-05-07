@@ -63,6 +63,8 @@
         </div>
       </div>
     </div>
+
+    <notification></notification>
   </div>
 </template>
 
@@ -106,6 +108,7 @@ export default {
       productService.update(this.inputField)
         .then((response) => {
           this.errors.clear();
+          this.$notification(response.message);
         })
         .catch(({ response }) => {
           this.errors.set(response.data.errors);
