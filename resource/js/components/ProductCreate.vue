@@ -84,19 +84,23 @@ export default {
     };
   },
   computed: {
-      sellPrice() {
-        const basePrice = price.filterNominal(this.inputField.basePrice);
-        const profit = price.filterNominal(this.inputField.profit);
+    sellPrice() {
+      const basePrice = price.filterNominal(this.inputField.basePrice);
+      const profit = price.filterNominal(this.inputField.profit);
 
-        return `Rp. ${(basePrice + profit).toLocaleString('id')}`;
-      },
+      return `Rp. ${(basePrice + profit).toLocaleString('id')}`;
+    },
   },
   methods: {
     clearErrorField(event) {
       this.errors.delete(event.target.name);
     },
     resetForm() {
-      this.inputField = defaultInputField;
+      const { base, name, profit, description } = defaultInputField;
+      this.inputField.name = name;
+      this.inputField.basePrice = basePrice;
+      this.inputField.profit = profit;
+      this.inputField.description = description;
     },
     submitProduct(event) {
       event.preventDefault();

@@ -48,20 +48,16 @@ export default {
    */
   methods: {
     push(options) {
-      let notification = {};
-
-      if (typeof options === 'string') {
-        notification.text = options;
-      }
-
-      notification = {
+      const notification = {
         id: Math.random(),
         title: '',
         text: '',
         duration: 1000 * 2, // default 2000ms
-        ...notification,
-        ...options,
       };
+
+      if (typeof options === 'string') {
+        notification.text = options;
+      }
 
       this.entries.push(notification);
       // this.autoClose(notification);
