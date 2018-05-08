@@ -5,6 +5,40 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Daftar Produk | <%= app.name %></title>
   <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="http://github.hubspot.com/shepherd/dist/css/shepherd-theme-arrows.css">
+
+  <style>
+    .step-small {
+      font-size: .85rem;
+      z-index: 20;
+    }
+
+    .step-small .shepherd-content {
+      max-width: 200px;
+    }
+
+    .step-small .shepherd-element {
+      display: none;
+      position: absolute;
+    }
+
+    .shepherd-element.shepherd-theme-arrows .shepherd-content .shepherd-text {
+      padding: .75rem 1rem;
+    }
+
+    .shepherd-element.shepherd-theme-arrows .shepherd-content .shepherd-text p {
+      line-height: 1.5rem;
+    }
+
+    .shepherd-element.shepherd-theme-arrows .shepherd-content footer .shepherd-buttons li .shepherd-button {
+      padding: .5rem;
+      border-radius: .125rem;
+      text-transform: capitalize;
+      font-size: .875rem;
+      letter-spacing: 0;
+    }
+  </style>
 </head>
 <body class="font-sans font-normal text-black leading-normal bg-grey-lightest">
   <div id="app">
@@ -20,8 +54,8 @@
           </div>
           <div class="w-full">
             <div class="my-2">
-              <a class="btn-add-product bg-white text-grey-darker rounded-sm border border-grey text-sm p-2 no-underline" href="/backstore/products/create">Tambah Produk</a>
-              <a class="rounded-sm text-white bg-blue no-underline border border-blue text-sm p-2" href="/backstore/pos">Transaksi Baru</a>
+              <a id="v-step-0" class="btn-add-product bg-white text-grey-darker rounded-sm border border-grey text-sm p-2 no-underline" href="/backstore/products/create">Tambah Produk</a>
+              <a id="v-step-1" class="rounded-sm text-white bg-blue no-underline border border-blue text-sm p-2" href="/backstore/pos">Transaksi Baru</a>
             </div>
           </div>
         </div>
@@ -74,5 +108,6 @@
     }
   </script>
   <script src="/js/bs-nav.js"></script>
+  <script src="/js/backstore/product-list.js"></script>
 </body>
 </html>
