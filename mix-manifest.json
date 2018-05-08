@@ -5,9 +5,9 @@
     "/public/js/backstore/product-detail.js": "/public/js/backstore/product-detail.js",
     "/public/js/pos.js": "/public/js/pos.js",
     "/public/js/product-detail.js": "/public/js/product-detail.js",
+    "/public/js/backstore/product-list.js": "/public/js/backstore/product-list.js",
     "/public/js/search-result.js": "/public/js/search-result.js",
     "/public/js/home.js": "/public/js/home.js",
     "/public/js/bs-nav.js": "/public/js/bs-nav.js",
-    "/public/css/style.css": "/public/css/style.css",
-    "/public/js/backstore/product-list.js": "/public/js/backstore/product-list.js"
+    "/public/css/style.css": "/public/css/style.css"
 }

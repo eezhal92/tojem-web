@@ -10,13 +10,33 @@
 
   <style>
     .step-small {
-      color: red;
-      font-size: .75rem;
+      font-size: .85rem;
       z-index: 20;
     }
 
     .step-small .shepherd-content {
       max-width: 200px;
+    }
+
+    .step-small .shepherd-element {
+      display: none;
+      position: absolute;
+    }
+
+    .shepherd-element.shepherd-theme-arrows .shepherd-content .shepherd-text {
+      padding: .75rem 1rem;
+    }
+
+    .shepherd-element.shepherd-theme-arrows .shepherd-content .shepherd-text p {
+      line-height: 1.5rem;
+    }
+
+    .shepherd-element.shepherd-theme-arrows .shepherd-content footer .shepherd-buttons li .shepherd-button {
+      padding: .5rem;
+      border-radius: .125rem;
+      text-transform: capitalize;
+      font-size: .875rem;
+      letter-spacing: 0;
     }
   </style>
 </head>

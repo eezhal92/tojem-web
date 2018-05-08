@@ -17,37 +17,37 @@ function initOnboarding({ force = false } = {}) {
 
   const tour = new Shepherd.Tour({
     defaults: {
-      classes: 'shepherd-element shepherd-open shepherd-theme-arrows',
+      classes: 'test',
       scrollTo: true,
     },
   });
 
   tour.addStep('add-product-step', {
-    text: 'Untuk bisa mulai menggunakan, Tambah terlebih dahulu',
+    text: 'Untuk memulai, masukkan data produk Anda',
     attachTo: '#v-step-0 right',
     classes: 'shepherd step-small shepherd-open shepherd-theme-arrows shepherd-transparent-text',
     buttons: {
-      text: 'Next',
+      text: 'Selanjutnya',
       action: tour.next,
     },
   });
 
   tour.addStep('add-transaction-step', {
-    text: 'Ketika ada transaksi, catatlah melalui halaman tambah transaksi',
+    text: 'Setelah produk-produk Anda tersimpan. Klik untuk mencatat transaksi!',
     attachTo: '#v-step-1 bottom',
     classes: 'shepherd step-small shepherd-open shepherd-theme-arrows shepherd-transparent-text',
     buttons: {
-      text: 'Next',
+      text: 'Selanjutnya',
       action: tour.next,
     },
   });
 
   tour.addStep('view-transaction', {
-    text: 'Lihat semua transaksi yang telah dicatat',
+    text: 'Semua transaksi yang tersimpan, bisa Anda lihat di sini',
     attachTo: '#all-transaction-menu right',
     classes: 'shepherd step-small shepherd-open shepherd-theme-arrows shepherd-transparent-text',
     buttons: {
-      text: 'Next',
+      text: 'Selanjutnya',
       action: tour.next,
     },
     when: {
@@ -60,11 +60,11 @@ function initOnboarding({ force = false } = {}) {
   });
 
   tour.addStep('view-report', {
-    text: 'Lihat laporan',
+    text: 'Laporan performa bisnis Anda',
     attachTo: '#report-menu right',
     classes: 'shepherd step-small shepherd-open shepherd-theme-arrows shepherd-transparent-text',
     buttons: {
-      text: 'Next',
+      text: 'Selanjutnya',
       action: tour.next,
     },
   });
@@ -73,6 +73,7 @@ function initOnboarding({ force = false } = {}) {
     if (isMobile) {
       document.querySelector('#close-btn').click();
     }
+    window.scrollTo(0, 0);
     localStorage.setItem('finish_onboarding', JSON.stringify(true));
   });
 
