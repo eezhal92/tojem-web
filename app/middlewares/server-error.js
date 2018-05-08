@@ -34,6 +34,9 @@ function serverError(error, request, response, next) {
   }
 
   if (process.env.NODE_ENV === 'production') {
+    // eslint-disable-next-line no-console
+    console.log(request.xhr, error);
+
     if (request.xhr) {
       return response.status(500).json({
         message: 'Server error',
@@ -42,8 +45,6 @@ function serverError(error, request, response, next) {
 
     return response.render('error/500');
   }
-
-  console.log(request.xhr, error);
 
   if (request.xhr) {
     return response.status(500).json({

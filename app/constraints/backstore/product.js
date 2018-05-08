@@ -9,7 +9,8 @@ import Validator from 'validatorjs';
 export const createProductConstraints = (data) => {
   const rules = {
     name: 'required|min:2',
-    price: 'required|numeric|min:1',
+    basePrice: 'required|numeric|min:1',
+    profit: 'required|numeric|min:1',
   };
 
   return new Validator(data, rules);

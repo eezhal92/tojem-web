@@ -1,5 +1,7 @@
 {
     "/public/js/report-overview.js": "/public/js/report-overview.js",
+    "/public/js/backstore/product-edit.js": "/public/js/backstore/product-edit.js",
+    "/public/js/backstore/product-create.js": "/public/js/backstore/product-create.js",
     "/public/js/backstore/product-detail.js": "/public/js/backstore/product-detail.js",
     "/public/js/pos.js": "/public/js/pos.js",
     "/public/js/product-detail.js": "/public/js/product-detail.js",

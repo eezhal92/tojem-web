@@ -41,11 +41,13 @@ describe('middlewares/server-error', () => {
 
   it('should render 500 page when production mode', () => {
     process.env.NODE_ENV = 'production';
+    console.log = jest.fn(); // eslint-disable-line no-console
 
     const error = new Error('Something went wrong');
 
     serverError(error, request, response, next);
 
+    expect(console.log).toHaveBeenCalledTimes(1); // eslint-disable-line no-console
     expect(response.render).toBeCalledWith('error/500');
     expect(response.render).toHaveBeenCalledTimes(1);
     expect(next).not.toBeCalled();

@@ -4,8 +4,8 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "prepush": "npm test",
-    "test": "npm run lint && jest",
+    "prepush": "npm run lint && npm test",
+    "test": "jest",
     "e2e": "./tojem test:e2e",
     "start": "./tojem serve --prod",
     "dev": "./tojem serve",

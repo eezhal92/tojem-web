@@ -38,15 +38,18 @@
             </div>
             <% } %>
 
-            <% products.forEach((product) => { %>
+            <% products.forEach((product, i) => { %>
               <div class="flex">
                 <div class="w-full border border-grey mb-4 rounded overflow-hidden bg-white">
                   <div class="info p-4">
                     <div class="inline-block"><%= product.name %></div>
                     <div class="inline-block float-right">
-                      <span class="text-green">Rp. <%= product.price.toLocaleString() %></span>
+                      <span class="text-green">
+                        Rp. <span data-price="<%= product.price %>"><%= product.price.toLocaleString('id') %></span>
+                      </span>
                     </div>
                   </div>
+
                   <div class="action p-2 text-sm bg-grey-lighter overflow-hidden">
                     <div class="inline-block float-right">
                       <a href="/backstore/products/<%= product.id %>/edit">Ubah</a>
@@ -63,6 +66,13 @@
     </div>
   </div>
 
+  <script>
+    const elements = document.querySelectorAll('[data-price]');
+
+    for (const el of elements) {
+      el.innerHTML = parseInt(el.dataset.price, 10).toLocaleString('id');
+    }
+  </script>
   <script src="/js/bs-nav.js"></script>
 </body>
 </html>
