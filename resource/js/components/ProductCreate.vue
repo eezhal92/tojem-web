@@ -96,7 +96,8 @@ export default {
       this.errors.delete(event.target.name);
     },
     resetForm() {
-      const { base, name, profit, description } = defaultInputField;
+      const { basePrice, name, profit, description } = defaultInputField;
+
       this.inputField.name = name;
       this.inputField.basePrice = basePrice;
       this.inputField.profit = profit;
@@ -118,7 +119,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-
-</style>

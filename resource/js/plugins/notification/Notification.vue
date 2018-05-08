@@ -60,7 +60,7 @@ export default {
       }
 
       this.entries.push(notification);
-      // this.autoClose(notification);
+      this.autoClose(notification);
     },
     hasTitle(entry) {
       return 'title' in entry && entry.title.trim() !== '';
