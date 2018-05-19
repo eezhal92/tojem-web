@@ -13,11 +13,22 @@
 </head>
 <body class="bg-fb font-sans font-normal text-black leading-normal text-white">
   <div class="container mx-auto">
+    <div class="mx-4 my-4">
+      <% if (auth.isAuth()) { %>
+        <a class="text-white" href="/backstore/products" title="Kelola toko Anda">Ke backstore</a>
+        <span class="text-white">|</span>
+        <a class="logout-link text-white" href="/logout">Log Out</a>
+      <% } else { %>
+        <a href="/login" class="login-page-link">Log In</a>
+      <% } %>
+    </div>
+
     <div class="mx-4">
-      <h1 class="mt-4 mb-2">Pembukuan</h1>
+      <h1 class="mt-4 mb-2">Memoku</h1>
       <div class="lead text-lg">
-        Ketahui keadaan usahamu, catat semua transaksi dan dapatkan laporan, gratis!
-        <a href="/login" class="text-white">Daftar dengan Facebook</a>
+        <p>Ketahui keadaan usahamu, catat semua transaksi dan dapatkan laporan, gratis!</p>
+        <br>
+        <a href="/login" class="text-blue bg-white p-2 rounded" onclick="window.location = '/auth/facebook'">Login dengan Facebook</a>
       </div>
     </div>
   </div>

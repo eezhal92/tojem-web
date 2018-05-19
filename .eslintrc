@@ -14,7 +14,7 @@
       "node": {
         "moduleDirectory": [
           "node_modules",
-          "tojem-web",
+          "memoku-web",
           "package"
         ]
       }

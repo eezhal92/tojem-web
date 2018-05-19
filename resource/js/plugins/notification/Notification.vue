@@ -40,7 +40,7 @@ export default {
   computed: {
     hasNotification() {
       return this.entries.length > 0;
-    }
+    },
   },
 
   /**
@@ -70,9 +70,9 @@ export default {
     },
     autoClose(entry) {
       setTimeout(() => this.closeNotification(entry), entry.duration);
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">

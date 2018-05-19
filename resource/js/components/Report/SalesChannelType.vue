@@ -12,7 +12,7 @@
 <script>
 /* eslint-disable no-undef */
 
-import Plotly from '../plotly';
+import Plotly from '../../plotly';
 
 export default {
   props: ['sales'],
