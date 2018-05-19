@@ -1,13 +1,15 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import Vue from 'vue';
 import Shepherd from 'tether-shepherd';
-import ProductList from '../../components/Product/ProductList'
+import ProductList from '../../components/Product/ProductList.vue';
 
+// eslint-disable-next-line no-new
 new Vue({
   el: '#app',
   components: {
     ProductList,
   },
-})
+});
 
 const isMobile = window.innerWidth < 768;
 

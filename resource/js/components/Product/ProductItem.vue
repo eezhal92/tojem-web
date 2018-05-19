@@ -14,7 +14,7 @@
           </button>
 
           <form class="inline-block" v-if="isFormShowing" @submit.prevent="save">
-            <input type="number" v-model="qty" style="width: 48px" class="rounded border p-1">
+            <input type="number" min="1" v-model="qty" style="width: 48px" class="rounded border p-1">
             <button type="submit" class="rounded bg-blue text-white p-1" title="Catat transaksi untuk ini">
               Simpan
             </button>

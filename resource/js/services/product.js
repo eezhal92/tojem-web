@@ -52,7 +52,7 @@ export function update(payload = {}) {
 
 export function getAll() {
   return axios.get('/api/products')
-    .then(response => response.data)
+    .then(response => response.data);
 }
 
 export default {

@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'Tojem',
+  name: 'Memoku',
   tagline: 'Jualan Jadi Mudah',
   version: '0.0.0',
   providers: [
