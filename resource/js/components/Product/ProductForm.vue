@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div class="mb-4" v-show="isBasePriceValid && isProfitAndSellPriceDirty">
+    <div class="mb-4">
       <label class="block mb-1" for="profit">Profit</label>
       <input
         id="profit"
@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <div class="mb-4" v-show="isBasePriceValid && isProfitAndSellPriceDirty">
+    <div class="mb-4">
       <div class="block mb-1">Harga Jual</div>
 
         <input
@@ -119,14 +119,6 @@ export default {
       delete product.productImages
 
       this.inputField = product
-    }
-  },
-  computed: {
-    isBasePriceValid () {
-      return !!price.filterNominal(this.inputField.basePrice);
-    },
-    isProfitAndSellPriceDirty () {
-      return !!this.inputField.profit || !!this.inputField.sellPrice;
     }
   },
   methods: {
