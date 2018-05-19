@@ -56,7 +56,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import axios from 'axios';
 
-import bus from '../bus';
+import bus from '../../bus';
 import CartItem from './POSCartItem.vue';
 
 export default {

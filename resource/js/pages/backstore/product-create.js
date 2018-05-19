@@ -4,7 +4,7 @@ import VMoney from 'v-money';
 /* eslint-enable import/no-extraneous-dependencies */
 
 import Notification from '../../plugins/notification';
-import ProductCreate from '../../components/ProductCreate.vue';
+import ProductCreate from '../../components/Product/ProductCreate.vue';
 
 Vue.use(Notification);
 Vue.use(VMoney, { precision: 0 });

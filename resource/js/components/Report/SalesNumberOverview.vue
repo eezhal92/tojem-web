@@ -1,47 +1,53 @@
 <template>
-  <div class="sales-amount-overview">
+  <div class="sales-number-overview">
     <div class="flex">
       <div class="xl:w-1/4 lg:w-1/2 md:w-1/2 sm:w-full m-4 p-3 overflow-hidden hover:shadow-lg">
-        <p>Penjualan</p>
-        <p class="text-3xl">{{ totalAmount | rupiah }}</p>
+        <p>Order</p>
+        <p class="text-3xl">{{ transactionNumber }}</p>
+      </div>
+      <div class="text-black xl:w-1/4 lg:w-1/2 md:w-1/2 sm:w-full m-4 p-3 overflow-hidden hover:shadow-lg">
+        <p>Item Terjual</p>
+        <p class="text-3xl">{{ itemsSold }}</p>
       </div>
     </div>
     <div class="border-t border-grey-lighter">
-      <div style="width: 100%" id="chart-amount"></div>
+      <div style="width: 100%" id="chart-number"></div>
     </div>
   </div>
 </template>
 
 <script>
-/* eslint-disable import/no-extraneous-dependencies, no-undef */
+/* eslint-disable no-undef */
 
-import axios from 'axios';
 import dateFns from 'date-fns';
 import groupBy from 'lodash/groupBy';
 
-import Plotly from '../plotly';
+import Plotly from '../../plotly';
 
 export default {
   props: ['sales', 'dateFormat'],
 
   mounted() {
     // eslint-disable-next-line
-    this.plotlyEl = document.querySelector('#chart-amount');
+    this.plotlyEl = document.querySelector('#chart-number');
 
     this.layout = {
-      title: 'Sales Growth',
+      title: 'Order Growth',
       xaxis: {
         title: 'Waktu',
         showgrid: false,
         zeroline: false,
       },
       yaxis: {
-        title: 'Penjualan',
+        title: 'Order',
         showline: false,
       },
     };
 
-    this.plotlyData = [{ ...this.salesData, type: 'scatter' }];
+    this.plotlyData = [
+      { ...this.transactionData, type: 'scatter', name: 'Order' },
+      { ...this.soldItemsData, type: 'scatter', name: 'Item Terjual' },
+    ];
 
     Plotly.newPlot(this.plotlyEl, this.plotlyData, this.layout);
 
@@ -66,10 +72,13 @@ export default {
   },
 
   computed: {
-    totalAmount() {
-      return this.sales.reduce((total, sale) => total + sale.amount, 0);
+    transactionNumber() {
+      return this.sales.length;
     },
-    salesData() {
+    itemsSold() {
+      return this.sales.reduce((total, sale) => total + sale.itemsCount, 0);
+    },
+    transactionData() {
       const data = this.sales.map(sale => ({
         ...sale,
         date: dateFns.format(sale.date, this.dateFormat),
@@ -78,12 +87,29 @@ export default {
       const groupedData = groupBy(data, 'date');
       const accumulatedData = Object.keys(groupedData).map(date => ({
         date,
-        amount: groupedData[date].map(i => i.amount).reduce((t, i) => t + i, 0),
+        number: groupedData[date].length,
       }));
 
       return {
         x: accumulatedData.map(i => i.date),
-        y: accumulatedData.map(i => i.amount),
+        y: accumulatedData.map(i => i.number),
+      };
+    },
+    soldItemsData() {
+      const data = this.sales.map(sale => ({
+        ...sale,
+        date: dateFns.format(sale.date, this.dateFormat),
+      }));
+
+      const groupedData = groupBy(data, 'date');
+      const accumulatedData = Object.keys(groupedData).map(date => ({
+        date,
+        itemsCount: groupedData[date].map(i => i.itemsCount).reduce((t, i) => t + i, 0),
+      }));
+
+      return {
+        x: accumulatedData.map(i => i.date),
+        y: accumulatedData.map(i => i.itemsCount),
       };
     },
   },
@@ -92,8 +118,10 @@ export default {
     sales: {
       deep: true,
       handler(value) {
-        this.plotlyData[0].x = this.salesData.x;
-        this.plotlyData[0].y = this.salesData.y;
+        this.plotlyData[0].x = this.transactionData.x;
+        this.plotlyData[0].y = this.transactionData.y;
+        this.plotlyData[1].x = this.soldItemsData.x;
+        this.plotlyData[1].y = this.soldItemsData.y;
 
         Plotly.redraw(this.plotlyEl);
       },

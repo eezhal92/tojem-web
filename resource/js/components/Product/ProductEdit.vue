@@ -69,9 +69,9 @@
 </template>
 
 <script>
-import price from '../lib/price';
-import FormError from '../lib/form-error';
-import productService from '../services/product';
+import price from '../../lib/price';
+import FormError from '../../lib/form-error';
+import productService from '../../services/product';
 
 export default {
   props: {

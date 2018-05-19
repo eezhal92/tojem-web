@@ -2,8 +2,8 @@
 
 import Vue from 'vue';
 import money from 'v-money';
-import POSCart from '../components/POSCart.vue';
-import ProductList from '../components/ProductList.vue';
+import POSCart from '../components/Pos/POSCart.vue';
+import ProductList from '../components/Pos/ProductList.vue';
 
 Vue.use(money, { precision: 0 });
 
