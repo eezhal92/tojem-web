@@ -45,16 +45,15 @@
 
     <div class="mb-4" v-show="isBasePriceValid && isProfitAndSellPriceDirty">
       <div class="block mb-1">Harga Jual</div>
-
-        <input
-          id="sellPrice"
-          name="sellPrice"
-          class="block p-1 border border-grey w-full"
-          placeholder="15000"
-          v-model="inputField.sellPrice"
-          v-money="money"
-          @blur="handleSellPriceBlur"
-        >
+      <input
+        id="sellPrice"
+        name="sellPrice"
+        class="block p-1 border border-grey w-full"
+        placeholder="15000"
+        v-model="inputField.sellPrice"
+        v-money="money"
+        @blur="handleSellPriceBlur"
+      >
     </div>
 
     <div class="mb-4">
@@ -77,7 +76,7 @@
 </template>
 
 <script>
-import price from '../../lib/price';
+import * as price from '../../lib/price';
 import FormError from '../../lib/form-error';
 
 const defaultInputField = {
@@ -102,7 +101,7 @@ export default {
     product: {
       type: Object,
       required: false,
-    }
+    },
   },
   data() {
     return {
@@ -113,30 +112,30 @@ export default {
   },
   mounted() {
     if (this.product) {
-      const product = { ...this.product }
+      const product = { ...this.product };
 
-      delete product.price
-      delete product.productImages
+      delete product.price;
+      delete product.productImages;
 
-      this.inputField = product
+      this.inputField = product;
     }
   },
   computed: {
-    isBasePriceValid () {
+    isBasePriceValid() {
       return !!price.filterNominal(this.inputField.basePrice);
     },
-    isProfitAndSellPriceDirty () {
+    isProfitAndSellPriceDirty() {
       return !!this.inputField.profit || !!this.inputField.sellPrice;
-    }
+    },
   },
   methods: {
-    handleBasePriceBlur (e) {
+    handleBasePriceBlur(e) {
       const basePrice = price.filterNominal(e.target.value);
       const profit = price.filterNominal(this.inputField.profit);
       const sellPrice = price.filterNominal(this.inputField.sellPrice);
       const profitAndSellPriceNotSet = !profit && !sellPrice;
 
-      if (!!basePrice) {
+      if (basePrice) {
         if (profitAndSellPriceNotSet) {
           this.inputField.sellPrice = basePrice;
 
@@ -151,22 +150,26 @@ export default {
 
         if (sellPrice) {
           this.inputField.profit = sellPrice - basePrice;
-
-          return;
         }
       }
     },
-    handleSellPriceBlur (e) {
-      this.inputField.profit = price.filterNominal(e.target.value) - price.filterNominal(this.inputField.basePrice);
+    handleSellPriceBlur(e) {
+      this.inputField.profit =
+        price.filterNominal(e.target.value) -
+        price.filterNominal(this.inputField.basePrice);
     },
-    handleProfitBlur (e) {
-      this.inputField.sellPrice = price.filterNominal(this.inputField.basePrice) + price.filterNominal(e.target.value);
+    handleProfitBlur(e) {
+      this.inputField.sellPrice =
+        price.filterNominal(this.inputField.basePrice) +
+        price.filterNominal(e.target.value);
     },
     clearErrorField(event) {
       this.errors.delete(event.target.name);
     },
     resetForm() {
-      const { basePrice, name, profit, description } = defaultInputField;
+      const {
+        basePrice, name, profit, description,
+      } = defaultInputField;
 
       this.inputField.name = name;
       this.inputField.basePrice = basePrice;
@@ -206,10 +209,10 @@ export default {
           }
         })
         .catch((error) => {
-          const { response } = error
+          const { response } = error;
           this.errors.set(response.data.errors);
         });
     },
-  }
+  },
 };
 </script>

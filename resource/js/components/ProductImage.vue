@@ -53,8 +53,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-import Loader from './Loader';
+import Loader from './Loader.vue';
 import * as productService from '../services/product';
 
 const MAXIMUM_UPLOAD = 4;
@@ -66,31 +65,32 @@ export default {
 
   props: ['productId', 'defaultImages'],
 
-  data () {
+  data() {
     return {
       processingImages: [],
       images: [],
-    }
+    };
   },
 
-  mounted () {
+  mounted() {
     this.images = this.defaultImages;
   },
 
   methods: {
-    handleRemoveButtonClick (imageId) {
-      axios.delete(`/api/products/${this.productId}/images/${imageId}`)
-        .then(() => {
-          this.images = this.images.filter(image => image.id !== imageId);
-        })
+    handleRemoveButtonClick(imageId) {
+      const opts = { productId: this.productId, imageId };
+
+      productService.deleteProductImage(opts).then(() => {
+        this.images = this.images.filter(image => image.id !== imageId);
+      });
     },
-    handleAddButtonClick () {
+    handleAddButtonClick() {
       this.triggerFileInputClick();
     },
-    triggerFileInputClick () {
+    triggerFileInputClick() {
       this.$refs.fileInput.click();
     },
-    validateUpload () {
+    validateUpload() {
       if (this.images.length === MAXIMUM_UPLOAD) {
         throw new Error('Anda telah mencapai batas maksimum unggah gambar');
       }
@@ -99,17 +99,17 @@ export default {
         throw new Error('Mohon tunggu hingga unggahan yang ada telah selesai.');
       }
     },
-    handleFileInputChange (event) {
+    handleFileInputChange(event) {
       try {
         this.validateUpload();
       } catch (error) {
-        alert(error.message);
+        alert(error.message); // eslint-disable-line no-alert
         return;
       }
 
       const processingImage = Date.now();
 
-      this.processingImages.push(processingImage)
+      this.processingImages.push(processingImage);
 
       productService.uploadProductImage({
         productId: this.productId,
@@ -123,110 +123,118 @@ export default {
           const { data } = error.response;
 
           if (data.error.code === 'LIMIT_FILE_SIZE') {
-            alert('Gagal mengunggah! Ukuran gambar terlalu besar.');
+            alert('Gagal mengunggah! Ukuran gambar terlalu besar.'); // eslint-disable-line no-alert
           }
 
           this.processingImages = [];
-        })
-    }
-  }
-}
+        });
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-  .product-image {
-    &__file-input {
-      display: none;
-    }
+.product-image {
+  &__file-input {
+    display: none;
   }
+}
 
-  .images {
-    display: flex;
+.images {
+  display: flex;
 
-    &__item {
-      margin-right: .5rem;
-      margin-bottom: .5rem;
-      border-radius: .25rem;
-      background-color: #cecece;
-      display: inline-block;
-      background-position: center;
-      background-size: cover;
-      position: relative;
-
-      .image-remove-button {
-        position: absolute;
-        padding: .5rem;
-        background: red;
-        color: #fff;
-        font-size: .75rem;
-        top: -1rem;
-        right: 0;
-      }
-    }
-
-    &__text {
-      font-size: .75rem;
-      text-align: center;
-      display: block;
-      margin-top: 2rem;
-    }
-  }
-
-  .loader-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-
-  .add-button {
-    border: 2px dashed #ccc;
-    background-color: transparent;
-    cursor: pointer;
-    &__text {
-      color: #666;
-      font-size: 12px;
-    }
-  }
-
-  .spinner {
-    width: 40px;
-    height: 40px;
-
+  &__item {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+    background-color: #cecece;
+    display: inline-block;
+    background-position: center;
+    background-size: cover;
     position: relative;
-  }
 
-  .double-bounce1, .double-bounce2 {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: #ffffff;
-    opacity: 0.6;
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
-    animation: sk-bounce 2.0s infinite ease-in-out;
-  }
-
-  .double-bounce2 {
-    -webkit-animation-delay: -1.0s;
-    animation-delay: -1.0s;
-  }
-
-  @-webkit-keyframes sk-bounce {
-    0%, 100% { -webkit-transform: scale(0.0) }
-    50% { -webkit-transform: scale(1.0) }
-  }
-
-  @keyframes sk-bounce {
-    0%, 100% {
-      transform: scale(0.0);
-      -webkit-transform: scale(0.0);
-    } 50% {
-      transform: scale(1.0);
-      -webkit-transform: scale(1.0);
+    .image-remove-button {
+      position: absolute;
+      padding: 0.5rem;
+      background: red;
+      color: #fff;
+      font-size: 0.75rem;
+      top: -1rem;
+      right: 0;
     }
   }
+
+  &__text {
+    font-size: 0.75rem;
+    text-align: center;
+    display: block;
+    margin-top: 2rem;
+  }
+}
+
+.loader-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.add-button {
+  border: 2px dashed #ccc;
+  background-color: transparent;
+  cursor: pointer;
+  &__text {
+    color: #666;
+    font-size: 12px;
+  }
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+
+  position: relative;
+}
+
+.double-bounce1,
+.double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #ffffff;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  -webkit-animation: sk-bounce 2s infinite ease-in-out;
+  animation: sk-bounce 2s infinite ease-in-out;
+}
+
+.double-bounce2 {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+}
+
+@-webkit-keyframes sk-bounce {
+  0%,
+  100% {
+    -webkit-transform: scale(0);
+  }
+  50% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes sk-bounce {
+  0%,
+  100% {
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+}
 </style>

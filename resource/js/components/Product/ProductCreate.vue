@@ -28,21 +28,21 @@
 </template>
 
 <script>
-import ProductForm from './ProductForm'
-import productService from '../../services/product';
+import ProductForm from './ProductForm.vue';
+import * as productService from '../../services/product';
 
 export default {
   components: {
-    ProductForm
+    ProductForm,
   },
 
   methods: {
-    handleProductFormSubmit (product) {
+    handleProductFormSubmit(product) {
       return productService.create(product)
         .then((response) => {
           this.$notification(response.message);
-        })
-    }
-  }
-}
+        });
+    },
+  },
+};
 </script>

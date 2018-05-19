@@ -32,29 +32,29 @@
 </template>
 
 <script>
-import ProductForm from './ProductForm'
-import productService from '../../services/product';
+import ProductForm from './ProductForm.vue';
+import * as productService from '../../services/product';
 
 export default {
   props: {
     value: {
       type: String,
       required: true,
-    }
+    },
   },
 
   components: {
     ProductForm,
   },
 
-  data () {
-    let product = null
+  data() {
+    let product = null;
 
     try {
-      product = JSON.parse(this.value)
-      product.sellPrice = product.basePrice + product.profit
+      product = JSON.parse(this.value);
+      product.sellPrice = product.basePrice + product.profit;
     } catch (error) {
-      console.warn('props.value is not valid stringified object')
+      console.warn('props.value is not valid stringified object'); // eslint-disable-line no-console
     }
 
     return {
@@ -63,14 +63,13 @@ export default {
   },
 
   methods: {
-    handleProductFormSubmit (product) {
-      return productService.update(product)
-        .then((response) => {
-          this.$notification(response.message);
-        })
-    }
-  }
-}
+    handleProductFormSubmit(product) {
+      return productService.update(product).then((response) => {
+        this.$notification(response.message);
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss">

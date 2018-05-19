@@ -33,43 +33,44 @@
 </template>
 
 <script>
-import axios from 'axios'
+import * as transaction from '../../services/transaction';
 
 export default {
   props: ['product'],
 
-  data () {
+  data() {
     return {
       isFormShowing: false,
       qty: 1,
-    }
+    };
   },
 
   computed: {
-    price () {
-      return this.product.price.toLocaleString('id')
-    }
+    price() {
+      return this.product.price.toLocaleString('id');
+    },
   },
 
   methods: {
-    toggleQuickSaveForm () {
-      this.isFormShowing = !this.isFormShowing
+    toggleQuickSaveForm() {
+      this.isFormShowing = !this.isFormShowing;
     },
-    save () {
-      axios.post('/api/orders', {
+    save() {
+      const orders = {
         type: 'on_site',
-        items: [{ ...this.product, qty: this.qty }]
-      })
+        items: [{ ...this.product, qty: this.qty }],
+      };
+
+      transaction.createOrder(orders)
         .then(() => {
-          alert('Berhasil mencatat produk ini sebagai terjual')
-          this.qty = 1
-          this.toggleQuickSaveForm()
+          alert('Berhasil mencatat produk ini sebagai terjual'); // eslint-disable-line no-alert
+          this.qty = 1;
+          this.toggleQuickSaveForm();
         })
         .catch((error) => {
-          alert(error.message)
-        })
-
-    }
-  }
-}
+          alert(error.message); // eslint-disable-line no-alert
+        });
+    },
+  },
+};
 </script>

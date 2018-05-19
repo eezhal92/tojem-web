@@ -26,8 +26,11 @@ export function uploadProductImage({
   return axios.post(`/api/products/${productId}/images`, payload, {
     ...baseOptions,
     onUploadProgress,
-  })
-    .then(response => response.data);
+  }).then(response => response.data);
+}
+
+export function deleteProductImage({ productId, imageId }) {
+  return axios.delete(`/api/products/${productId}/images/${imageId}`);
 }
 
 export function create(payload = {}) {
@@ -57,6 +60,7 @@ export function getAll() {
 
 export default {
   uploadProductImage,
+  deleteProductImage,
   create,
   update,
 };
