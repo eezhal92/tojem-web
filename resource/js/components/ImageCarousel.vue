@@ -26,55 +26,54 @@ export default {
   },
 
   computed: {
-    selectedImageUrl () {
-      const image = this.images.find(image => image.id === this.selected);
+    selectedImageUrl() {
+      const image = this.images.find(img => img.id === this.selected);
 
       if (!image) {
         return '';
       }
 
       return image.url;
-    }
+    },
   },
 
-  mounted () {
+  mounted() {
     if (this.images.length) {
       this.selected = this.images[0].id;
     }
   },
 
   methods: {
-    selectImage (imageId) {
+    selectImage(imageId) {
       this.selected = imageId;
     },
-    isSelected (imageId) {
+    isSelected(imageId) {
       return this.selected === imageId;
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
-  .image-carousel {
-    padding: 0.2rem;
-  }
+.image-carousel {
+  padding: 0.2rem;
+}
 
-  .image-selector {
-    overflow-x: auto;
-    padding: 1rem 0;
+.image-selector {
+  overflow-x: auto;
+  padding: 1rem 0;
 
-    &__item {
-      width: 4rem;
-      height: 4rem;
-      margin-right: 1rem;
-      background-size: cover;
-      background-position: center;
-      display: inline-block;
+  &__item {
+    width: 4rem;
+    height: 4rem;
+    margin-right: 1rem;
+    background-size: cover;
+    background-position: center;
+    display: inline-block;
 
-      &--active {
-        border: 2px solid #e3342f;
-      }
+    &--active {
+      border: 2px solid #e3342f;
     }
   }
+}
 </style>
-

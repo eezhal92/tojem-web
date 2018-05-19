@@ -39,7 +39,7 @@ export default {
       deep: true,
       handler(val) {
         const qty = parseInt(val.qty, 10);
-        // eslint-disable-next-line no-param-reassign
+        // eslint-disable-next-line no-param-reassign, no-restricted-globals
         val.qty = isNaN(qty) ? 0 : qty;
       },
     },

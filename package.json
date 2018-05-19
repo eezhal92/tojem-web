@@ -11,7 +11,7 @@
     "dev": "./tojem serve",
     "asset:dev": "NODE_ENV=development webpack --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "asset:build": "NODE_ENV=production webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "lint": "eslint ."
+    "lint": "eslint . --ext .js,.vue"
   },
   "engines": {
     "node": ">= 8",

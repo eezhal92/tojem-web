@@ -12,44 +12,45 @@
 </template>
 
 <script>
-import ProductItem from './ProductItem'
-import * as productService from '../../services/product'
+import ProductItem from './ProductItem.vue';
+import * as productService from '../../services/product';
+
 export default {
   components: {
-    ProductItem
+    ProductItem,
   },
 
-  data () {
+  data() {
     return {
       keyword: '',
       products: [],
-    }
+    };
   },
 
   computed: {
     filteredProducts() {
-      const keyword = this.keyword.toLowerCase()
+      const keyword = this.keyword.toLowerCase();
       if (!keyword) {
-        return this.products
+        return this.products;
       }
 
-      return this.products.filter((product) => (
+      return this.products.filter(product => (
         product.name.toLowerCase().includes(keyword)
-      ))
-    }
+      ));
+    },
   },
 
-  mounted () {
-    this.fetchProducts()
+  mounted() {
+    this.fetchProducts();
   },
 
   methods: {
-    fetchProducts () {
+    fetchProducts() {
       productService.getAll()
         .then((products) => {
-          this.products = products
-        })
-    }
-  }
-}
+          this.products = products;
+        });
+    },
+  },
+};
 </script>
