@@ -55,7 +55,6 @@
           <div class="w-full">
             <div class="my-2">
               <a id="v-step-0" class="btn-add-product bg-white text-grey-darker rounded-sm border border-grey text-sm p-2 no-underline" href="/backstore/products/create">Tambah Produk</a>
-              <a id="v-step-1" class="rounded-sm text-white bg-blue no-underline border border-blue text-sm p-2" href="/backstore/pos">Transaksi Baru</a>
             </div>
           </div>
         </div>
@@ -72,27 +71,8 @@
             </div>
             <% } %>
 
-            <% products.forEach((product, i) => { %>
-              <div class="flex">
-                <div class="w-full border border-grey mb-4 rounded overflow-hidden bg-white">
-                  <div class="info p-4">
-                    <div class="inline-block"><%= product.name %></div>
-                    <div class="inline-block float-right">
-                      <span class="text-green">
-                        Rp. <span data-price="<%= product.price %>"><%= product.price.toLocaleString('id') %></span>
-                      </span>
-                    </div>
-                  </div>
+            <product-list></product-list>
 
-                  <div class="action p-2 text-sm bg-grey-lighter overflow-hidden">
-                    <div class="inline-block float-right">
-                      <a href="/backstore/products/<%= product.id %>/edit">Ubah</a>
-                      <a href="/backstore/products/<%= product.id %>">Detail</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <% }) %>
           </div>
         </div>
       </div>
@@ -100,13 +80,6 @@
     </div>
   </div>
 
-  <script>
-    const elements = document.querySelectorAll('[data-price]');
-
-    for (const el of elements) {
-      el.innerHTML = parseInt(el.dataset.price, 10).toLocaleString('id');
-    }
-  </script>
   <script src="/js/bs-nav.js"></script>
   <script src="/js/backstore/product-list.js"></script>
 </body>

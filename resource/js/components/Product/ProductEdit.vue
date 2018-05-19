@@ -8,59 +8,22 @@
 
     <div class="flex">
       <div class="p-4 w-full">
-        <div id="edit-product-form" @keydown="clearErrorField($event)">
-          <div class="mb-4">
-            <label class="block mb-1" for="name">Nama</label>
-            <input class="block p-1 border border-grey w-full" id="name" v-model="inputField.name" type="text" name="name" placeholder="Apa nama produk Anda?">
+        <ProductForm
+          :product="product"
+          :on-submit="handleProductFormSubmit"
+        >
 
-            <div class="text-red" v-if="errors.has('name')">
-              <small>{{ errors.get('name') }}</small>
+          <template slot="action" slot-scope="props">
+            <div class="float-right">
+              <button id="restore-product-button" class="border border-blue p-2 rounded-sm text-center text-blue button-handler" @click="props.restoreProduct">
+                Reset (Restore)
+              </button>
+              <button id="save-product-button" class="border border-blue p-2 rounded-sm text-center text-blue button-handler" @click="props.submitProduct">
+                Perbaharui
+              </button>
             </div>
-          </div>
-
-          <div class="mb-4">
-            <label class="block mb-1" for="basePrice">Harga Modal</label>
-            <input class="block p-1 border border-grey w-full" id="basePrice" v-model="inputField.basePrice" v-money="money" name="basePrice" placeholder="15000">
-
-            <div class="text-red" v-if="errors.has('basePrice')">
-              <small>{{ errors.get('basePrice') }}</small>
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <label class="block mb-1" for="profit">Profit</label>
-            <input class="block p-1 border border-grey w-full" id="profit" v-model="inputField.profit" v-money="money" name="profit" placeholder="15000">
-
-            <div class="text-red" v-if="errors.has('profit')">
-              <small>{{ errors.get('profit') }}</small>
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <div class="block mb-1">Harga Jual</div>
-            <span class="block p-1 border border-grey w-full">
-              {{ sellPrice }}
-            </span>
-          </div>
-
-          <div class="mb-4">
-            <label class="block mb-1" for="description">Deskripsi</label>
-            <textarea class="block p-1 border border-grey w-full" id="description" v-model="inputField.description" name="description" rows="3" placeholder="Deskripsi menarik tentang produk Anda"></textarea>
-
-            <div class="text-red" v-if="errors.has('description')">
-              <small>{{ errors.get('description') }}</small>
-            </div>
-          </div>
-
-          <div class="float-right">
-            <button id="restore-product-button" class="border border-blue p-2 rounded-sm text-center text-blue button-handler" @click="restoreProduct">
-              Reset (Restore)
-            </button>
-            <button id="save-product-button" class="border border-blue p-2 rounded-sm text-center text-blue button-handler" @click="submitProduct">
-              Perbaharui
-            </button>
-          </div>
-        </div>
+          </template>
+        </ProductForm>
       </div>
     </div>
 
@@ -69,53 +32,45 @@
 </template>
 
 <script>
-import price from '../../lib/price';
-import FormError from '../../lib/form-error';
+import ProductForm from './ProductForm'
 import productService from '../../services/product';
 
 export default {
   props: {
     value: {
       type: String,
-      required: true
+      required: true,
     }
   },
-  data() {
+
+  components: {
+    ProductForm,
+  },
+
+  data () {
+    let product = null
+
+    try {
+      product = JSON.parse(this.value)
+      product.sellPrice = product.basePrice + product.profit
+    } catch (error) {
+      console.warn('props.value is not valid stringified object')
+    }
+
     return {
-      money: price.vMoneyFormat,
-      inputField: JSON.parse(this.value),
-      errors: new FormError(),
+      product,
     };
   },
-  computed: {
-      sellPrice() {
-        const basePrice = price.filterNominal(this.inputField.basePrice);
-        const profit = price.filterNominal(this.inputField.profit);
 
-        return `Rp. ${(basePrice + profit).toLocaleString('id')}`;
-      },
-  },
   methods: {
-    clearErrorField(event) {
-      this.errors.delete(event.target.name);
-    },
-    restoreProduct() {
-      this.inputField = JSON.parse(this.value);
-    },
-    submitProduct(event) {
-      event.preventDefault();
-
-      productService.update(this.inputField)
+    handleProductFormSubmit (product) {
+      return productService.update(product)
         .then((response) => {
-          this.errors.clear();
           this.$notification(response.message);
         })
-        .catch(({ response }) => {
-          this.errors.set(response.data.errors);
-        });
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style lang="scss">

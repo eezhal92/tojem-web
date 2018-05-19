@@ -1,4 +1,13 @@
+import Vue from 'vue';
 import Shepherd from 'tether-shepherd';
+import ProductList from '../../components/Product/ProductList'
+
+new Vue({
+  el: '#app',
+  components: {
+    ProductList,
+  },
+})
 
 const isMobile = window.innerWidth < 768;
 

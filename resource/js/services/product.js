@@ -50,6 +50,11 @@ export function update(payload = {}) {
   }, baseOptions).then(response => response.data);
 }
 
+export function getAll() {
+  return axios.get('/api/products')
+    .then(response => response.data)
+}
+
 export default {
   uploadProductImage,
   create,
