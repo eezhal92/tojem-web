@@ -25,6 +25,7 @@
           <table class="text-sm md:text-base">
             <thead>
               <tr>
+                <th class="border-b-2 border-solid border-grey text-left"><span>ID</span></th>
                 <th class="border-b-2 border-solid border-grey text-left"><span>Waktu</span></th>
                 <th class="border-b-2 border-solid border-grey text-left"><span>Nilai</span></th>
                 <th class="border-b-2 border-solid border-grey text-left"><span>Channel</span></th>
@@ -34,6 +35,7 @@
             <tbody>
               <% orders.forEach((order) => { %>
               <tr>
+                <td>#<%= order.id %></td>
                 <td><%= order.date %></td>
                 <td><span class="hidden md:inline">Rp. </span><%= order.amount.toLocaleString() %></td>
                 <td><%= order.type %></td>
