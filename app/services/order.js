@@ -94,6 +94,7 @@ export class OrderService {
         productId: item.id,
         productName: item.name,
         productPrice: item.price,
+        productProfit: item.profit,
         qty: item.qty,
       }));
 

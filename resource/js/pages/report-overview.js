@@ -2,9 +2,10 @@
 
 import Vue from 'vue';
 import axios from 'axios';
+import SalesChannelType from '../components/Report/SalesChannelType.vue';
 import SalesAmountOverview from '../components/Report/SalesAmountOverview.vue';
 import SalesNumberOverview from '../components/Report/SalesNumberOverview.vue';
-import SalesChannelType from '../components/Report/SalesChannelType.vue';
+import SalesProfitOverview from '../components/Report/SalesProfitOverview.vue';
 
 Vue.filter('rupiah', value => `Rp. ${value.toLocaleString()}`);
 
@@ -41,8 +42,9 @@ new Vue({
     },
   },
   components: {
+    SalesChannelType,
     SalesAmountOverview,
     SalesNumberOverview,
-    SalesChannelType,
+    SalesProfitOverview,
   },
 });

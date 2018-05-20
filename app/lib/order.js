@@ -40,12 +40,17 @@ export const orderItemsAmount = orderItems => orderItems
   .map(item => item.productPrice * item.qty)
   .reduce((acc, price) => acc + price, 0);
 
+export const orderItemsProfit = orderItems => orderItems
+  .map(item => item.productProfit * item.qty)
+  .reduce((acc, profit) => acc + profit, 0);
+
 export function mapForReport(orders) {
   return orders.map((o) => {
     const order = o.dataValues;
 
     if (order.orderItems) {
       order.amount = orderItemsAmount(order.orderItems);
+      order.profit = orderItemsProfit(order.orderItems);
     }
 
     return order;
@@ -58,6 +63,7 @@ export function mapForList(orders) {
 
     if (order.orderItems) {
       order.amount = orderItemsAmount(order.orderItems);
+      order.profit = orderItemsProfit(order.orderItems);
       order.type = typeText(order.type);
       order.date = dateFns.format(order.createdAt, 'dddd, DD MMM YYYY @ HH:mm');
     }
@@ -75,10 +81,12 @@ export function summaryForSales(orders) {
     amount,
     orderItems,
     createdAt,
+    profit,
   }) => ({
     type,
     channel,
     amount,
+    profit,
     itemsCount: orderItems.reduce((total, item) => total + (1 * item.qty), 0),
     date: createdAt,
   }));

@@ -2,7 +2,7 @@
   <div class="sales-amount-overview">
     <div class="flex">
       <div class="xl:w-1/4 lg:w-1/2 md:w-1/2 sm:w-full m-4 p-3 overflow-hidden hover:shadow-lg">
-        <p>Penjualan</p>
+        <p>Total Penjualan</p>
         <p class="text-3xl">{{ totalAmount | rupiah }}</p>
       </div>
     </div>
@@ -29,7 +29,7 @@ export default {
     this.plotlyEl = document.querySelector('#chart-amount');
 
     this.layout = {
-      title: 'Sales Growth',
+      title: 'Sales Graph',
       xaxis: {
         title: 'Waktu',
         showgrid: false,
