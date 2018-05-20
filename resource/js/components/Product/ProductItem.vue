@@ -14,7 +14,11 @@
           </button>
 
           <form class="inline-block" v-if="isFormShowing" @submit.prevent="save">
-            <input type="number" min="1" v-model="qty" style="width: 48px" class="rounded border p-1">
+            <input type="number" ref="productQty" min="1" v-model="qty" style="width: 48px" class="rounded border p-1">
+            <select class="rounded border p-1" v-model="type">
+              <option value="on_site">Beli di tempat</option>
+              <option value="cod">COD</option>
+            </select>
             <button type="submit" class="rounded bg-blue text-white p-1" title="Catat transaksi untuk ini">
               Simpan
             </button>
@@ -42,6 +46,7 @@ export default {
     return {
       isFormShowing: false,
       qty: 1,
+      type: 'on_site',
     };
   },
 
@@ -54,10 +59,16 @@ export default {
   methods: {
     toggleQuickSaveForm() {
       this.isFormShowing = !this.isFormShowing;
+
+      if (this.isFormShowing) {
+        this.$nextTick(() => {
+          this.$refs.productQty.select();
+        });
+      }
     },
     save() {
       const orders = {
-        type: 'on_site',
+        type: this.type,
         items: [{ ...this.product, qty: this.qty }],
       };
 

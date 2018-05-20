@@ -1,7 +1,7 @@
 <template>
   <div class="product-list">
     <div class="my-2">
-      Cari <input type="text" class="rounded p-2 border" v-model="keyword">
+      <input type="text" class="rounded p-2 border" v-model="keyword" placeholder="Cari produk...">
     </div>
     <ProductItem
       v-for="product in filteredProducts"

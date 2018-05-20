@@ -4,7 +4,7 @@
       <strong>Transaksi</strong>
       <div class="float-right">
         <select v-model="type" id="order-type">
-          <option value="on_site">On-site</option>
+          <option value="on_site">Beli di tempat</option>
           <option value="cod">Cash On Delivery</option>
         </select>
       </div>

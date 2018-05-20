@@ -17,9 +17,9 @@
       <% if (auth.isAuth()) { %>
         <a class="text-white" href="/backstore/products" title="Kelola toko Anda">Ke backstore</a>
         <span class="text-white">|</span>
-        <a class="logout-link text-white" href="/logout">Log Out</a>
+        <a class="logout-link text-white" href="/logout">Keluar</a>
       <% } else { %>
-        <a href="/login" class="login-page-link">Log In</a>
+        <a href="/login" class="login-page-link text-white">Masuk</a>
       <% } %>
     </div>
 
@@ -28,7 +28,9 @@
       <div class="lead text-lg">
         <p>Ketahui keadaan usahamu, catat semua transaksi dan dapatkan laporan, gratis!</p>
         <br>
-        <a href="/login" class="text-blue bg-white p-2 rounded" onclick="window.location = '/auth/facebook'">Login dengan Facebook</a>
+        <button data-env="login-facebook" class="text-blue bg-white p-2 rounded" onclick="window.location = '/auth/facebook'">
+          <i class="fa fa-fw fa-facebook"></i> Masuk dengan facebook
+        </button>
       </div>
     </div>
   </div>
