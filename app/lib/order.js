@@ -1,3 +1,4 @@
+import { uniq, flatten, uniqueId } from 'lodash';
 import dateFns from 'date-fns';
 import ExtendableError from 'es6-error';
 import { AuthorizationError } from 'app/lib/errors';
@@ -72,10 +73,25 @@ export function mapForList(orders) {
   });
 }
 
-export function summaryForSales(orders) {
-  const mappedOrders = mapForReport(orders);
+function getDates(startDate, stopDate) {
+  const dateArray = [];
+  let currentDate = startDate;
 
-  return mappedOrders.map(({
+  while (currentDate <= stopDate) {
+    const pushedDate = new Date(dateFns.startOfDay(currentDate));
+    dateArray.push(pushedDate.toISOString());
+    currentDate = dateFns.format(dateFns.addDays(currentDate, 1), 'YYYY-MM-DD');
+  }
+
+  return dateArray;
+}
+
+export function summaryForSales({
+  startDate,
+  endDate,
+  orders,
+} = {}) {
+  const mappedOrders = mapForReport(orders).map(({
     type,
     channel,
     amount,
@@ -90,4 +106,35 @@ export function summaryForSales(orders) {
     itemsCount: orderItems.reduce((total, item) => total + (1 * item.qty), 0),
     date: createdAt,
   }));
+
+  const start = startDate.slice(0, 10);
+  const end = endDate.slice(0, 10);
+  const dates = getDates(start, end);
+
+  // If the date is same
+  // we don't need to generate no transaction data
+  if (start === end) {
+    return mappedOrders;
+  }
+
+  // Generate data for date that transaction not exists
+  const orderDates = uniq(mappedOrders.map(order => dateFns.startOfDay(order.date).toISOString()));
+
+  const result = dates.map((date) => {
+    const isOrderExists = orderDates.indexOf(date) !== -1;
+
+    if (isOrderExists) {
+      return mappedOrders.filter(order => dateFns.isSameDay(date, order.date));
+    }
+
+    return {
+      id: uniqueId('no_transaction_'),
+      amount: 0,
+      profit: 0,
+      date,
+      itemsCount: 0,
+    };
+  });
+
+  return flatten(result);
 }

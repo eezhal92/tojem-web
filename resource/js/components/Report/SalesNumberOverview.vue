@@ -85,10 +85,16 @@ export default {
       }));
 
       const groupedData = groupBy(data, 'date');
-      const accumulatedData = Object.keys(groupedData).map(date => ({
-        date,
-        number: groupedData[date].length,
-      }));
+      const accumulatedData = Object.keys(groupedData).map((date) => {
+        const number = groupedData[date].length === 1 && !groupedData[date][0].amount
+          ? 0
+          : groupedData[date].length;
+
+        return {
+          date,
+          number,
+        };
+      });
 
       return {
         x: accumulatedData.map(i => i.date),
