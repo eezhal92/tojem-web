@@ -25,7 +25,7 @@ new Vue({
       this.fetchSales(event.target.value);
     },
     fetchSales(dateCode) {
-      return axios.get(`/api/reports/1/orders?date_code=${dateCode}`)
+      return axios.get(`/api/reports/orders?date_code=${dateCode}`)
         .then(response => response.data)
         .then((data) => {
           this.sales = data.result;

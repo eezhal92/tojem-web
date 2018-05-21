@@ -17,7 +17,7 @@ class ReportController {
       const { startDate, endDate } = convertToDates(dateCode);
 
       const orders = await this.orderService.findAllForStoreWithinRange({
-        storeId: parseInt(request.params.id, 10),
+        storeId: request.session.store.id,
         startDate,
         endDate,
         withItems: true,

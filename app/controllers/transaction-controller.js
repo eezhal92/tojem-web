@@ -24,7 +24,7 @@ export class TransactionController {
       const offset = (page * limit) - limit;
 
       const findAllPromise = models.order.findAll({
-        where: { storeId: 1 },
+        where: { storeId: request.session.store.id },
         include: [{
           model: models.orderItem,
         }],
