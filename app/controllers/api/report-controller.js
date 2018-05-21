@@ -25,7 +25,7 @@ class ReportController {
 
       return response.json({
         query: { dateCode, startDate, endDate },
-        result: summaryForSales(orders),
+        result: summaryForSales({ startDate, endDate, orders }),
       });
     } catch (error) {
       return next(error);

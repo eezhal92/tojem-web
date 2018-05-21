@@ -1,13 +1,13 @@
 <template>
-  <div class="sales-amount-overview">
+  <div class="sales-profit-overview">
     <div class="flex">
       <div class="xl:w-1/4 lg:w-1/2 md:w-1/2 sm:w-full m-4 p-3 overflow-hidden hover:shadow-lg">
-        <p>Total Penjualan</p>
-        <p class="text-3xl">{{ totalAmount | rupiah }}</p>
+        <p>Keuntungan</p>
+        <p class="text-3xl">{{ totalProfit | rupiah }}</p>
       </div>
     </div>
     <div class="border-t border-grey-lighter">
-      <div style="width: 100%" id="chart-amount"></div>
+      <div style="width: 100%" id="chart-profit"></div>
     </div>
   </div>
 </template>
@@ -26,17 +26,17 @@ export default {
 
   mounted() {
     // eslint-disable-next-line
-    this.plotlyEl = document.querySelector('#chart-amount');
+    this.plotlyEl = document.querySelector('#chart-profit');
 
     this.layout = {
-      title: 'Sales Graph',
+      title: 'Profit Graph',
       xaxis: {
         title: 'Waktu',
         showgrid: false,
         zeroline: false,
       },
       yaxis: {
-        title: 'Penjualan',
+        title: 'Keuntungan',
         showline: false,
       },
     };
@@ -66,8 +66,8 @@ export default {
   },
 
   computed: {
-    totalAmount() {
-      return this.sales.reduce((total, sale) => total + sale.amount, 0);
+    totalProfit() {
+      return this.sales.reduce((total, sale) => total + sale.profit, 0);
     },
     salesData() {
       const data = this.sales.map(sale => ({
@@ -78,12 +78,12 @@ export default {
       const groupedData = groupBy(data, 'date');
       const accumulatedData = Object.keys(groupedData).map(date => ({
         date,
-        amount: groupedData[date].map(i => i.amount).reduce((t, i) => t + i, 0),
+        profit: groupedData[date].map(i => i.profit).reduce((t, i) => t + i, 0),
       }));
 
       return {
         x: accumulatedData.map(i => i.date),
-        y: accumulatedData.map(i => i.amount),
+        y: accumulatedData.map(i => i.profit),
       };
     },
   },

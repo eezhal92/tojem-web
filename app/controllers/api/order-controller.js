@@ -27,6 +27,10 @@ export class OrderApiController {
     try {
       const { type, items } = request.body;
 
+      // Todo: it should only take product's id and qty
+      // and rest data like basePrice, profit etc
+      // should be loaded from database.
+
       validateOrder(type, request);
 
       const storeId = request.session.store.id;

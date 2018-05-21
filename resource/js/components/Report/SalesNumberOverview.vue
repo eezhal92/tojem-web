@@ -32,20 +32,20 @@ export default {
     this.plotlyEl = document.querySelector('#chart-number');
 
     this.layout = {
-      title: 'Order Growth',
+      title: 'Transaction Graph',
       xaxis: {
         title: 'Waktu',
         showgrid: false,
         zeroline: false,
       },
       yaxis: {
-        title: 'Order',
+        title: 'Transaksi',
         showline: false,
       },
     };
 
     this.plotlyData = [
-      { ...this.transactionData, type: 'scatter', name: 'Order' },
+      { ...this.transactionData, type: 'scatter', name: 'Transaksi' },
       { ...this.soldItemsData, type: 'scatter', name: 'Item Terjual' },
     ];
 
@@ -85,10 +85,16 @@ export default {
       }));
 
       const groupedData = groupBy(data, 'date');
-      const accumulatedData = Object.keys(groupedData).map(date => ({
-        date,
-        number: groupedData[date].length,
-      }));
+      const accumulatedData = Object.keys(groupedData).map((date) => {
+        const number = groupedData[date].length === 1 && !groupedData[date][0].amount
+          ? 0
+          : groupedData[date].length;
+
+        return {
+          date,
+          number,
+        };
+      });
 
       return {
         x: accumulatedData.map(i => i.date),
