@@ -9,12 +9,12 @@
           </span>
         </div>
         <div class="inline-block float-right">
-          <button @click="toggleQuickSaveForm" class="border p-1 rounded">
+          <button @click="toggleQuickSaveForm" class="quick-transaction border p-1 rounded">
             {{ isFormShowing ? 'Batal' : 'Terjual' }}
           </button>
 
           <form class="inline-block" v-if="isFormShowing" @submit.prevent="save">
-            <input type="number" ref="productQty" min="1" v-model="qty" style="width: 48px" class="rounded border p-1">
+            <span>Jml</span><input type="number" ref="productQty" min="1" v-model="qty" style="width: 48px" class="rounded border p-1">
             <select class="rounded border p-1" v-model="type">
               <option value="on_site">Beli di tempat</option>
               <option value="cod">COD</option>

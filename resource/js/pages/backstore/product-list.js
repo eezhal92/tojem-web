@@ -3,14 +3,6 @@ import Vue from 'vue';
 import Shepherd from 'tether-shepherd';
 import ProductList from '../../components/Product/ProductList.vue';
 
-// eslint-disable-next-line no-new
-new Vue({
-  el: '#app',
-  components: {
-    ProductList,
-  },
-});
-
 const isMobile = window.innerWidth < 768;
 
 function initOnboarding({ force = false } = {}) {
@@ -53,6 +45,16 @@ function initOnboarding({ force = false } = {}) {
     },
   });
 
+  tour.addStep('quick-transaction-step', {
+    text: 'Anda juga bisa mencatat transaksi dengan cepat dengan tombol <b>Terjual</b>',
+    attachTo: '.quick-transaction left',
+    classes: 'shepherd step-small shepherd-open shepherd-theme-arrows shepherd-transparent-text',
+    buttons: {
+      text: 'Selanjutnya',
+      action: tour.next,
+    },
+  });
+
   tour.addStep('view-transaction', {
     text: 'Semua transaksi yang tersimpan, bisa Anda lihat di sini',
     attachTo: '#all-transaction-menu right',
@@ -75,7 +77,7 @@ function initOnboarding({ force = false } = {}) {
     attachTo: '#report-menu right',
     classes: 'shepherd step-small shepherd-open shepherd-theme-arrows shepherd-transparent-text',
     buttons: {
-      text: 'Selanjutnya',
+      text: 'Selesai',
       action: tour.next,
     },
   });
@@ -96,3 +98,11 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   initOnboarding();
 }
+
+// eslint-disable-next-line no-new
+new Vue({
+  el: '#app',
+  components: {
+    ProductList,
+  },
+});
